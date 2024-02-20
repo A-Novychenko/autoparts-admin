@@ -1,14 +1,14 @@
 {
-  "title": "WDS_template",
-  "description": "WDS_template",
-  "keywords": "WDS_template",
+  "title": "AM-admin",
+  "description": "ADMIN",
+  "keywords": "am-admin",
   "locale": "uk_UA",
   "images": [
     {
       "url": "/meta/og-image.jpg",
       "width": 1200,
       "height": 630,
-      "alt": "WDS_template"
+      "alt": "am-admin"
     }
   ]
 }

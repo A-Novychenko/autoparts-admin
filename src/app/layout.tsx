@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 import { Raleway, Geologica } from 'next/font/google';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '@/providers/thema';
 
 import meta from '@/data/meta';
 
 import './globals.css';
+import StoreProvider from '@/providers/StoreProvider';
 
 const raleway = Raleway({
   subsets: ['cyrillic', 'latin'],
@@ -30,7 +34,13 @@ export default function RootLayout({
   return (
     <html lang="uk" className="scroll-smooth">
       <body className={`${raleway.variable} ${geologica.variable}`}>
-        <main>{children}</main>
+        <main>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <StoreProvider>{children}</StoreProvider>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </main>
       </body>
     </html>
   );
