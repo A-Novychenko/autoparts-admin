@@ -1,5 +1,5 @@
-import { Link, Typography } from '@mui/material';
-import React from 'react';
+import {Link, Typography} from "@mui/material";
+import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Copyright = (props: any) => {
@@ -10,12 +10,12 @@ export const Copyright = (props: any) => {
       align="center"
       {...props}
     >
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://autoparts-liard.vercel.app">
         Авто-магаз
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 };
