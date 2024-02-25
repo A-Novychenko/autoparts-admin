@@ -1,5 +1,4 @@
 import {Link, Typography} from "@mui/material";
-import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Copyright = (props: any) => {
