@@ -11,8 +11,8 @@ export const Copyright = (props: any) => {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://autoparts-liard.vercel.app">
+        Авто-магаз
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

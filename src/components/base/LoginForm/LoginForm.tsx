@@ -15,15 +15,29 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 
 import { Copyright } from '@/components/ui';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { login } from '@/lib/features/auth/authOperation';
+import { redirect } from 'next/navigation';
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch();
+
+  const isLoggedIn = useAppSelector(st => st.authReducer.isLoggedIn);
+  console.log('isLoggedIn', isLoggedIn);
+
+  if (isLoggedIn) {
+    redirect('/home');
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const formattedData = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    console.log(formattedData);
+    dispatch(login(formattedData));
   };
 
   return (
