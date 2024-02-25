@@ -1,10 +1,14 @@
-import { LogoutBtn } from '@/components/ui';
+// import { AppBar } from '@/components/base';
+// import { Container } from '@/components/ui';
 
 export default function DashboardPage() {
   return (
     <>
-      <h1>This is DashboardPage</h1>
-      <LogoutBtn />
+      {/* <AppBar /> */}
+      {/* <Container>
+        <></>
+      </Container> */}
+      <h1>Dashboard</h1>
     </>
   );
 }

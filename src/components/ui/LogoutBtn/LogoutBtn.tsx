@@ -1,3 +1,5 @@
+import { Button } from '@mui/material';
+
 import { useAppDispatch } from '@/redux/hooks';
 import { logout } from '@/redux/auth/authOperations';
 
@@ -14,9 +16,14 @@ export const LogoutBtn: React.FC = () => {
 
   return (
     <div>
-      <button type="button" onClick={handleLogout}>
+      <Button
+        variant="outlined"
+        type="button"
+        onClick={handleLogout}
+        sx={{ color: '#fff', borderColor: '#fff' }}
+      >
         {logoutBtn}
-      </button>
+      </Button>
     </div>
   );
 };

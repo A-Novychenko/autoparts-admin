@@ -1,11 +1,14 @@
-import "./App.css";
-import {Route, Routes} from "react-router-dom";
-import {Layout} from "./Layout";
-import LoginPage from "@/pages/LoginPage";
-import DashboardPage from "@/pages/DashboardPage";
-import {PrivateRoute} from "./PrivateRoute";
-import {RestrictedRoute} from "./RestrictedRoute";
-import {useAppSelector} from "@/redux/hooks";
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout';
+import LoginPage from '@/pages/LoginPage';
+import DashboardPage from '@/pages/DashboardPage';
+import { PrivateRoute } from './PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute';
+import { useAppSelector } from '@/redux/hooks';
+import { DashboardLayout } from './DashboardLayout';
+import ASGPage from '@/pages/ASGPage';
+import OrdersPage from '@/pages/Orders';
 // import { useAppDispatch } from "@/redux/hooks";
 
 export const App = () => {
@@ -19,8 +22,8 @@ export const App = () => {
   // return isRefreshing ? (
   //   <b>Refreshing user...</b>
   // ) : (
-  const isAuthenticated = useAppSelector((s) => s.auth.isAuthenticated);
-  console.log("isAuthenticatedAPP", isAuthenticated);
+  const isAuthenticated = useAppSelector(s => s.auth.isAuthenticated);
+  console.log('isAuthenticatedAPP', isAuthenticated);
 
   return (
     <Routes>
@@ -35,23 +38,16 @@ export const App = () => {
           }
         />
 
-        {/* <Route index element={<LoginPage />} /> */}
-        {/* <Route
-          path="/"
-          element={
-            <RestrictedRoute
-              redirectTo="/dashboard"
-              component={<LoginPage />}
-            />
-          }
-        /> */}
-
         <Route
           path="/dashboard"
           element={
-            <PrivateRoute redirectTo="/" component={<DashboardPage />} />
+            <PrivateRoute redirectTo="/" component={<DashboardLayout />} />
           }
-        />
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="asg" element={<ASGPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+        </Route>
       </Route>
     </Routes>
   );
