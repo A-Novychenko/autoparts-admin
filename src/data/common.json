@@ -4,5 +4,10 @@
   },
   "logout": {
     "logoutBtn": "Выйти"
-  }
+  },
+  "mainNavLinks": [
+    { "name": "Главная", "link": "/dashboard" },
+    { "name": "ASG", "link": "/dashboard/asg" },
+    { "name": "Заказы", "link": "/dashboard/orders" }
+  ]
 }

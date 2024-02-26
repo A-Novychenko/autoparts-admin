@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import MUIAppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,21 +9,19 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 import { LogoutBtn } from '@/components/ui';
 
 import logo from '@assets/logo.png';
-import { NavLink } from 'react-router-dom';
 
-const pages = [
-  { name: 'Главная', link: '/dashboard' },
-  { name: 'ASG', link: '/dashboard/asg' },
-  { name: 'Заказы', link: '/dashboard/orders' },
-];
+import staticData from '@/data/common.json';
+
+import { MainNavLink } from './AppBar.styled';
 
 export const AppBar = () => {
+  const { mainNavLinks } = staticData;
+
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -83,9 +83,8 @@ export const AppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map(({ name, link }, idx) => (
+              {mainNavLinks.map(({ name, link }, idx) => (
                 <MenuItem key={idx} onClick={handleCloseNavMenu}>
-                  {/* <Typography textAlign="center">{page}</Typography> */}
                   <NavLink to={link} style={{ textAlign: 'center' }}>
                     {name}
                   </NavLink>
@@ -95,16 +94,10 @@ export const AppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(({ name, link }, idx) => (
-              <Button
-                key={idx}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <NavLink style={{ color: 'inherit' }} to={link}>
-                  {name}
-                </NavLink>
-              </Button>
+            {mainNavLinks.map(({ name, link }, idx) => (
+              <MainNavLink key={idx} to={link}>
+                {name}
+              </MainNavLink>
             ))}
           </Box>
 
