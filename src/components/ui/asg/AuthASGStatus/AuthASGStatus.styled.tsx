@@ -29,12 +29,15 @@ export const DataWrap = styled.div`
   padding: 8px;
   border-radius: 8px;
 `;
+
 export const NameBox = styled.div`
   width: 150px;
 `;
+
 export const ContactBox = styled.div`
   width: 150px;
 `;
+
 export const NameText = styled.p`
   color: #000000;
 `;

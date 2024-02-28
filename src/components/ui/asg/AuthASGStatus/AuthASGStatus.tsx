@@ -34,6 +34,7 @@ export const AuthASGStatus: React.FC = () => {
               <NameText>{login}</NameText>
               <NameText>{name}</NameText>
             </NameBox>
+
             <ContactBox>
               <NameText>{email}</NameText>
               <NameText>{phone}</NameText>
