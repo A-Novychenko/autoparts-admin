@@ -9,6 +9,7 @@ import { useAppSelector } from '@/redux/hooks';
 import { DashboardLayout } from './DashboardLayout';
 import ASGPage from '@/pages/ASGPage';
 import OrdersPage from '@/pages/Orders';
+import UsersPage from '@/pages/UsersPage';
 // import { useAppDispatch } from "@/redux/hooks";
 
 export const App = () => {
@@ -47,6 +48,7 @@ export const App = () => {
           <Route index element={<DashboardPage />} />
           <Route path="asg" element={<ASGPage />} />
           <Route path="orders" element={<OrdersPage />} />
+          <Route path="users" element={<UsersPage />} />
         </Route>
       </Route>
     </Routes>

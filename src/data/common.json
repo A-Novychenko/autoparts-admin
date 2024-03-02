@@ -8,6 +8,30 @@
   "mainNavLinks": [
     { "name": "Главная", "link": "/dashboard" },
     { "name": "ASG", "link": "/dashboard/asg" },
-    { "name": "Заказы", "link": "/dashboard/orders" }
+    { "name": "Заказы", "link": "/dashboard/orders" },
+    { "name": "Пользователи", "link": "/dashboard/users" }
+  ],
+  "userPage": {
+    "newUserLabel": "Добавить нового пользователя",
+    "newUserSubmitBtn": "Зарагестрировать",
+    "newUserCancelBtn": "Отменить",
+    "fields": [
+      { "id": "name", "label": "Имя" },
+      { "id": "login", "label": "Логин" },
+      { "id": "password", "label": "Пароль" },
+      {
+        "id": "role",
+        "label": "Тип пользователя",
+        "values": ["admin", "manager"]
+      }
+    ]
+  },
+  "userItem": [
+    { "id": "name", "label": "Имя" },
+    { "id": "login", "label": "Логин" },
+    { "id": "password", "label": "Пароль" },
+    { "id": "role", "label": "Тип пользователя" },
+    { "id": "status", "label": "Статус" },
+    { "id": "editor", "label": "" }
   ]
 }
