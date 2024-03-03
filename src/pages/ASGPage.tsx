@@ -1,4 +1,4 @@
-import { AuthASGStatus } from '@/components/ui';
+import { AuthASGStatus } from '@/components/base';
 
 export default function ASGPage() {
   return (

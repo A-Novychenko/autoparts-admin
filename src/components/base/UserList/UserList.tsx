@@ -10,11 +10,12 @@ import TableRow from '@mui/material/TableRow';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, Switch, Tooltip } from '@mui/material';
 
-import { Column, ColumnData, UserListProps } from './types';
-
-import staticData from '@/data/common.json';
 import { useAppDispatch } from '@/redux/hooks';
 import { changeStatus, removeUser } from '@/redux/auth/authOperations';
+
+import staticData from '@/data/common.json';
+
+import { Column, ColumnData, UserListProps } from './types';
 
 export const UserList: React.FC<UserListProps> = ({ users }) => {
   const [page, setPage] = useState(0);

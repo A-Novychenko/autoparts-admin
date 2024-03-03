@@ -80,7 +80,7 @@ export const NewUserFormDialog = () => {
             fields.map(({ id, label, values }, idx) => {
               return id !== 'role' ? (
                 <TextField
-                  key={idx}
+                  key={`${idx}${values}`}
                   autoFocus
                   required
                   margin="dense"
@@ -92,7 +92,11 @@ export const NewUserFormDialog = () => {
                   variant="standard"
                 />
               ) : (
-                <FormControl fullWidth style={{ marginTop: 20 }}>
+                <FormControl
+                  key={`${idx}${values}`}
+                  fullWidth
+                  style={{ marginTop: 20 }}
+                >
                   <InputLabel required id="demo-simple-select-label">
                     {label}
                   </InputLabel>
