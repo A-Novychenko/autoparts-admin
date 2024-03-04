@@ -8,20 +8,25 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Switch, Tooltip } from '@mui/material';
+import { Box, CircularProgress, Switch } from '@mui/material';
 
 import { useAppDispatch } from '@/redux/hooks';
 import { changeStatus, removeUser } from '@/redux/auth/authOperations';
+import { useAuth } from '@/hooks';
 
 import staticData from '@/data/common.json';
 
 import { Column, ColumnData, UserListProps } from './types';
+import { AlertDialog } from '@/components/ui';
 
 export const UserList: React.FC<UserListProps> = ({ users }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [currentItem, setCurrentItem] = useState('');
 
   const dispatch = useAppDispatch();
+
+  const { isLoading } = useAuth();
 
   const data: ColumnData[] = staticData.userItem;
 
@@ -45,12 +50,14 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
     setPage(0);
   };
 
-  const handleChange = (
+  const handleChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
     id: string
   ) => {
     const status = event.target.checked ? 'enabled' : 'disabled';
-    dispatch(changeStatus({ id, status }));
+    setCurrentItem(id);
+    await dispatch(changeStatus({ id, status }));
+    setCurrentItem('');
   };
 
   const handleDelete = (id: string) => {
@@ -98,25 +105,32 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
                             column.id === 'role' ||
                             column.id === 'password') && <>{value}</>}
 
-                          {column.id === 'status' && (
-                            <Switch
-                              checked={value === 'enabled'}
-                              onChange={e => handleChange(e, row._id)}
-                              inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                          )}
+                          {column.id === 'status' &&
+                            (isLoading && currentItem === row._id ? (
+                              <Box sx={{ display: 'flex' }}>
+                                <CircularProgress size={38} />
+                              </Box>
+                            ) : (
+                              <Switch
+                                checked={value === 'enabled'}
+                                onChange={e => handleChange(e, row._id)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                              />
+                            ))}
 
                           {column.id === 'editor' && (
-                            <Tooltip
-                              title="Delete"
-                              onClick={() => {
+                            <AlertDialog
+                              title="Удалить пользователя?"
+                              description="Пользователь будет полностью удален из базы данных. После удаления восстановить не возможно"
+                              leftBtnLabel="Отменить"
+                              rightBtnLabel="Удалить"
+                              rightColorBtn="#f70b0b"
+                              action={() => {
                                 handleDelete(row._id);
                               }}
                             >
-                              <IconButton>
-                                <DeleteIcon />
-                              </IconButton>
-                            </Tooltip>
+                              <DeleteIcon />
+                            </AlertDialog>
                           )}
                         </TableCell>
                       );

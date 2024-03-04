@@ -5,6 +5,7 @@ export type State = {
 export type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
+  user: User;
   userList: User[];
 };
 

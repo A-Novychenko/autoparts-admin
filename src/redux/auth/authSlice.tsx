@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import {
   login,
   logout,
@@ -7,11 +8,21 @@ import {
   changeStatus,
   removeUser,
 } from './authOperations';
+
 import { AuthState } from './types';
+
+const user = {
+  _id: '',
+  name: '',
+  login: '',
+  role: '',
+  status: '',
+};
 
 const initialState: AuthState = {
   isAuthenticated: false,
   isLoading: false,
+  user,
   userList: [],
 };
 
@@ -37,6 +48,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (st, action) => {
         st.isAuthenticated = action.payload!;
+        st.isLoading = false;
       })
       .addCase(login.rejected, st => {
         st.isAuthenticated = false;
@@ -48,6 +60,7 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (st, action) => {
         st.isAuthenticated = action.payload!;
+        st.isLoading = false;
       })
       .addCase(logout.rejected, st => {
         st.isAuthenticated = true;
@@ -59,6 +72,7 @@ const authSlice = createSlice({
       })
       .addCase(getAllUsers.fulfilled, (st, action) => {
         st.userList = action.payload!;
+        st.isLoading = false;
       })
       .addCase(getAllUsers.rejected, st => {
         st.userList = [];
@@ -69,8 +83,7 @@ const authSlice = createSlice({
         st.isLoading = true;
       })
       .addCase(changeStatus.fulfilled, (st, { payload }) => {
-        console.log('st', st);
-        console.log('payload', payload);
+        st.isLoading = false;
         st.userList = st.userList.map(user => {
           if (user._id === payload._id) {
             return { ...user, status: payload.status };
