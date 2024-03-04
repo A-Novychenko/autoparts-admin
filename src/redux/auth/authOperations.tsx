@@ -1,9 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { State } from './types';
 
 const serverApi = axios.create({
-  baseURL: 'http://localhost:3005/api',
+  // baseURL: 'http://localhost:3005/api',
+  baseURL: 'https://autoparts-backend.onrender.com/api',
 });
+
+const setAuthHeader = (token: string) => {
+  serverApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+const clearAuthHeader = () => {
+  serverApi.defaults.headers.common.Authorization = '';
+};
 
 export const addUser = createAsyncThunk(
   'auth/addUser',
@@ -21,7 +31,7 @@ export const addUser = createAsyncThunk(
 
       return data.user;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );
@@ -30,18 +40,41 @@ export const login = createAsyncThunk(
   'auth/login',
   async (
     credentials: {
-      email: FormDataEntryValue | null;
+      login: FormDataEntryValue | null;
       password: FormDataEntryValue | null;
     },
     { rejectWithValue }
   ) => {
     try {
-      const res = await serverApi.post('/auth/login', credentials);
-      console.log('res', res);
+      const { data } = await serverApi.post('/auth/login', credentials);
 
-      return true;
+      setAuthHeader(data.token);
+
+      return data;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
+    }
+  }
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refreshUser',
+  async (_, thunkApi) => {
+    const state: State = thunkApi.getState() as State;
+
+    const persistedToken = state.auth.token;
+
+    if (persistedToken === null) {
+      return thunkApi.rejectWithValue('Unable to fetch user');
+    }
+
+    try {
+      setAuthHeader(persistedToken);
+      const { data } = await serverApi.get('/auth/current');
+
+      return data.user;
+    } catch (e) {
+      return thunkApi.rejectWithValue(e);
     }
   }
 );
@@ -50,12 +83,13 @@ export const logout = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await serverApi.post('/auth/logout');
-      console.log('res', res);
+      await serverApi.post('/auth/logout');
+
+      clearAuthHeader();
 
       return false;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );
@@ -68,7 +102,7 @@ export const getAllUsers = createAsyncThunk(
 
       return data.users;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );
@@ -81,7 +115,7 @@ export const changeStatus = createAsyncThunk(
 
       return data.user;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );
@@ -94,7 +128,7 @@ export const removeUser = createAsyncThunk(
 
       return data.user;
     } catch (e) {
-      rejectWithValue(e);
+      return rejectWithValue(e);
     }
   }
 );

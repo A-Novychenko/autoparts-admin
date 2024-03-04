@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 export const Layout = () => {
   return (
     <div>
-      <Suspense fallback={null}>
+      <Suspense fallback={<p>Loading...</p>}>
         <Outlet />
       </Suspense>
     </div>

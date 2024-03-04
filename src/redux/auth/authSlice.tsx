@@ -7,6 +7,7 @@ import {
   addUser,
   changeStatus,
   removeUser,
+  refreshUser,
 } from './authOperations';
 
 import { AuthState } from './types';
@@ -21,7 +22,9 @@ const user = {
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  isRefreshing: false,
   isLoading: false,
+  token: '',
   user,
   userList: [],
 };
@@ -47,12 +50,26 @@ const authSlice = createSlice({
         st.isLoading = true;
       })
       .addCase(login.fulfilled, (st, action) => {
-        st.isAuthenticated = action.payload!;
+        st.user = action.payload!.user;
+        st.token = action.payload!.token;
+        st.isAuthenticated = true;
         st.isLoading = false;
       })
       .addCase(login.rejected, st => {
         st.isAuthenticated = false;
         st.isLoading = false;
+      })
+
+      .addCase(refreshUser.pending, st => {
+        st.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (st, action) => {
+        st.user = action.payload;
+        st.isAuthenticated = true;
+        st.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, st => {
+        st.isRefreshing = false;
       })
 
       .addCase(logout.pending, st => {

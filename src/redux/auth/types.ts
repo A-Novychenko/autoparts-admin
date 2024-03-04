@@ -4,7 +4,9 @@ export type State = {
 
 export type AuthState = {
   isAuthenticated: boolean;
+  isRefreshing: boolean;
   isLoading: boolean;
+  token: string;
   user: User;
   userList: User[];
 };

@@ -35,9 +35,9 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
     label: item.label,
   }));
 
-  const rows =
-    users &&
-    users.map(user => ({ ...user, password: '*******', editor: 'editor' }));
+  const rows = users
+    ? users.map(user => ({ ...user, password: '*******', editor: 'editor' }))
+    : [];
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);

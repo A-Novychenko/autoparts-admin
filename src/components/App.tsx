@@ -5,28 +5,29 @@ import LoginPage from '@/pages/LoginPage';
 import DashboardPage from '@/pages/DashboardPage';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
-import { useAppSelector } from '@/redux/hooks';
 import { DashboardLayout } from './DashboardLayout';
 import ASGPage from '@/pages/ASGPage';
 import OrdersPage from '@/pages/Orders';
 import UsersPage from '@/pages/UsersPage';
-// import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch } from '@/redux/hooks';
+import { useEffect } from 'react';
+import { useAuth } from '@/hooks';
+import { refreshUser } from '@/redux/auth/authOperations';
 
 export const App = () => {
-  // const dispatch = useAppDispatch();
-  // const {isRefreshing} = useAuth();
+  const dispatch = useAppDispatch();
+  const { isRefreshing, isAuthenticated } = useAuth();
 
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-  // return isRefreshing ? (
-  //   <b>Refreshing user...</b>
-  // ) : (
-  const isAuthenticated = useAppSelector(s => s.auth.isAuthenticated);
   console.log('isAuthenticatedAPP', isAuthenticated);
 
-  return (
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    // return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route
@@ -52,6 +53,6 @@ export const App = () => {
         </Route>
       </Route>
     </Routes>
+    // );
   );
-  // );
 };

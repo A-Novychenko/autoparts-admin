@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 
 import { LogoutBtn } from '@/components/ui';
+import { UserInfo } from '@components/base';
 
 import logo from '@assets/logo.png';
 
@@ -100,6 +101,8 @@ export const AppBar = () => {
               </MainNavLink>
             ))}
           </Box>
+
+          <UserInfo />
 
           <Box sx={{ flexGrow: 0 }}>
             <LogoutBtn />
