@@ -13,6 +13,7 @@ import { useAppDispatch } from '@/redux/hooks';
 import { useEffect } from 'react';
 import { useAuth } from '@/hooks';
 import { refreshUser } from '@/redux/auth/authOperations';
+import ErrorPage from '@/pages/ErrorPage';
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,6 @@ export const App = () => {
   return isRefreshing ? (
     <b>Refreshing user...</b>
   ) : (
-    // return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route
@@ -52,7 +52,7 @@ export const App = () => {
           <Route path="users" element={<UsersPage />} />
         </Route>
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
-    // );
   );
 };
