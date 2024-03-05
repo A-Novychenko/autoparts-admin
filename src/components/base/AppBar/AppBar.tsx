@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { LogoutBtn } from '@/components/ui';
 import { UserInfo } from '@components/base';
 
+import { useAuth } from '@/hooks';
+
 import logo from '@assets/logo.png';
 
 import staticData from '@/data/common.json';
@@ -21,7 +23,11 @@ import staticData from '@/data/common.json';
 import { MainNavLink } from './AppBar.styled';
 
 export const AppBar = () => {
+  const { userRole } = useAuth();
+
   const { mainNavLinks } = staticData;
+
+  const links = mainNavLinks.filter(link => link.available.includes(userRole));
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -84,7 +90,7 @@ export const AppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {mainNavLinks.map(({ name, link }, idx) => (
+              {links.map(({ name, link }, idx) => (
                 <MenuItem key={idx} onClick={handleCloseNavMenu}>
                   <NavLink to={link} style={{ textAlign: 'center' }}>
                     {name}
@@ -95,7 +101,7 @@ export const AppBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {mainNavLinks.map(({ name, link }, idx) => (
+            {links.map(({ name, link }, idx) => (
               <MainNavLink key={idx} to={link}>
                 {name}
               </MainNavLink>

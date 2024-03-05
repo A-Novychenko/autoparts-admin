@@ -87,7 +87,7 @@ export const logout = createAsyncThunk(
 
       clearAuthHeader();
 
-      return false;
+      return true;
     } catch (e) {
       return rejectWithValue(e);
     }
@@ -124,9 +124,9 @@ export const removeUser = createAsyncThunk(
   'auth/removeUser',
   async (id: string, { rejectWithValue }) => {
     try {
-      const { data } = await serverApi.delete(`/auth/user/${id}`);
+      await serverApi.delete(`/auth/user/${id}`);
 
-      return data.user;
+      return id;
     } catch (e) {
       return rejectWithValue(e);
     }

@@ -10,8 +10,9 @@ export const PrivateRoute = ({
   component: ReactNode;
   redirectTo: string;
 }) => {
-  const { isAuthenticated, isRefreshing } = useAuth();
-  const shouldRedirect = !isAuthenticated && !isRefreshing;
+  const { isAuthenticated, isRefreshing, isActive } = useAuth();
+  const shouldRedirect =
+    !isAuthenticated && isActive !== 'enabled' && !isRefreshing;
 
   return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
 };

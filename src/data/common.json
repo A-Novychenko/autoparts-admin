@@ -6,14 +6,30 @@
     "logoutBtn": "Выйти"
   },
   "mainNavLinks": [
-    { "name": "Главная", "link": "/dashboard" },
-    { "name": "ASG", "link": "/dashboard/asg" },
-    { "name": "Заказы", "link": "/dashboard/orders" },
-    { "name": "Пользователи", "link": "/dashboard/users" }
+    {
+      "name": "Главная",
+      "link": "/dashboard",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "ASG",
+      "link": "/dashboard/asg",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "Заказы",
+      "link": "/dashboard/orders",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "Пользователи",
+      "link": "/dashboard/users",
+      "available": ["admin"]
+    }
   ],
   "userPage": {
     "newUserLabel": "Добавить нового пользователя",
-    "newUserSubmitBtn": "Зарагестрировать",
+    "newUserSubmitBtn": "Зарегистрировать",
     "newUserCancelBtn": "Отменить",
     "fields": [
       { "id": "name", "label": "Имя" },

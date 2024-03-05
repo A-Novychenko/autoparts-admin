@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useAuth } from '@/hooks';
 import { refreshUser } from '@/redux/auth/authOperations';
 import ErrorPage from '@/pages/ErrorPage';
+import { AdminRoute } from './AdminRoute';
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -49,7 +50,12 @@ export const App = () => {
           <Route index element={<DashboardPage />} />
           <Route path="asg" element={<ASGPage />} />
           <Route path="orders" element={<OrdersPage />} />
-          <Route path="users" element={<UsersPage />} />
+          <Route
+            path="users"
+            element={
+              <AdminRoute redirectTo="/dashboard" component={<UsersPage />} />
+            }
+          />
         </Route>
       </Route>
       <Route path="*" element={<ErrorPage />} />

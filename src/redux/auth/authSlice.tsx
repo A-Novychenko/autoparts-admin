@@ -75,8 +75,11 @@ const authSlice = createSlice({
       .addCase(logout.pending, st => {
         st.isLoading = true;
       })
-      .addCase(logout.fulfilled, (st, action) => {
-        st.isAuthenticated = action.payload!;
+      .addCase(logout.fulfilled, st => {
+        st.isAuthenticated = false;
+        st.isRefreshing = false;
+        st.token = '';
+        st.user = user;
         st.isLoading = false;
       })
       .addCase(logout.rejected, st => {
@@ -116,7 +119,7 @@ const authSlice = createSlice({
         st.isLoading = true;
       })
       .addCase(removeUser.fulfilled, (st, { payload }) => {
-        st.userList = st.userList.filter(user => user._id !== payload._id);
+        st.userList = st.userList.filter(user => user._id !== payload);
 
         st.isLoading = false;
       })

@@ -3,15 +3,15 @@ import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '@/hooks';
 
-export const RestrictedRoute = ({
+export const AdminRoute = ({
   component: Component,
-  redirectTo = '/',
+  redirectTo = '/dashboard',
 }: {
   component: ReactNode;
   redirectTo: string;
 }) => {
-  const { isAuthenticated, isActive } = useAuth();
-  const shouldRedirect = isAuthenticated && isActive === 'enabled';
+  const { userRole } = useAuth();
+  const shouldRedirect = userRole !== 'admin';
 
   return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
 };
