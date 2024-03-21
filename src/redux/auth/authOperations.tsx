@@ -1,19 +1,47 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+
 import { State } from './types';
 
 const serverApi = axios.create({
-  // baseURL: 'http://localhost:3005/api',
-  baseURL: 'https://autoparts-backend.onrender.com/api',
+  baseURL: 'http://localhost:3005/api',
+  // baseURL: 'https://autoparts-backend.onrender.com/api',
 });
 
 const setAuthHeader = (token: string) => {
-  serverApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+  if (token) {
+    serverApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+  }
+  serverApi.defaults.headers.common.Authorization = '';
 };
 
 const clearAuthHeader = () => {
   serverApi.defaults.headers.common.Authorization = '';
 };
+
+serverApi.interceptors.response.use(
+  res => res,
+  async e => {
+    if (e.response.status === 401) {
+      const refreshToken = 'persistedRefreshToken'; //get refreshToken
+
+      try {
+        const { data } = await serverApi.post('/auth/refresh', {
+          refreshToken,
+        });
+        console.log('data', data);
+        setAuthHeader(data.accessToken);
+        //storage refreshToken
+
+        return serverApi(e.config);
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    }
+
+    return Promise.reject(e);
+  }
+);
 
 export const addUser = createAsyncThunk(
   'auth/addUser',
@@ -48,7 +76,7 @@ export const login = createAsyncThunk(
     try {
       const { data } = await serverApi.post('/auth/login', credentials);
 
-      setAuthHeader(data.token);
+      setAuthHeader(data.accessToken);
 
       return data;
     } catch (e) {
