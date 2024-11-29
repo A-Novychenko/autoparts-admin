@@ -5,7 +5,7 @@ import staticData from '@/data/common.json';
 import { CopyrightProps } from './types';
 
 export const Copyright: React.FC<CopyrightProps> = props => {
-  const { name } = staticData.copyright;
+  const { name, typeShop } = staticData.copyright;
 
   return (
     <Typography
@@ -14,11 +14,10 @@ export const Copyright: React.FC<CopyrightProps> = props => {
       align="center"
       {...props}
     >
-      {'Copyright © '}
+      {` ${'© '} ${new Date().getFullYear()} `}
       <Link color="inherit" href="https://autoparts-liard.vercel.app">
-        {name}
+        {typeShop} {name}
       </Link>{' '}
-      {new Date().getFullYear()}
       {'.'}
     </Typography>
   );

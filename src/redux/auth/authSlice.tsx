@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   login,
@@ -32,7 +32,20 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setLoggedOut() {
+      return initialState;
+    },
+
+    setTokenInState(state, action: PayloadAction<{ token: string }>) {
+      state.token = action.payload.token;
+    },
+
+    setIsAuthenticated(state, action) {
+      state.isAuthenticated = action.payload;
+    },
+  },
+
   extraReducers: builder => {
     builder
       .addCase(addUser.pending, st => {
@@ -51,7 +64,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (st, action) => {
         st.user = action.payload!.user;
-        st.token = action.payload!.token;
+        st.token = action.payload!.accessToken;
         st.isAuthenticated = true;
         st.isLoading = false;
       })
@@ -64,7 +77,8 @@ const authSlice = createSlice({
         st.isRefreshing = true;
       })
       .addCase(refreshUser.fulfilled, (st, action) => {
-        st.user = action.payload;
+        st.user = action.payload.user;
+        st.token = action.payload!.accessToken;
         st.isAuthenticated = true;
         st.isRefreshing = false;
       })
@@ -130,3 +144,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+
+export const { setTokenInState, setIsAuthenticated } = authSlice.actions;

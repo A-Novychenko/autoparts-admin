@@ -11,13 +11,30 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { authReducer } from './auth/authSlice';
+import {
+  authReducer,
+  setTokenInState,
+  setIsAuthenticated,
+} from './auth/authSlice';
+
+import {
+  setTokenUpdateCallback,
+  setLogoutIsAuthenticatedCallback,
+} from './auth/authOperations';
 
 const authPersistConfig = {
   key: 'auth',
   storage,
   whitelist: ['token'],
 };
+
+setTokenUpdateCallback(({ token }) => {
+  store.dispatch(setTokenInState({ token }));
+});
+
+setLogoutIsAuthenticatedCallback(() => {
+  store.dispatch(setIsAuthenticated(false));
+});
 
 export const store = configureStore({
   reducer: { auth: persistReducer(authPersistConfig, authReducer) },
