@@ -36,11 +36,15 @@ export const setLogoutIsAuthenticatedCallback = (callback: () => void) => {
 serverApi.interceptors.response.use(
   res => res,
   async e => {
+    console.log('BEFORE');
     if (e.response && e.response.status === 401 && !e.config._retry) {
       e.config._retry = true;
 
+      console.log('AFTER');
+
       try {
         const refreshToken = localStorage.getItem('refreshToken');
+
         if (!refreshToken) {
           throw new Error('Refresh token missing');
         }
@@ -66,6 +70,8 @@ serverApi.interceptors.response.use(
             token: newAccessToken,
           });
         }
+
+        e.config.headers['authorization'] = `Bearer ${newAccessToken}`;
 
         return serverApi(e.config);
       } catch (refreshError) {

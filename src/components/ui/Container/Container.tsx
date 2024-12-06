@@ -9,7 +9,7 @@ export const Container: React.FC<ContainerProps> = ({ children }) => {
     <>
       <CssBaseline />
       <MUIContainer maxWidth="xl">
-        <Box sx={{ height: '100vh' }}>{children}</Box>
+        <Box sx={{ height: 'calc(100vh - 64px)' }}>{children}</Box>
       </MUIContainer>
     </>
   );

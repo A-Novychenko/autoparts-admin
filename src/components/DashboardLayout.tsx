@@ -8,6 +8,7 @@ export const DashboardLayout = () => {
   return (
     <div>
       <AppBar />
+
       <Container>
         <Suspense fallback={null}>
           <Outlet />

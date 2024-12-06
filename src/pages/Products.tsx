@@ -1,11 +1,19 @@
-import { SearchForm } from '@/components/ui';
+import { Outlet } from 'react-router-dom';
+
+import { PageContainer, PageWrap, Sidebar } from '@/components/ui';
 
 export default function ProductsPage() {
   return (
     <>
-      <h1>ProductsPage</h1>
+      <h1 className="visually-hidden">ProductsPage</h1>
 
-      <SearchForm />
+      <PageWrap>
+        <Sidebar />
+
+        <PageContainer>
+          <Outlet />
+        </PageContainer>
+      </PageWrap>
     </>
   );
 }

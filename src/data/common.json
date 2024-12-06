@@ -24,13 +24,30 @@
     },
     {
       "name": "Товары",
-      "link": "/dashboard/products",
+      "link": "/dashboard/products/general",
       "available": ["admin", "manager"]
     },
     {
       "name": "Пользователи",
       "link": "/dashboard/users",
       "available": ["admin"]
+    }
+  ],
+  "productsNav": [
+    {
+      "name": "Главная",
+      "link": "/dashboard/products/general",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "Категории",
+      "link": "/dashboard/products/categories",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "Товары",
+      "link": "/dashboard/products/catalog",
+      "available": ["admin", "manager"]
     }
   ],
   "userPage": {

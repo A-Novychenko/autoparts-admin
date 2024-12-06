@@ -154,6 +154,7 @@ export const ProductASGCard: React.FC<{ product: IProductASG }> = ({
           value={inputPrice}
           onChange={e => setInputPrice(Number(e.target.value))}
           min="0"
+          style={{ width: '100px', marginRight: '20px' }}
         />
 
         <AddBtn

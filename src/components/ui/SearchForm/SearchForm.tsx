@@ -44,7 +44,7 @@ export const SearchForm: React.FC = () => {
           value={query}
           onChange={handleChange}
           placeholder="Пошук товарів..."
-          style={{ padding: '8px', width: '200px' }}
+          style={{ padding: '8px', width: '100%' }}
         />
         <button type="submit" style={{ padding: '8px' }} disabled={loading}>
           {loading ? 'Завантаження...' : 'Пошук'}
