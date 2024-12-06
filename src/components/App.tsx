@@ -8,6 +8,7 @@ import { RestrictedRoute } from './RestrictedRoute';
 import { DashboardLayout } from './DashboardLayout';
 import ASGPage from '@/pages/ASGPage';
 import OrdersPage from '@/pages/Orders';
+import ProductsPage from '@/pages/Products';
 import UsersPage from '@/pages/UsersPage';
 import { useAppDispatch } from '@/redux/hooks';
 import { useEffect } from 'react';
@@ -50,6 +51,7 @@ export const App = () => {
           <Route index element={<DashboardPage />} />
           <Route path="asg" element={<ASGPage />} />
           <Route path="orders" element={<OrdersPage />} />
+          <Route path="products" element={<ProductsPage />} />
           <Route
             path="users"
             element={

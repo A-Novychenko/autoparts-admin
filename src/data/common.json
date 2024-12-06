@@ -23,6 +23,11 @@
       "available": ["admin", "manager"]
     },
     {
+      "name": "Товары",
+      "link": "/dashboard/products",
+      "available": ["admin", "manager"]
+    },
+    {
       "name": "Пользователи",
       "link": "/dashboard/users",
       "available": ["admin"]

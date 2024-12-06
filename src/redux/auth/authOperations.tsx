@@ -49,10 +49,15 @@ serverApi.interceptors.response.use(
           refreshToken,
         });
 
-        const newAccessToken = data.data.accessToken;
-        const newRefreshToken = data.data.refreshToken;
+        console.log('data!!!QQ!!', data);
 
-        setAuthHeader(data.data.accessToken);
+        const newAccessToken = data.accessToken;
+        const newRefreshToken = data.refreshToken;
+
+        console.log('newAccessToken', newAccessToken);
+        console.log('newRefreshToken', newRefreshToken);
+
+        setAuthHeader(newAccessToken);
 
         localStorage.setItem('refreshToken', newRefreshToken);
 
@@ -62,7 +67,6 @@ serverApi.interceptors.response.use(
           });
         }
 
-        setAuthHeader(newAccessToken);
         return serverApi(e.config);
       } catch (refreshError) {
         if (axios.isAxiosError(refreshError)) {
