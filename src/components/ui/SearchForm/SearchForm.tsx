@@ -1,17 +1,24 @@
 import { useState } from 'react';
 
-import { ProductASGCard } from '../ProductASGCard';
+import staticData from '@/data/common.json';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { searchFormProps } from './types';
 
-export const SearchForm: React.FC = () => {
+import { ErrorText, Form, FormField, SearchButton } from './SearchForm.styled';
+
+export const SearchForm: React.FC<searchFormProps> = ({
+  children,
+  keyData,
+  setItems,
+  hasData,
+  fetchData,
+}) => {
+  const { loadingText, searchText, searchPlaceholder, noResultsText } =
+    staticData.staticText.searchForm;
+
   const [query, setQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<IProductASG[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  console.log('query', query);
-  console.log('products', products);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -24,11 +31,9 @@ export const SearchForm: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await serverApi.post('/catalog/cms-search-products', {
-        article: query.trim().toUpperCase(),
-      });
+      const data = await fetchData(query);
 
-      setProducts(data.products);
+      setItems(data[keyData]);
     } catch (error) {
       setError('Не вдалося знайти товари. Спробуйте ще раз.');
     } finally {
@@ -37,35 +42,25 @@ export const SearchForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px' }}>
-        <input
+    <>
+      <Form onSubmit={handleSubmit}>
+        <FormField
           type="text"
           value={query}
           onChange={handleChange}
-          placeholder="Пошук товарів..."
-          style={{ padding: '8px', width: '100%' }}
+          placeholder={searchPlaceholder}
         />
-        <button type="submit" style={{ padding: '8px' }} disabled={loading}>
-          {loading ? 'Завантаження...' : 'Пошук'}
-        </button>
-      </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        <SearchButton type="submit" disabled={loading}>
+          {loading ? loadingText : searchText}
+        </SearchButton>
+      </Form>
+
+      {error && <ErrorText>{error}</ErrorText>}
 
       <div>
-        {products.length > 0 ? (
-          <ul>
-            {products.map((product: IProductASG) => (
-              <li key={product.id}>
-                <ProductASGCard product={product} />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          !loading && <p>Немає результатів для пошуку.</p>
-        )}
+        {hasData ? <>{children}</> : !loading && <p>{noResultsText}</p>}
       </div>
-    </div>
+    </>
   );
 };

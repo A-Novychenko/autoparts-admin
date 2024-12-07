@@ -12,11 +12,7 @@
       "link": "/dashboard",
       "available": ["admin", "manager"]
     },
-    {
-      "name": "ASG",
-      "link": "/dashboard/asg",
-      "available": ["admin", "manager"]
-    },
+
     {
       "name": "Заказы",
       "link": "/dashboard/orders",
@@ -24,7 +20,12 @@
     },
     {
       "name": "Товары",
-      "link": "/dashboard/products/general",
+      "link": "/dashboard/products",
+      "available": ["admin", "manager"]
+    },
+    {
+      "name": "ASG",
+      "link": "/dashboard/asg",
       "available": ["admin", "manager"]
     },
     {
@@ -33,23 +34,7 @@
       "available": ["admin"]
     }
   ],
-  "productsNav": [
-    {
-      "name": "Главная",
-      "link": "/dashboard/products/general",
-      "available": ["admin", "manager"]
-    },
-    {
-      "name": "Категории",
-      "link": "/dashboard/products/categories",
-      "available": ["admin", "manager"]
-    },
-    {
-      "name": "Товары",
-      "link": "/dashboard/products/catalog",
-      "available": ["admin", "manager"]
-    }
-  ],
+
   "userPage": {
     "newUserLabel": "Добавить нового пользователя",
     "newUserSubmitBtn": "Зарегистрировать",
@@ -72,5 +57,13 @@
     { "id": "role", "label": "Тип пользователя" },
     { "id": "status", "label": "Статус" },
     { "id": "editor", "label": "" }
-  ]
+  ],
+  "staticText": {
+    "searchForm": {
+      "loadingText": "Загрузка",
+      "searchText": "Поиск",
+      "searchPlaceholder": "Поиск товаров...",
+      "noResultsText": "Нет результатов поиска"
+    }
+  }
 }

@@ -8,3 +8,6 @@ export * from './ProductASGCard';
 export * from './Sidebar';
 export * from './PageWrap';
 export * from './PageContainer';
+export * from './CatalogCategoryBtn';
+export * from './CatalogCategoryList';
+export * from './CatalogCategoryCard';

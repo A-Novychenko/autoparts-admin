@@ -9,9 +9,6 @@ import { DashboardLayout } from './DashboardLayout';
 import ASGPage from '@/pages/ASGPage';
 import OrdersPage from '@/pages/Orders';
 import ProductsPage from '@/pages/Products';
-import ProductsGeneralPage from '@/pages/ProductsGeneralPage';
-import ProductsCategoriesPage from '@/pages/ProductsCategoriesPage';
-import ProductsCatalogPage from '@/pages/ProductsCatalogPage';
 import UsersPage from '@/pages/UsersPage';
 import { useAppDispatch } from '@/redux/hooks';
 import { useEffect } from 'react';
@@ -54,11 +51,8 @@ export const App = () => {
           <Route index element={<DashboardPage />} />
           <Route path="asg" element={<ASGPage />} />
           <Route path="orders" element={<OrdersPage />} />
-          <Route path="products" element={<ProductsPage />}>
-            <Route path="general" element={<ProductsGeneralPage />} />
-            <Route path="categories" element={<ProductsCategoriesPage />} />
-            <Route path="catalog" element={<ProductsCatalogPage />} />
-          </Route>
+          <Route path="products" element={<ProductsPage />} />
+
           <Route
             path="users"
             element={

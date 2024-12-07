@@ -16,3 +16,14 @@ interface IProductASG {
   updatedAt: string;
   _id: string;
 }
+
+interface ICategory {
+  createdAt: string;
+  id: number;
+  img: string;
+  name: string;
+  parent_id: number;
+  updatedAt: string;
+  _id: string;
+  childrenCategories?: ICategory[];
+}
