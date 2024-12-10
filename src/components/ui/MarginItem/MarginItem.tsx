@@ -1,3 +1,9 @@
+import { useState } from 'react';
+
+import { ConfirmAlert } from '@components/ui';
+
+import { serverApi } from '@/redux/auth/authOperations';
+
 import staticData from '@/data/common.json';
 
 import { MarginItemProps } from './types';
@@ -8,14 +14,24 @@ import {
   MarginValue,
   MarginValueWrap,
   WrapMargin,
+  AlertText,
+  AlertPercentage,
 } from './MarginItem.styled';
-import { ConfirmAlert } from '../ConfirmAlert';
-import { useState } from 'react';
 
 export const MarginItem: React.FC<MarginItemProps> = ({ margin }) => {
-  const { marginText } = staticData.catalogCard;
+  const { marginText, popoverText } = staticData.catalogCard;
 
   const [percentageValue, setPercentageValue] = useState<number>(margin);
+
+  const isChangedValue = margin !== percentageValue;
+
+  const handleSubmit = async () => {
+    try {
+      await serverApi.post('', { margin: percentageValue });
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   return (
     <WrapMargin>
@@ -35,7 +51,11 @@ export const MarginItem: React.FC<MarginItemProps> = ({ margin }) => {
         </MarginValueWrap>
       </MarginForm>
 
-      <ConfirmAlert margin={percentageValue} />
+      <ConfirmAlert handleSubmit={handleSubmit} disabled={isChangedValue}>
+        <AlertText>
+          {popoverText} <AlertPercentage>{percentageValue}%</AlertPercentage> ?
+        </AlertText>
+      </ConfirmAlert>
     </WrapMargin>
   );
 };

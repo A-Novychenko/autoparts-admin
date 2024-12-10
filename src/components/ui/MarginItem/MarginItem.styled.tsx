@@ -18,8 +18,7 @@ export const MarginValueWrap = styled.div`
 `;
 
 export const MarginValue = styled.input`
-  width: 42px;
-  /* width: 62px; */
+  width: 48px;
   border: none;
   padding-right: 20px;
 
@@ -32,4 +31,12 @@ export const MarginPercentage = styled.span`
   top: 50%;
   right: 0;
   transform: translateY(-50%);
+`;
+
+export const AlertText = styled.p`
+  padding: 16px;
+`;
+
+export const AlertPercentage = styled.span`
+  color: #008011;
 `;

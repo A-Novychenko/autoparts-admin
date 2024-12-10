@@ -20,6 +20,7 @@
     "createdAtText": "Создано",
     "updatedAtText": "Обновлено",
     "marginText": "Наценка",
+    "popoverText": "Установить",
     "changeBtnLabel": "Изменить",
     "cancelBtn": "Отменить",
     "saveBtn": "Записать"

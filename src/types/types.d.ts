@@ -22,6 +22,7 @@ interface ICategory {
   id: number;
   img: string;
   name: string;
+  margin: number;
   parent_id: number;
   updatedAt: string;
   _id: string;

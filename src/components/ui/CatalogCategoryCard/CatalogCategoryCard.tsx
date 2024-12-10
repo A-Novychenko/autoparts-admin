@@ -18,8 +18,6 @@ export const CatalogCategoryCard: React.FC<CatalogCategoryCardProps> = ({
   category,
   isLoading,
 }) => {
-  const margin = 10;
-
   const { nameText, noDateText, createdAtText, updatedAtText } =
     staticData.catalogCard;
 
@@ -31,7 +29,7 @@ export const CatalogCategoryCard: React.FC<CatalogCategoryCardProps> = ({
             <CardInfo>
               <CategoryName>{`${nameText}: ${category?.name}`}</CategoryName>
 
-              <MarginItem margin={margin} />
+              <MarginItem key={category?.id} margin={category?.margin || 0} />
 
               <WrapDate>
                 <p>
