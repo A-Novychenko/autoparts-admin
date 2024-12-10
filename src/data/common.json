@@ -6,6 +6,24 @@
   "logout": {
     "logoutBtn": "Выйти"
   },
+  "upload": "Загрузить",
+
+  "catalogCard": {
+    "nameText": "Категория",
+    "imgText": "Картинка",
+    "nameMainCategory": "Главная",
+    "fieldNameLabel": "Имя",
+    "fieldIdLabel": "ID",
+    "ParentIdText": "Родительская категория",
+    "noDateText": "нет даты",
+    "noImgText": "не загружена",
+    "createdAtText": "Создано",
+    "updatedAtText": "Обновлено",
+    "marginText": "Наценка",
+    "changeBtnLabel": "Изменить",
+    "cancelBtn": "Отменить",
+    "saveBtn": "Записать"
+  },
   "mainNavLinks": [
     {
       "name": "Главная",

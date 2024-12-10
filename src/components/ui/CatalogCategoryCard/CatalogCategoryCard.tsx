@@ -1,23 +1,74 @@
+import { CatalogCategoryCardImage, Loader, MarginItem } from '@/components/ui';
+
+import { formatDateToUkrainian } from '@/utils';
+
+import staticData from '@/data/common.json';
+
 import { CatalogCategoryCardProps } from './types';
 
-import { Wrap } from './CatalogCategoryCard.styled';
+import {
+  Card,
+  CategoryName,
+  Wrap,
+  WrapDate,
+  CardInfo,
+} from './CatalogCategoryCard.styled';
 
 export const CatalogCategoryCard: React.FC<CatalogCategoryCardProps> = ({
   category,
+  isLoading,
 }) => {
-  if (!category) return;
+  const margin = 10;
 
-  const { _id, id, img, name, parent_id, createdAt, updatedAt } = category;
+  const { nameText, noDateText, createdAtText, updatedAtText } =
+    staticData.catalogCard;
 
   return (
-    <Wrap>
-      <p>_id: {_id}</p>
-      <p>ASG id: {id}</p>
-      <p>img: {img}</p>
-      <p>name: {name}</p>
-      <p>parent_id: {parent_id}</p>
-      <p>createdAt: {createdAt}</p>
-      <p>updatedAt: {updatedAt}</p>
-    </Wrap>
+    <>
+      <Wrap>
+        {!isLoading ? (
+          <Card>
+            <CardInfo>
+              <CategoryName>{`${nameText}: ${category?.name}`}</CategoryName>
+
+              <MarginItem margin={margin} />
+
+              <WrapDate>
+                <p>
+                  {` ${createdAtText}:
+                ${
+                  category?.createdAt
+                    ? formatDateToUkrainian(category?.createdAt)
+                    : noDateText
+                }
+                `}
+                </p>
+
+                <p>
+                  {`    ${updatedAtText}: 
+                ${
+                  category?.createdAt
+                    ? formatDateToUkrainian(category?.updatedAt)
+                    : noDateText
+                }`}
+                </p>
+              </WrapDate>
+            </CardInfo>
+
+            <CatalogCategoryCardImage category={category} />
+          </Card>
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Loader />
+          </div>
+        )}
+      </Wrap>
+    </>
   );
 };

@@ -7,16 +7,25 @@ export const CatalogCategoryBtn: React.FC<CatalogCategoryBtnProps> = ({
   name,
   handleClick,
   children,
+  selectedCategory,
 }) => {
+  const selectedCategoryId = selectedCategory ? selectedCategory.id : null;
+  const isSelected = selectedCategoryId === id;
+
+  console.log('isSelected', isSelected);
   return (
     <Button
+      style={{
+        color: isSelected ? '#000' : '#101340',
+        fontWeight: isSelected ? 700 : 400,
+      }}
       type="button"
       onClick={() => {
         handleClick(id);
       }}
     >
       {children}
-      <span>{id}</span>
+
       <span> {name}</span>
     </Button>
   );

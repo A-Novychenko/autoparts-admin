@@ -18,14 +18,21 @@ export default function ProductsPage() {
   );
   const [products, setProducts] = useState<IProductASG[]>([]);
   const [openCategories, setOpenCategories] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getAllCategories = async () => {
       try {
+        setIsLoading(true);
+        setSelectedCategory(null);
+
         const { data } = await serverApi.get('cms-catalog/');
         setCategories(data.categories);
+        setSelectedCategory(data.categories[0]);
       } catch (e) {
         console.log('e', e);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -98,10 +105,15 @@ export default function ProductsPage() {
           handleClick={handleClick}
           categories={categories}
           openCategories={openCategories}
+          isLoading={isLoading}
+          selectedCategory={selectedCategory}
         />
 
         <PageContainer>
-          <CatalogCategoryCard category={selectedCategory} />
+          <CatalogCategoryCard
+            category={selectedCategory}
+            isLoading={isLoading}
+          />
 
           <SearchForm
             setItems={setProducts}
@@ -123,6 +135,8 @@ export default function ProductsPage() {
               ))}
             </ul>
           </SearchForm>
+
+          <p style={{ textAlign: 'center' }}>1 2 3</p>
         </PageContainer>
       </PageWrap>
     </>

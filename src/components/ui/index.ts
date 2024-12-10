@@ -11,3 +11,7 @@ export * from './PageContainer';
 export * from './CatalogCategoryBtn';
 export * from './CatalogCategoryList';
 export * from './CatalogCategoryCard';
+export * from './Loader';
+export * from './CatalogCategoryCardImage';
+export * from './ConfirmAlert';
+export * from './MarginItem';

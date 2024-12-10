@@ -5,4 +5,5 @@ export type CatalogCategoryBtnProps = {
   name: string;
   handleClick: (id: number) => void;
   children: ReactNode;
+  selectedCategory: ICategory | null;
 };
