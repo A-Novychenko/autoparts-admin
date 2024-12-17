@@ -89,7 +89,7 @@ export default function ProductsPage() {
   const hasData = products.length > 0;
 
   const fetchData = async (query: string) => {
-    const { data } = await serverApi.post('/catalog/cms-search-products', {
+    const { data } = await serverApi.post('/cms-catalog/search-products', {
       article: query.trim().toUpperCase(),
     });
 
