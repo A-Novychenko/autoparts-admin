@@ -113,6 +113,7 @@ export default function ProductsPage() {
           <CatalogCategoryCard
             category={selectedCategory}
             isLoading={isLoading}
+            setCategories={setCategories}
           />
 
           <SearchForm

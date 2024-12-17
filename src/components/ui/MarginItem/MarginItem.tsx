@@ -18,18 +18,52 @@ import {
   AlertPercentage,
 } from './MarginItem.styled';
 
-export const MarginItem: React.FC<MarginItemProps> = ({ margin }) => {
+export const MarginItem: React.FC<MarginItemProps> = ({
+  id,
+  margin,
+  setCategories,
+}) => {
   const { marginText, popoverText } = staticData.catalogCard;
 
   const [percentageValue, setPercentageValue] = useState<number>(margin);
 
   const isChangedValue = margin !== percentageValue;
 
+  const updateCategories = (
+    categories: ICategory[],
+    updatedCategory: ICategory
+  ): ICategory[] => {
+    return categories.map(category => {
+      if (category.id === updatedCategory.id) {
+        return {
+          ...category,
+          margin: updatedCategory.margin,
+          childrenCategories: category.childrenCategories
+            ? updatedCategory.childrenCategories
+            : category.childrenCategories,
+        };
+      }
+
+      return category;
+    });
+  };
+
   const handleSubmit = async () => {
     try {
-      await serverApi.post('', { margin: percentageValue });
+      const { data } = await serverApi.put('/cms-catalog/margin', {
+        id,
+        margin: percentageValue,
+      });
+
+      if (data.data && data.data.length > 0) {
+        const updatedCategory = data.data[0];
+
+        setCategories((prevCategories: ICategory[]) => {
+          return updateCategories(prevCategories, updatedCategory);
+        });
+      }
     } catch (error) {
-      console.log('error', error);
+      console.log('Error during category update:', error);
     }
   };
 
