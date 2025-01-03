@@ -1,20 +1,27 @@
 interface IProductASG {
-  article: string;
-  brand: string;
+  _id: string;
+  id: number;
+  cid: string;
+
   category: string;
   category_id: number;
-  cid: string;
-  count_warehouse_3: string;
-  createdAt: string;
-  description: string;
-  id: number;
-  img: string[];
-  name: string;
-  price: number;
-  price_asg: number;
+
+  brand: string;
+  article: string;
   tecdoc_article: string;
+
+  name: string;
+  description: string;
+  img: string[];
+  createdAt: string;
   updatedAt: string;
-  _id: string;
+
+  count_warehouse_3: string;
+  price_supplier: number;
+  price_client: number;
+  price_promo: number;
+  banner: boolean;
+  sale: boolean;
 }
 
 interface ICategory {
