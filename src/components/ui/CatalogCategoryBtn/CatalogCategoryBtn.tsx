@@ -12,7 +12,6 @@ export const CatalogCategoryBtn: React.FC<CatalogCategoryBtnProps> = ({
   const selectedCategoryId = selectedCategory ? selectedCategory.id : null;
   const isSelected = selectedCategoryId === id;
 
-  console.log('isSelected', isSelected);
   return (
     <Button
       style={{

@@ -10,6 +10,7 @@
 
   "catalogCard": {
     "nameText": "Категория",
+    "nameTextNotSelected": "Категория не выбрана",
     "imgText": "Картинка",
     "nameMainCategory": "Главная",
     "fieldNameLabel": "Имя",
@@ -81,8 +82,10 @@
     "searchForm": {
       "loadingText": "Загрузка",
       "searchText": "Поиск",
+      "searchNotFound": "Ничего не найдено",
+      "searchErrorText": "Ошибка! Попытайтесь еще раз или обратитесь в техподержку.",
       "searchPlaceholder": "Поиск товаров...",
-      "noResultsText": "Нет результатов поиска"
+      "noResultsText": "В этой категории нет товаров. Выберите вложенную категорию или другую"
     }
   }
 }

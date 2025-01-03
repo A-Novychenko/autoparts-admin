@@ -4,21 +4,26 @@ import staticData from '@/data/common.json';
 
 import { searchFormProps } from './types';
 
-import { ErrorText, Form, FormField, SearchButton } from './SearchForm.styled';
+import { Form, FormField, SearchButton } from './SearchForm.styled';
 
 export const SearchForm: React.FC<searchFormProps> = ({
-  children,
   keyData,
   setItems,
-  hasData,
   fetchData,
+  setSelectedCategory,
+  loadingSearchProducts,
+  setLoadingSearchProducts,
+  setErrorSearchProducts,
 }) => {
-  const { loadingText, searchText, searchPlaceholder, noResultsText } =
-    staticData.staticText.searchForm;
+  const {
+    loadingText,
+    searchText,
+    searchNotFound,
+    searchErrorText,
+    searchPlaceholder,
+  } = staticData.staticText.searchForm;
 
   const [query, setQuery] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -28,16 +33,23 @@ export const SearchForm: React.FC<searchFormProps> = ({
     e.preventDefault();
     if (!query.trim()) return;
 
-    setLoading(true);
-    setError(null);
+    setItems([]);
+    setLoadingSearchProducts(true);
+    setErrorSearchProducts(null);
     try {
       const data = await fetchData(query);
 
+      setSelectedCategory(null);
       setItems(data[keyData]);
+      setQuery('');
+
+      if (data[keyData].length < 1) {
+        setErrorSearchProducts(searchNotFound);
+      }
     } catch (error) {
-      setError('Не вдалося знайти товари. Спробуйте ще раз.');
+      setErrorSearchProducts(searchErrorText);
     } finally {
-      setLoading(false);
+      setLoadingSearchProducts(false);
     }
   };
 
@@ -51,16 +63,10 @@ export const SearchForm: React.FC<searchFormProps> = ({
           placeholder={searchPlaceholder}
         />
 
-        <SearchButton type="submit" disabled={loading}>
-          {loading ? loadingText : searchText}
+        <SearchButton type="submit" disabled={loadingSearchProducts}>
+          {loadingSearchProducts ? loadingText : searchText}
         </SearchButton>
       </Form>
-
-      {error && <ErrorText>{error}</ErrorText>}
-
-      <div>
-        {hasData ? <>{children}</> : !loading && <p>{noResultsText}</p>}
-      </div>
     </>
   );
 };

@@ -19,49 +19,61 @@ export const CatalogCategoryCard: React.FC<CatalogCategoryCardProps> = ({
   isLoading,
   setCategories,
 }) => {
-  const { nameText, noDateText, createdAtText, updatedAtText } =
-    staticData.catalogCard;
+  const {
+    nameText,
+    nameTextNotSelected,
+    noDateText,
+    createdAtText,
+    updatedAtText,
+  } = staticData.catalogCard;
 
   return (
     <>
       <Wrap>
         {!isLoading ? (
-          <Card>
-            <CardInfo>
-              <CategoryName>{`${nameText}: ${category?.name}`}</CategoryName>
-              {category?.id && category?.margin && (
-                <MarginItem
-                  key={category.id}
-                  id={category.id}
-                  margin={category.margin}
-                  setCategories={setCategories}
-                />
-              )}
+          <>
+            {category && (
+              <Card>
+                <CardInfo>
+                  <CategoryName>{`${nameText}: ${category?.name}`}</CategoryName>
+                  {category?.id && category?.margin && (
+                    <MarginItem
+                      key={category.id}
+                      id={category.id}
+                      margin={category.margin}
+                      setCategories={setCategories}
+                    />
+                  )}
 
-              <WrapDate>
-                <p>
-                  {` ${createdAtText}:
+                  <WrapDate>
+                    <p>
+                      {` ${createdAtText}:
                 ${
                   category?.createdAt
                     ? formatDateToUkrainian(category?.createdAt)
                     : noDateText
                 }
                 `}
-                </p>
+                    </p>
 
-                <p>
-                  {`    ${updatedAtText}: 
+                    <p>
+                      {`    ${updatedAtText}: 
                 ${
                   category?.createdAt
                     ? formatDateToUkrainian(category?.updatedAt)
                     : noDateText
                 }`}
-                </p>
-              </WrapDate>
-            </CardInfo>
+                    </p>
+                  </WrapDate>
+                </CardInfo>
 
-            <CatalogCategoryCardImage category={category} />
-          </Card>
+                <CatalogCategoryCardImage category={category} />
+              </Card>
+            )}
+            {!category && (
+              <CategoryName>{`${nameTextNotSelected}`}</CategoryName>
+            )}
+          </>
         ) : (
           <div
             style={{

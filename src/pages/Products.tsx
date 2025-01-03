@@ -5,9 +5,9 @@ import {
   CatalogCategoryList,
   PageContainer,
   PageWrap,
-  ProductASGCard,
   SearchForm,
 } from '@/components/ui';
+import { ProductsASGList } from '@/components/base';
 
 import { serverApi } from '@/redux/auth/authOperations';
 
@@ -16,9 +16,20 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(
     null
   );
+
   const [products, setProducts] = useState<IProductASG[]>([]);
   const [openCategories, setOpenCategories] = useState<number[]>([]);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadingSearchProducts, setLoadingSearchProducts] =
+    useState<boolean>(false);
+
+  const [errorSearchProducts, setErrorSearchProducts] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const getAllCategories = async () => {
@@ -27,6 +38,7 @@ export default function ProductsPage() {
         setSelectedCategory(null);
 
         const { data } = await serverApi.get('cms-catalog/');
+
         setCategories(data.categories);
         setSelectedCategory(data.categories[0]);
       } catch (e) {
@@ -68,21 +80,41 @@ export default function ProductsPage() {
   const handleClick = async (id: number) => {
     toggleCategory(id);
     setProducts([]);
+    setCurrentPage(1);
+    setTotalPages(1);
 
     const category: ICategory | undefined = findCategoryById(categories, id);
 
     if (category) {
       setSelectedCategory(category);
     }
-
-    if (category?.childrenCategories?.length === 0) {
-      const { data } = await serverApi.get(
-        `cms-catalog/products?id=${category?.id}&page=${1}`
-      );
-      console.log('data', data);
-      setProducts(data.products);
-    }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoadingSearchProducts(true);
+
+        const { data } = await serverApi.get(
+          `cms-catalog/products?id=${selectedCategory?.id}&page=${currentPage}`
+        );
+
+        if (currentPage === 1) {
+          setTotalPages(data.totalPages);
+        }
+
+        setProducts(data.products);
+      } catch (error) {
+        console.log('error', error);
+      } finally {
+        setLoadingSearchProducts(false);
+      }
+    };
+
+    if (selectedCategory?.childrenCategories?.length === 0) {
+      fetchData();
+    }
+  }, [selectedCategory, currentPage]);
 
   const keyData = 'products';
 
@@ -118,26 +150,24 @@ export default function ProductsPage() {
 
           <SearchForm
             setItems={setProducts}
-            hasData={hasData}
             fetchData={fetchData}
             keyData={keyData}
-          >
-            <ul
-              style={{
-                flexGrow: 1,
-                overflow: 'auto',
-                height: 'calc(100vh - 353px)',
-              }}
-            >
-              {products.map((product: IProductASG) => (
-                <li key={product.id}>
-                  <ProductASGCard product={product} />
-                </li>
-              ))}
-            </ul>
-          </SearchForm>
+            setSelectedCategory={setSelectedCategory}
+            loadingSearchProducts={loadingSearchProducts}
+            setLoadingSearchProducts={setLoadingSearchProducts}
+            setErrorSearchProducts={setErrorSearchProducts}
+          />
 
-          <p style={{ textAlign: 'center' }}>1 2 3</p>
+          <ProductsASGList
+            products={products}
+            setProducts={setProducts}
+            hasData={hasData}
+            loadingSearchProducts={loadingSearchProducts}
+            errorSearchProducts={errorSearchProducts}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
         </PageContainer>
       </PageWrap>
     </>

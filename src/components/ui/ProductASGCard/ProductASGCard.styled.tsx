@@ -5,8 +5,8 @@ export const Wrap = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.1);
+  background-color: #f6f6f6;
+  /* box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.1); */
   margin-bottom: 12px;
 `;
 
@@ -23,7 +23,7 @@ export const Image = styled.img`
   object-fit: contain;
 `;
 
-export const TextContetntWrap = styled.div`
+export const TextContentWrap = styled.div`
   flex-grow: 1;
 `;
 

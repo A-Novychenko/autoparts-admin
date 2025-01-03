@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/redux/auth/authOperations';
 
 const IMG_DEFAULT =
   'https://img.freepik.com/free-vector/illustration-of-gallery-icon_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1707868800&semt=sph';
@@ -10,11 +10,13 @@ import {
   ImgBox,
   Image,
   AddBtn,
-  TextContetntWrap,
+  TextContentWrap,
 } from './ProductASGCard.styled';
+import { ProductASGCardProps } from './types';
 
-export const ProductASGCard: React.FC<{ product: IProductASG }> = ({
+export const ProductASGCard: React.FC<ProductASGCardProps> = ({
   product,
+  setProducts,
 }) => {
   const {
     article,
@@ -36,13 +38,29 @@ export const ProductASGCard: React.FC<{ product: IProductASG }> = ({
   const countWarehouse = count_warehouse_3 === '0' ? ' ' : count_warehouse_3;
 
   const handleAddProductToBanner = async () => {
-    // await serverApi.post('/catalog/banner', {
-    //   id: product.id,
-    //   img: image,
-    //   price: product.price_client,
-    //   price_promo: inputPrice,
-    // });
-    console.log('need added PUT method by upd Product');
+    try {
+      const { data } = await serverApi.put('/cms-catalog/banner', {
+        id: product.id,
+        banner: !banner,
+      });
+
+      const { updProduct } = data;
+
+      console.log('updProduct', updProduct);
+
+      setProducts(pSt => {
+        const productsUpdated = pSt.map(product => {
+          if (product.id === updProduct.id) {
+            return { ...product, banner: updProduct.banner };
+          }
+
+          return product;
+        });
+        return productsUpdated;
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -51,7 +69,7 @@ export const ProductASGCard: React.FC<{ product: IProductASG }> = ({
         <Image src={image} width={298} height={298} alt={name} />
       </ImgBox>
 
-      <TextContetntWrap>
+      <TextContentWrap>
         <p>
           {brand} {name}
         </p>
@@ -75,7 +93,7 @@ export const ProductASGCard: React.FC<{ product: IProductASG }> = ({
             </span>
           )}
         </p>
-      </TextContetntWrap>
+      </TextContentWrap>
 
       <div>
         <input

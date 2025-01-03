@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type searchFormProps = {
-  children: React.ReactNode;
   keyData: string;
   setItems: React.Dispatch<React.SetStateAction<IProductASG[]>>;
-  hasData: boolean;
   fetchData: (query: string) => Promise<any>;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<ICategory | null>>;
+  loadingSearchProducts: boolean;
+  setLoadingSearchProducts: React.Dispatch<React.SetStateAction<boolean>>;
+  setErrorSearchProducts: React.Dispatch<React.SetStateAction<string | null>>;
 };

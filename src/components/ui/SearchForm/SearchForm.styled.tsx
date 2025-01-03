@@ -16,7 +16,3 @@ export const SearchButton = styled.button`
   padding: 8px;
   height: 40px;
 `;
-
-export const ErrorText = styled.p`
-  color: #f00;
-`;

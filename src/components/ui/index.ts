@@ -15,3 +15,4 @@ export * from './Loader';
 export * from './CatalogCategoryCardImage';
 export * from './ConfirmAlert';
 export * from './MarginItem';
+export * from './Pagination';

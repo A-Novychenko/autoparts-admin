@@ -4,3 +4,4 @@ export * from './NewUserFormDialog';
 export * from './UserList';
 export * from './asg';
 export * from './UserInfo';
+export * from './ProductsASGList';
