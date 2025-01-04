@@ -111,6 +111,10 @@ export const login = createAsyncThunk(
   ) => {
     try {
       const { data } = await serverApi.post('/auth/login', credentials);
+      // const { data } = await axios.post(
+      //   'http://localhost:3009/auth/login',
+      //   credentials
+      // );
 
       console.log('auth/login_data', data);
       console.log('auth/login_data_refreshToken', data.refreshToken);

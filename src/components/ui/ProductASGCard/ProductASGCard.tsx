@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { serverApi } from '@/redux/auth/authOperations';
 
 const IMG_DEFAULT =
@@ -9,10 +7,13 @@ import {
   Wrap,
   ImgBox,
   Image,
-  AddBtn,
   TextContentWrap,
+  Description,
+  Brand,
+  InfoBox,
 } from './ProductASGCard.styled';
 import { ProductASGCardProps } from './types';
+import { ProductToggleField } from '../ProductToggleField';
 
 export const ProductASGCard: React.FC<ProductASGCardProps> = ({
   product,
@@ -32,7 +33,14 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
     sale,
   } = product;
 
-  const [inputPrice, setInputPrice] = useState(price_client);
+  // const [inputPrice, setInputPrice] = useState(price_client);
+  //         <input
+  //           type="number"
+  //           value={inputPrice}
+  //           onChange={e => setInputPrice(Number(e.target.value))}
+  //           min="0"
+  //           style={{ width: '100px', marginRight: '20px' }}
+  //         />;
 
   const image = img && img?.length > 0 ? img[0] : IMG_DEFAULT;
   const countWarehouse = count_warehouse_3 === '0' ? ' ' : count_warehouse_3;
@@ -63,6 +71,30 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
     }
   };
 
+  const handleAddProductToSale = async () => {
+    try {
+      const { data } = await serverApi.put('/cms-catalog/sale', {
+        id: product.id,
+        sale: !sale,
+      });
+
+      const { updProduct } = data;
+
+      setProducts(pSt => {
+        const productsUpdated = pSt.map(product => {
+          if (product.id === updProduct.id) {
+            return { ...product, sale: updProduct.sale };
+          }
+
+          return product;
+        });
+        return productsUpdated;
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <Wrap>
       <ImgBox>
@@ -70,48 +102,46 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
       </ImgBox>
 
       <TextContentWrap>
-        <p>
-          {brand} {name}
-        </p>
+        <InfoBox>
+          <p>
+            <Brand>{brand}</Brand> {name}
+          </p>
+          <Description>{description}</Description>
+          <p>{`Артикул: ${article}`}</p>
+          <p>
+            {count_warehouse_3 === '0' ? (
+              <span style={{ color: 'red' }}>Немає в наявності</span>
+            ) : (
+              <span style={{ color: 'green' }}>
+                В наявності {countWarehouse}шт
+              </span>
+            )}
+          </p>
+        </InfoBox>
 
-        <p>{description}</p>
+        <div>
+          <p>Цена поставщика: {price_supplier} грн</p>
+          <p>Цена клиента: {price_client} грн</p>
+          <p>
+            Цена клиента АКЦИЯ/Распродажа: {price_promo ? price_promo : 'NET'}
+            грн
+          </p>
 
-        <p>{`Артикул: ${article}`}</p>
+          <ProductToggleField
+            flag={banner}
+            label="banner"
+            disabled={count_warehouse_3 === '0'}
+            btnAction={handleAddProductToBanner}
+          />
 
-        <p>Цена поставщика: {price_supplier} грн</p>
-        <p>Цена клиента: {price_client} грн</p>
-        <p>Цена клиента АКЦИЯ/Распродажа: {price_promo} грн</p>
-        <p>Banner: {banner ? 'DA' : 'NET'}</p>
-        <p>Sale: {sale ? 'DA' : 'NET'}</p>
-
-        <p>
-          {count_warehouse_3 === '0' ? (
-            <span style={{ color: 'red' }}>Немає в наявності</span>
-          ) : (
-            <span style={{ color: 'green' }}>
-              В наявності {countWarehouse}шт
-            </span>
-          )}
-        </p>
+          <ProductToggleField
+            flag={sale}
+            label="sale"
+            disabled={count_warehouse_3 === '0'}
+            btnAction={handleAddProductToSale}
+          />
+        </div>
       </TextContentWrap>
-
-      <div>
-        <input
-          type="number"
-          value={inputPrice}
-          onChange={e => setInputPrice(Number(e.target.value))}
-          min="0"
-          style={{ width: '100px', marginRight: '20px' }}
-        />
-
-        <AddBtn
-          type="button"
-          disabled={count_warehouse_3 === '0'}
-          onClick={handleAddProductToBanner}
-        >
-          Добавить в баннер
-        </AddBtn>
-      </div>
     </Wrap>
   );
 };

@@ -8,9 +8,15 @@ export const Wrap = styled.div`
 
 export const List = styled.ul`
   flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
   overflow: auto;
   padding-right: 14px;
   height: calc(100vh - 353px);
+
+  padding-bottom: 12px;
 `;
 
 export const ErrorText = styled.p`
