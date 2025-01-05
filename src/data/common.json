@@ -88,6 +88,21 @@
       "noResultsText": "В этой категории нет товаров. Выберите вложенную категорию или другую"
     }
   },
+  "productCard": {
+    "price": {
+      "currency": "грн",
+      "supplierLabel": "Цена поставщика:",
+      "clientLabel": "Цена клиента:",
+      "promoLabel": "Цена по акции:",
+      "promoNotPrice": "Не установлено",
+      "promoBtnLabels": {
+        "add": "Установить",
+        "remove": "Убрать"
+      },
+      "marginLabel": "Наценка:",
+      "profitLabel": "Прибыль:"
+    }
+  },
   "productToggleField": {
     "labelBanner": "Отображается на баннере:",
     "labelSale": "Отображается в распродаже:",

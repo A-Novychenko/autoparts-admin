@@ -17,3 +17,4 @@ export * from './ConfirmAlert';
 export * from './MarginItem';
 export * from './Pagination';
 export * from './ProductToggleField';
+export * from './PricePromoPopover';

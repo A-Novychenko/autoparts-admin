@@ -25,9 +25,9 @@ export const ProductToggleField: React.FC<ProductToggleFieldProps> = ({
       <FieldLabel>
         {label === 'banner' ? labelBanner : labelSale}
         {flag ? (
-          <FieldStatusYes>{` ${status.yes}`}</FieldStatusYes>
+          <FieldStatusYes>&nbsp;{status.yes}</FieldStatusYes>
         ) : (
-          <FieldStatusNo>{` ${status.no}`}</FieldStatusNo>
+          <FieldStatusNo>&nbsp;{status.no}</FieldStatusNo>
         )}
       </FieldLabel>
 

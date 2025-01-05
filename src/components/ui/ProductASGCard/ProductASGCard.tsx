@@ -1,7 +1,12 @@
+import { ProductToggleField, PricePromoPopover } from '@components/ui';
+
 import { serverApi } from '@/redux/auth/authOperations';
 
+import staticData from '@/data/common.json';
 const IMG_DEFAULT =
   'https://img.freepik.com/free-vector/illustration-of-gallery-icon_53876-27002.jpg?size=626&ext=jpg&ga=GA1.1.1141335507.1707868800&semt=sph';
+
+import { ProductASGCardProps } from './types';
 
 import {
   Wrap,
@@ -11,9 +16,12 @@ import {
   Description,
   Brand,
   InfoBox,
+  PriceBox,
+  SupplierPrice,
+  ClientPrice,
+  PromoPriceBox,
+  PromoRemoveBtn,
 } from './ProductASGCard.styled';
-import { ProductASGCardProps } from './types';
-import { ProductToggleField } from '../ProductToggleField';
 
 export const ProductASGCard: React.FC<ProductASGCardProps> = ({
   product,
@@ -33,14 +41,16 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
     sale,
   } = product;
 
-  // const [inputPrice, setInputPrice] = useState(price_client);
-  //         <input
-  //           type="number"
-  //           value={inputPrice}
-  //           onChange={e => setInputPrice(Number(e.target.value))}
-  //           min="0"
-  //           style={{ width: '100px', marginRight: '20px' }}
-  //         />;
+  const {
+    currency,
+    supplierLabel,
+    clientLabel,
+    promoLabel,
+    promoNotPrice,
+    promoBtnLabels,
+    marginLabel,
+    profitLabel,
+  } = staticData.productCard.price;
 
   const image = img && img?.length > 0 ? img[0] : IMG_DEFAULT;
   const countWarehouse = count_warehouse_3 === '0' ? ' ' : count_warehouse_3;
@@ -95,6 +105,30 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
     }
   };
 
+  const handleChangeSalePrice = async (price: number | null) => {
+    try {
+      const { data } = await serverApi.put('/cms-catalog/price-promo', {
+        id: product.id,
+        price_promo: price,
+      });
+
+      const { updProduct } = data;
+
+      setProducts(pSt => {
+        const productsUpdated = pSt.map(product => {
+          if (product.id === updProduct.id) {
+            return { ...product, price_promo: updProduct.price_promo };
+          }
+
+          return product;
+        });
+        return productsUpdated;
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <Wrap>
       <ImgBox>
@@ -106,24 +140,83 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
           <p>
             <Brand>{brand}</Brand> {name}
           </p>
+
           <Description>{description}</Description>
-          <p>{`Артикул: ${article}`}</p>
+
           <p>
             {count_warehouse_3 === '0' ? (
-              <span style={{ color: 'red' }}>Немає в наявності</span>
+              <span style={{ color: 'red' }}>Нет в наличии</span>
             ) : (
               <span style={{ color: 'green' }}>
-                В наявності {countWarehouse}шт
+                В наличии {countWarehouse}шт
               </span>
             )}
           </p>
+
+          <p>{`Артикул: ${article}`}</p>
         </InfoBox>
 
-        <div>
-          <p>Цена поставщика: {price_supplier} грн</p>
-          <p>Цена клиента: {price_client} грн</p>
+        <PriceBox>
+          <SupplierPrice>
+            {supplierLabel}&nbsp;
+            {price_supplier}
+            {currency}
+          </SupplierPrice>
+
+          <ClientPrice
+            style={{
+              textDecoration: price_promo ? 'line-through' : 'none',
+              color: price_promo ? '#101340' : undefined,
+            }}
+          >
+            {clientLabel}&nbsp;
+            {price_client}
+            {currency}
+          </ClientPrice>
+
+          <PromoPriceBox>
+            <p
+              style={{
+                color: price_promo ? '#008402' : '#101340',
+              }}
+            >
+              {promoLabel}&nbsp;
+              {price_promo ? price_promo + currency : promoNotPrice}
+            </p>
+
+            {price_promo ? (
+              <PromoRemoveBtn
+                type="button"
+                onClick={() => {
+                  handleChangeSalePrice(null);
+                }}
+              >
+                {promoBtnLabels.remove}
+              </PromoRemoveBtn>
+            ) : (
+              <PricePromoPopover
+                price_client={price_client}
+                handleSubmit={handleChangeSalePrice}
+              />
+            )}
+          </PromoPriceBox>
+
           <p>
-            Цена клиента АКЦИЯ/Распродажа: {price_promo ? price_promo : 'NET'}
+            {marginLabel}
+            {Math.round(
+              (((price_promo ? price_promo : price_client) - price_supplier) /
+                price_supplier) *
+                100
+            )}
+            %
+          </p>
+
+          <p>
+            {profitLabel}
+            {Math.round(
+              ((price_promo ? price_promo : price_client) - price_supplier) *
+                100
+            ) / 100}
             грн
           </p>
 
@@ -140,7 +233,7 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
             disabled={count_warehouse_3 === '0'}
             btnAction={handleAddProductToSale}
           />
-        </div>
+        </PriceBox>
       </TextContentWrap>
     </Wrap>
   );
