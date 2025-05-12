@@ -1,7 +1,11 @@
+import { VinReqList } from '@/components/ui';
+
 export default function OrdersPage() {
   return (
     <>
-      <h1>Orders-PAGE</h1>
+      <h1>Страница заказов</h1>
+
+      <VinReqList />
     </>
   );
 }

@@ -18,3 +18,4 @@ export * from './MarginItem';
 export * from './Pagination';
 export * from './ProductToggleField';
 export * from './PricePromoPopover';
+export * from './VinReqList';
