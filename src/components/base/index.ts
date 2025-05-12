@@ -5,3 +5,4 @@ export * from './UserList';
 export * from './asg';
 export * from './UserInfo';
 export * from './ProductsASGList';
+export * from './VinReqDetail';
