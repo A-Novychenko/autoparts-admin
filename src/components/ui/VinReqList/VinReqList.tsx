@@ -30,57 +30,59 @@ export const VinReqList = () => {
 
   return (
     <PageContainer>
-      <StyledTable>
-        <thead>
-          <tr>
-            <th>Номер</th>
-            <th>Статус</th>
-            <th>Имя</th>
-            <th>Телефон</th>
-            <th>VIN</th>
-            <th>Сообщение</th>
-            <th>Дата</th>
-            <th>Действие</th>
-          </tr>
-        </thead>
+      <div style={{ padding: '0 20px' }}>
+        <StyledTable>
+          <thead>
+            <tr>
+              <th>Номер</th>
+              <th>Статус</th>
+              <th>Имя</th>
+              <th>Телефон</th>
+              <th>VIN</th>
+              <th>Сообщение</th>
+              <th>Дата</th>
+              <th>Действие</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {vinReqItems.map(item => (
-            <tr key={item._id} data-status={item.status}>
-              <td>{item.number}</td>
-              <td>{item.status}</td>
-              <td>{item.name}</td>
-              <td>{item.phone}</td>
-              <td>{item.vinCode}</td>
-              <td
-                style={{
-                  maxWidth: 300,
-                }}
-              >
-                <span
+          <tbody>
+            {vinReqItems.map(item => (
+              <tr key={item._id} data-status={item.status}>
+                <td>{item.number}</td>
+                <td>{item.status}</td>
+                <td>{item.name}</td>
+                <td>{item.phone}</td>
+                <td>{item.vinCode}</td>
+                <td
                   style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 1,
-                    WebkitBoxOrient: 'vertical',
-                    whiteSpace: 'normal',
+                    maxWidth: 300,
                   }}
                 >
-                  {item.message}
-                </span>
-              </td>
-              <td>{formatDateToUkrainian(item.createdAt)}</td>
-              <td>
-                {/* <button>Детальнее</button> */}
-                <DetailsBtn to={`/dashboard/orders/vin-request/${item._id}`}>
-                  Открыть
-                </DetailsBtn>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </StyledTable>
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      whiteSpace: 'normal',
+                    }}
+                  >
+                    {item.message}
+                  </span>
+                </td>
+                <td>{formatDateToUkrainian(item.createdAt)}</td>
+                <td>
+                  {/* <button>Детальнее</button> */}
+                  <DetailsBtn to={`/dashboard/orders/vin-request/${item._id}`}>
+                    Открыть
+                  </DetailsBtn>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </StyledTable>
+      </div>
     </PageContainer>
   );
 };
