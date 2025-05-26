@@ -5,26 +5,33 @@ import {
   Route,
 } from 'react-router-dom';
 
+import { ToastContainer } from 'react-toastify';
+
 import { Layout } from '@/components/Layout';
 import { DashboardLayout } from '@/components/DashboardLayout';
+
+import { PrivateRoute } from '@/components/PrivateRoute';
+import { RestrictedRoute } from '@/components/RestrictedRoute';
+import { AdminRoute } from '@/components/AdminRoute';
+
+import { useAppDispatch } from '@/redux/hooks';
+import { refreshUser } from '@/redux/auth/authOperations';
+import { useAuth } from '@/hooks';
+
 import LoginPage from '@/pages/LoginPage';
+
 import DashboardPage from '@/pages/DashboardPage';
+
 import ASGPage from '@/pages/ASGPage';
 import OrdersPage from '@/pages/Orders';
+import ProductsPage from '@/pages/Products';
+import UsersPage from '@/pages/UsersPage';
+import ErrorPage from '@/pages/ErrorPage';
+
 import OrdersListPage from '@/pages/OrdersListPage';
 import OrderDetailsPage from '@/pages/OrderDetailsPage';
 import VinRequestListPage from '@/pages/VinRequestListPage';
 import VinRequestPage from '@/pages/VinRequestPage';
-import ProductsPage from '@/pages/Products';
-import UsersPage from '@/pages/UsersPage';
-import ErrorPage from '@/pages/ErrorPage';
-import { PrivateRoute } from '@/components/PrivateRoute';
-import { RestrictedRoute } from '@/components/RestrictedRoute';
-import { AdminRoute } from '@/components/AdminRoute';
-import { useAppDispatch } from '@/redux/hooks';
-import { refreshUser } from '@/redux/auth/authOperations';
-import { useAuth } from '@/hooks';
-import { ToastContainer } from 'react-toastify';
 
 const AppWrapper = ({ element }: { element: React.ReactNode }) => {
   const dispatch = useAppDispatch();
