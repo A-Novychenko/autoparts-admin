@@ -6,3 +6,4 @@ export * from './asg';
 export * from './UserInfo';
 export * from './ProductsASGList';
 export * from './VinReqDetail';
+export * from './OrderDetail';

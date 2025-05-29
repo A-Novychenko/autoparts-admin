@@ -15,9 +15,12 @@ export default function OrdersPage() {
         style={{
           display: 'flex',
           gap: '10px',
-          marginBottom: '20px',
-          // width: 320,
-          // height: 60,
+          paddingBottom: '20px',
+          width: '100%',
+          height: 60,
+          position: 'fixed',
+          top: 64,
+          backgroundColor: '#fff',
         }}
       >
         <button
@@ -41,11 +44,14 @@ export default function OrdersPage() {
           VIN-запросы
         </button>
       </div>
-      <PageWrap>
-        <PageContainer>
-          <Outlet />
-        </PageContainer>
-      </PageWrap>
+
+      <div style={{ marginTop: 124 }}>
+        <PageWrap>
+          <PageContainer>
+            <Outlet />
+          </PageContainer>
+        </PageWrap>
+      </div>
     </>
   );
 }

@@ -40,7 +40,10 @@ export const AppBar = () => {
   };
 
   return (
-    <MUIAppBar position="static" sx={{ backgroundColor: '#101340' }}>
+    <MUIAppBar
+      position="static"
+      sx={{ backgroundColor: '#101340', position: 'fixed', top: 0 }}
+    >
       {/* <Container maxWidth="xl"> */}
       <Toolbar disableGutters>
         <Typography

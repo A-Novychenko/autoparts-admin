@@ -6,7 +6,7 @@ import { AppBar } from './base';
 
 export const DashboardLayout = () => {
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh', marginTop: 64 }}>
       <AppBar />
 
       {/* <Container> */}

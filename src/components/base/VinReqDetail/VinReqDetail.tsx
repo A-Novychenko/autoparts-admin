@@ -18,7 +18,7 @@ import { serverApi } from '@/redux/auth/authOperations';
 
 const statusOptions = [
   { label: 'Новый', value: 'new' },
-  { label: 'В обработке', value: 'inprogress' },
+  { label: 'В обработке', value: 'in-progress' },
   { label: 'Завершен', value: 'done' },
   { label: 'Отклонен', value: 'rejected' },
 ];
@@ -59,7 +59,6 @@ export const VinReqDetail: React.FC<VinReqDetailProps> = ({ item }) => {
 
     try {
       setIsSaving(true);
-      // await axios.patch(`/api/vin-requests/${item._id}/comment`, { comment });
       await serverApi.patch(`/orders/vin-requests/${item._id}`, {
         comment,
       });
