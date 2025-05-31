@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 type Item = {
   _id: string;
   number: string;
-  status: 'new' | 'inprogress' | 'done' | 'rejected';
+  status: 'new' | 'in-progress' | 'done' | 'rejected';
   phone: string;
   vinCode: string;
   name: string;

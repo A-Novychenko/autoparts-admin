@@ -7,3 +7,4 @@ export * from './UserInfo';
 export * from './ProductsASGList';
 export * from './VinReqDetail';
 export * from './OrderDetail';
+export * from './CallbackList';

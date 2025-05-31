@@ -5,9 +5,17 @@ export default function OrdersPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const activeTab = location.pathname.includes('vin-requests')
-    ? 'vin'
-    : 'orders';
+  const pathname = location.pathname;
+
+  let activeTab: 'orders' | 'vin' | 'callback' | null = null;
+
+  if (pathname.includes('/order-list')) {
+    activeTab = 'orders';
+  } else if (pathname.includes('/vin-requests')) {
+    activeTab = 'vin';
+  } else if (pathname.includes('/callback')) {
+    activeTab = 'callback';
+  }
 
   return (
     <>
@@ -24,7 +32,7 @@ export default function OrdersPage() {
         }}
       >
         <button
-          onClick={() => navigate('/dashboard/orders/list')}
+          onClick={() => navigate('/dashboard/orders/order-list')}
           style={{
             backgroundColor: activeTab === 'orders' ? '#101340' : '#fff',
             color: activeTab === 'orders' ? '#fff' : '#101340',
@@ -42,6 +50,16 @@ export default function OrdersPage() {
           }}
         >
           VIN-запросы
+        </button>
+        <button
+          onClick={() => navigate('/dashboard/orders/callback')}
+          style={{
+            backgroundColor: activeTab === 'callback' ? '#101340' : '#fff',
+            color: activeTab === 'callback' ? '#fff' : '#101340',
+            flexGrow: 1,
+          }}
+        >
+          Обратные звонки
         </button>
       </div>
 

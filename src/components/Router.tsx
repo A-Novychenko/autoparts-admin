@@ -32,6 +32,7 @@ import OrdersListPage from '@/pages/OrdersListPage';
 import OrderDetailsPage from '@/pages/OrderDetailsPage';
 import VinRequestListPage from '@/pages/VinRequestListPage';
 import VinRequestPage from '@/pages/VinRequestPage';
+import CallbackListPage from '@/pages/CallbackListPage';
 
 const AppWrapper = ({ element }: { element: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -75,10 +76,11 @@ export const router = createBrowserRouter(
 
         <Route path="orders" element={<OrdersPage />}>
           <Route index element={<OrdersListPage />} />
-          <Route path="list" element={<OrdersListPage />} />
+          <Route path="order-list" element={<OrdersListPage />} />
           <Route path="vin-requests" element={<VinRequestListPage />} />
           <Route path="order/:id" element={<OrderDetailsPage />} />
           <Route path="vin-request/:id" element={<VinRequestPage />} />
+          <Route path="callback" element={<CallbackListPage />} />
         </Route>
 
         <Route path="products" element={<ProductsPage />} />
