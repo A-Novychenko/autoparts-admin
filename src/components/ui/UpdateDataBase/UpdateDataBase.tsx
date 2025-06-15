@@ -82,6 +82,30 @@ export const UpdateDataBase: React.FC = () => {
     }
   };
 
+  const handleUpdSitemap = async () => {
+    try {
+      setIsLoading(true);
+      setMsg('Обновление Sitemap');
+      setStatus('#ffc');
+
+      await serverApi.post(
+        '/catalog/sitemap',
+        {},
+        {
+          timeout: 20 * 60000, // 1000 = 1секундa
+        }
+      );
+      setMsg('Sitemap обновлен!');
+      setStatus('#1fc528');
+    } catch (e) {
+      console.log('e', e);
+      setStatus('#ff0000');
+      setMsg('ОШИБКА-Sitemap НЕ ОБНОВЛЕН');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       style={{
@@ -130,6 +154,10 @@ export const UpdateDataBase: React.FC = () => {
         ) : (
           <Loader size={'16'} color="#fff" />
         )}
+      </button>
+
+      <button type="button" onClick={handleUpdSitemap} disabled={isLoading}>
+        {!isLoading ? 'Обновить Sitemap' : <Loader size={'16'} color="#fff" />}
       </button>
     </div>
   );
