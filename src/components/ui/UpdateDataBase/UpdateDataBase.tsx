@@ -140,6 +140,14 @@ export const UpdateDataBase: React.FC = () => {
         )}
       </button>
 
+      <button type="button" onClick={() => {}} disabled={isLoading}>
+        {!isLoading ? (
+          'Обновить наличие и цену Products'
+        ) : (
+          <Loader size={'12'} color="#fff" />
+        )}
+      </button>
+
       <button type="button" onClick={handleUpdDBProducts} disabled={isLoading}>
         {!isLoading ? (
           'Обновить базу данных Products'
