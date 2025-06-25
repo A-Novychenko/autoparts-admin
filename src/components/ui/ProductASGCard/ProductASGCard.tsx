@@ -31,6 +31,7 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
     article,
     brand,
     count_warehouse_3,
+    count_warehouse_4,
     description,
     img,
     name,
@@ -223,7 +224,7 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
           <ProductToggleField
             flag={banner}
             label="banner"
-            disabled={count_warehouse_3 === '0'}
+            disabled={count_warehouse_3 === '0' && count_warehouse_4 === '0'}
             btnAction={handleAddProductToBanner}
           />
 

@@ -1,7 +1,6 @@
 interface IProductASG {
   _id: string;
   id: number;
-  cid: string;
 
   category: string;
   category_id: number;
@@ -13,10 +12,9 @@ interface IProductASG {
   name: string;
   description: string;
   img: string[];
-  createdAt: string;
-  updatedAt: string;
 
   count_warehouse_3: string;
+  count_warehouse_4: string;
   price_supplier: number;
   price_client: number;
   price_promo: number;
