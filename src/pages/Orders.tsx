@@ -41,6 +41,7 @@ export default function OrdersPage() {
         >
           Заказы
         </button>
+
         <button
           onClick={() => navigate('/dashboard/orders/vin-requests')}
           style={{
@@ -51,6 +52,7 @@ export default function OrdersPage() {
         >
           VIN-запросы
         </button>
+
         <button
           onClick={() => navigate('/dashboard/orders/callback')}
           style={{
