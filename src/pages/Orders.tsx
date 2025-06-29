@@ -1,5 +1,6 @@
-import { PageContainer, PageWrap } from '@/components/ui';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+
+import { PageContainer, PageWrap } from '@/components/ui';
 
 export default function OrdersPage() {
   const navigate = useNavigate();
