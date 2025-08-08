@@ -6,6 +6,45 @@ export const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
+export const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const DocBox = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const DocBtnInv = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  background-color: #00a6fa;
+  color: #000;
+
+  &:hover {
+    background-color: #1200dc;
+    color: #ffffff;
+    transition: background-color 300ms cubic-bezier(0.075, 0.82, 0.165, 1),
+      color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+`;
+
+export const DocBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  &:hover {
+    background-color: #1200dc;
+    transition: background-color 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+`;
+
 export const Section = styled.section`
   margin-bottom: 32px;
 `;

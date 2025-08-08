@@ -16,6 +16,7 @@
     "@mui/icons-material": "5",
     "@mui/material": "5",
     "@mui/x-charts": "^8.6.0",
+    "@react-pdf/renderer": "^4.3.0",
     "@reduxjs/toolkit": "^2.2.1",
     "add": "^2.0.6",
     "axios": "^1.6.7",

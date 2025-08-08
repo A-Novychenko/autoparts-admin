@@ -8,6 +8,7 @@ type OrderProduct = {
   quantity: number;
   availability: string;
   _id: string;
+  brand: string;
 };
 
 type OrderItem = {
@@ -23,7 +24,8 @@ type OrderItem = {
   deliveryCity: string;
   postOffice: string;
   payment: string;
-  products: Product[];
+  products: OrderProduct[];
+  // products: Product[];
   createdAt: string;
   updatedAt: string;
 };

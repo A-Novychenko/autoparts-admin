@@ -5,7 +5,17 @@ import { toast } from 'react-toastify';
 import { serverApi } from '@/redux/auth/authOperations';
 import { formatDateToUkrainian } from '@/utils';
 
+// import { PDFDownloadLink } from '@react-pdf/renderer';
+
+import { pdf } from '@react-pdf/renderer';
+import { FaRegFilePdf } from 'react-icons/fa6';
+import { LiaFileInvoiceSolid } from 'react-icons/lia';
+
 import {
+  DocBox,
+  DocBtn,
+  DocBtnInv,
+  HeaderWrap,
   InfoItem,
   Label,
   ProductCard,
@@ -19,6 +29,8 @@ import {
   TextAreaStyled,
   Wrapper,
 } from './OrderDetail.styled';
+import { DeliveryNotePDF } from '@/components/ui';
+import { InvoicePDF } from '@/components/ui/InvoicePDF';
 
 const statusOptions = [
   { label: 'Новый', value: 'new' },
@@ -87,9 +99,32 @@ export const OrderDetail = ({
     saveComment(); // авто-збереження при blur
   };
 
+  const handleOpenDeliveryNotePdf = async () => {
+    const blob = await pdf(<DeliveryNotePDF order={order} />).toBlob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+  };
+  const handleOpenInvoicePdf = async () => {
+    const blob = await pdf(<InvoicePDF order={order} />).toBlob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
+  };
+
   return (
     <Wrapper>
-      <h2>Замовлення №{order.number}</h2>
+      <HeaderWrap>
+        <h2>Замовлення №{order.number}</h2>
+        <DocBox>
+          <DocBtnInv onClick={handleOpenInvoicePdf}>
+            <LiaFileInvoiceSolid />
+            Счет
+          </DocBtnInv>
+          <DocBtn onClick={handleOpenDeliveryNotePdf}>
+            <FaRegFilePdf />
+            Расходная
+          </DocBtn>
+        </DocBox>
+      </HeaderWrap>
 
       <Section>
         <SectionTitle>Інформація про замовлення</SectionTitle>
@@ -181,6 +216,15 @@ export const OrderDetail = ({
             </ProductCard>
           ))}
         </ProductList>
+
+        {/* <PDFDownloadLink
+          document={<DeliveryNote order={order} />}
+          fileName={`накладна-${order.number}.pdf`}
+        >
+          {({ loading }) =>
+            loading ? 'Генерується...' : 'Завантажити накладну'
+          }
+        </PDFDownloadLink> */}
       </Section>
     </Wrapper>
   );

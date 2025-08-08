@@ -21,7 +21,13 @@ const OrderDetailsPage = () => {
     getOrder();
   }, [id]);
 
-  return <OrderDetail order={order} setOrder={setOrder} />;
+  console.log('order', order);
+
+  return (
+    <>
+      <OrderDetail order={order} setOrder={setOrder} />
+    </>
+  );
 };
 
 export default OrderDetailsPage;

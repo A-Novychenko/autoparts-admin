@@ -167,7 +167,7 @@ export const VinReqList = () => {
               {formatDateToUkrainian(item.createdAt)}
               <div style={{ marginTop: 4 }}>
                 <OpenBtn to={`/dashboard/orders/vin-request/${item._id}`}>
-                  Відкрити
+                  Открыть запрос
                 </OpenBtn>
               </div>
             </GridItem>

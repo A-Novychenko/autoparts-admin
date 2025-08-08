@@ -63,7 +63,7 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
               {new Date(order.createdAt).toLocaleString('uk-UA')}
               <div style={{ marginTop: 4 }}>
                 <OpenBtn to={`/dashboard/orders/order/${order._id}`}>
-                  Відкрити
+                  Открыть заказ
                 </OpenBtn>
               </div>
             </GridItem>
