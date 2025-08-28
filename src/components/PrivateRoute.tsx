@@ -1,39 +1,22 @@
-// import { ReactNode } from 'react';
-// import { Navigate } from 'react-router-dom';
-
-// import { useAuth } from '@/hooks';
-
-// export const PrivateRoute = ({
-//   component: Component,
-//   redirectTo = '/',
-// }: {
-//   component: ReactNode;
-//   redirectTo: string;
-// }) => {
-//   const { isAuthenticated, isRefreshing, isActive } = useAuth();
-//   const shouldRedirect =
-//     !isAuthenticated && isActive !== 'enabled' && !isRefreshing;
-
-//   return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
-// };
-
-import { ReactNode } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-
 import { useAuth } from '@/hooks';
 
 export const PrivateRoute = ({
   component: Component,
   redirectTo = '/',
 }: {
-  component: ReactNode;
-  redirectTo: string;
+  component: React.ReactNode;
+  redirectTo?: string;
 }) => {
-  const { isAuthenticated, isRefreshing, isActive } = useAuth();
+  const { isAuthenticated, isRefreshing, isLoading, isActive } = useAuth();
 
-  if (isRefreshing) return null; // Ждём, пока refreshUser завершится
+  // Если идёт инициализация состояния авторизации — не делаем redirect.
+  // Возвращаем компонент, чтобы путь оставался "занятым" и не было fallback к родителю.
+  if (isRefreshing || isLoading) {
+    return Component;
+  }
 
-  const shouldRedirect = !isAuthenticated || isActive !== 'enabled'; // Проверка уже после обновления
-
-  return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
+  const shouldRedirect = !isAuthenticated || isActive !== 'enabled';
+  return shouldRedirect ? <Navigate to={redirectTo} replace /> : Component;
 };

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const gridTemplate = `
-  80px 160px 100px 180px 120px 280px 1fr 160px
+  80px 160px 100px 180px 160px 280px 1fr 160px
 `;
 
 export const Card = styled.article`

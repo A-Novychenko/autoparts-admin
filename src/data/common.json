@@ -7,7 +7,6 @@
     "logoutBtn": "Выйти"
   },
   "upload": "Загрузить",
-
   "catalogCard": {
     "nameText": "Категория",
     "nameTextNotSelected": "Категория не выбрана",
@@ -30,53 +29,103 @@
     {
       "name": "Главная",
       "link": "/dashboard",
-      "available": ["admin", "manager"]
+      "available": [
+        "admin",
+        "manager"
+      ]
     },
-
     {
       "name": "Заказы",
-      "link": "/dashboard/orders",
-      "available": ["admin", "manager"]
+      "link": "/dashboard/orders/order-list",
+      "available": [
+        "admin",
+        "manager"
+      ]
+    },
+    {
+      "name": "Каталог",
+      "link": "/dashboard/catalog",
+      "available": [
+        "admin",
+        "manager"
+      ]
     },
     {
       "name": "Товары",
       "link": "/dashboard/products",
-      "available": ["admin", "manager"]
+      "available": [
+        "admin",
+        "manager"
+      ]
     },
     {
       "name": "ASG",
       "link": "/dashboard/asg",
-      "available": ["admin", "manager"]
+      "available": [
+        "admin",
+        "manager"
+      ]
     },
     {
       "name": "Пользователи",
       "link": "/dashboard/users",
-      "available": ["admin"]
+      "available": [
+        "admin"
+      ]
     }
   ],
-
   "userPage": {
     "newUserLabel": "Добавить нового пользователя",
     "newUserSubmitBtn": "Зарегистрировать",
     "newUserCancelBtn": "Отменить",
     "fields": [
-      { "id": "name", "label": "Имя" },
-      { "id": "login", "label": "Логин" },
-      { "id": "password", "label": "Пароль" },
+      {
+        "id": "name",
+        "label": "Имя"
+      },
+      {
+        "id": "login",
+        "label": "Логин"
+      },
+      {
+        "id": "password",
+        "label": "Пароль"
+      },
       {
         "id": "role",
         "label": "Тип пользователя",
-        "values": ["admin", "manager"]
+        "values": [
+          "admin",
+          "manager"
+        ]
       }
     ]
   },
   "userItem": [
-    { "id": "name", "label": "Имя" },
-    { "id": "login", "label": "Логин" },
-    { "id": "password", "label": "Пароль" },
-    { "id": "role", "label": "Тип пользователя" },
-    { "id": "status", "label": "Статус" },
-    { "id": "editor", "label": "" }
+    {
+      "id": "name",
+      "label": "Имя"
+    },
+    {
+      "id": "login",
+      "label": "Логин"
+    },
+    {
+      "id": "password",
+      "label": "Пароль"
+    },
+    {
+      "id": "role",
+      "label": "Тип пользователя"
+    },
+    {
+      "id": "status",
+      "label": "Статус"
+    },
+    {
+      "id": "editor",
+      "label": ""
+    }
   ],
   "staticText": {
     "searchForm": {

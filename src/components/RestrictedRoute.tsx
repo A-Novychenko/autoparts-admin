@@ -1,17 +1,19 @@
-import { ReactNode } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-
 import { useAuth } from '@/hooks';
 
 export const RestrictedRoute = ({
   component: Component,
-  redirectTo = '/',
+  redirectTo = '/dashboard',
 }: {
-  component: ReactNode;
-  redirectTo: string;
+  component: React.ReactNode;
+  redirectTo?: string;
 }) => {
-  const { isAuthenticated, isActive } = useAuth();
-  const shouldRedirect = isAuthenticated && isActive === 'enabled';
+  const { isAuthenticated, isRefreshing, isLoading } = useAuth();
 
-  return shouldRedirect ? <Navigate to={redirectTo} /> : Component;
+  if (isRefreshing || isLoading) {
+    return Component;
+  }
+
+  return isAuthenticated ? <Navigate to={redirectTo} replace /> : Component;
 };

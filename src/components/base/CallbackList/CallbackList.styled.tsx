@@ -1,18 +1,14 @@
 import styled from '@emotion/styled';
 
+const gridTemplate = `
+  80px 160px 100px 180px 160px 280px 1fr 160px
+`;
+
 export const Container = styled.section`
   width: 100%;
-  padding: 32px 16px;
-`;
-
-export const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const gridTemplate = `
-  80px 160px 100px 180px 120px 280px 1fr 160px
+  padding: 0px 16px 32px;
+  overflow: hidden;
+  height: calc(100vh - 128px);
 `;
 
 export const Header = styled.div`
@@ -28,10 +24,16 @@ export const Header = styled.div`
     font-size: 14px;
     background: #f9fafb;
     border-radius: 10px;
-    margin-bottom: 8px;
-
-    position: sticky;
-    top: 120px;
-    z-index: 10;
+    margin-bottom: 5px;
+    width: 100%;
   }
+`;
+
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: scroll;
+  height: calc(100vh - 173px);
+  padding: 0 0 32px;
 `;

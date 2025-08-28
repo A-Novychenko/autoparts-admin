@@ -1,10 +1,17 @@
+import { IoStorefrontSharp } from 'react-icons/io5';
+import { FaMoneyBillWave } from 'react-icons/fa';
+import { MdPayment } from 'react-icons/md';
+
+import NpLogo from '@assets/np-logo.svg?react';
+
 import {
   Card,
   Container,
   GridItem,
+  GridItemAddress,
   Header,
   List,
-  OpenBtn,
+  OrderNumber,
   StatusBadge,
 } from './OrderList.styled';
 import { OrderListProps } from './types';
@@ -25,10 +32,27 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
         return '#2a67ff';
     }
   };
+  const badgeText = (status: string) => {
+    switch (status) {
+      case 'new':
+        return 'Новый';
+      case 'in-progress':
+        return 'В обработке';
+      case 'done':
+        return 'Выполнен';
+      case 'rejected':
+        return 'Отклонен';
+
+      default:
+        return '#2a67ff';
+    }
+  };
 
   return (
     <Container>
       <Header>
+        <div>№</div>
+        <div>Статус</div>
         <div>№ / Статус</div>
         <div>Имя</div>
         <div>Телефон</div>
@@ -41,31 +65,40 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
 
       <List>
         {orders.map(order => (
-          <Card key={order.number}>
+          <Card key={order.number} to={`/dashboard/orders/order/${order._id}`}>
             <GridItem>
-              №{order.number}
+              <OrderNumber> №{order.number}</OrderNumber>
+            </GridItem>
+            <GridItem>
               <StatusBadge style={{ background: badgeColor(order.status) }}>
-                {order.status}
+                {badgeText(order.status)}
               </StatusBadge>
             </GridItem>
 
             <GridItem>{order.name}</GridItem>
             <GridItem>{order.phone}</GridItem>
             <GridItem>{order.email}</GridItem>
+            <GridItemAddress>
+              {order.delivery === 'post' ? (
+                <NpLogo width={20} height={20} />
+              ) : (
+                <IoStorefrontSharp size={20} color="#101340" />
+              )}
+              {order.deliveryCity && `${order.deliveryCity}`}
+              {order.postOffice && ` №${order.postOffice}`}
+            </GridItemAddress>
             <GridItem>
-              {order.delivery}
-              {order.deliveryCity && `, ${order.deliveryCity}`}
-              {order.postOffice && `, №${order.postOffice}`}
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {order.payment === 'prepayment' ? (
+                  <MdPayment size={20} color="blue" />
+                ) : (
+                  <FaMoneyBillWave size={20} color="green" />
+                )}
+              </div>
             </GridItem>
-            <GridItem>{order.payment}</GridItem>
             <GridItem>{order.message || '-'}</GridItem>
             <GridItem>
               {new Date(order.createdAt).toLocaleString('uk-UA')}
-              <div style={{ marginTop: 4 }}>
-                <OpenBtn to={`/dashboard/orders/order/${order._id}`}>
-                  Открыть заказ
-                </OpenBtn>
-              </div>
             </GridItem>
           </Card>
         ))}

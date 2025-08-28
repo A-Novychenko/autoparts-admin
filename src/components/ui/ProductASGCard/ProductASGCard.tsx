@@ -22,6 +22,10 @@ import {
   PromoPriceBox,
   PromoRemoveBtn,
 } from './ProductASGCard.styled';
+import {
+  FieldBtn,
+  FieldStatusAdd,
+} from '../ProductToggleField/ProductToggleField.styled';
 
 export const ProductASGCard: React.FC<ProductASGCardProps> = ({
   product,
@@ -125,6 +129,17 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
         });
         return productsUpdated;
       });
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleAddTopProducts = async () => {
+    try {
+      const { data } = await serverApi.post('/catalog/top-products', {
+        tecdoc_article: product.tecdoc_article,
+      });
+      console.log('data', data);
     } catch (error) {
       console.log('error', error);
     }
@@ -234,6 +249,14 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
             disabled={count_warehouse_3 === '0'}
             btnAction={handleAddProductToSale}
           />
+
+          <FieldBtn
+            style={{ width: 300 }}
+            type="button"
+            onClick={handleAddTopProducts}
+          >
+            <FieldStatusAdd>Добавить в ТОП-товары</FieldStatusAdd>
+          </FieldBtn>
         </PriceBox>
       </TextContentWrap>
     </Wrap>

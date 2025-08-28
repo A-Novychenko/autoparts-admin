@@ -18,61 +18,132 @@ export default function OrdersPage() {
     activeTab = 'callback';
   }
 
+  let bgColor;
+
+  switch (activeTab) {
+    case 'orders':
+      bgColor = '#c2ffd4';
+      break;
+    case 'vin':
+      bgColor = '#e4edff';
+      break;
+    case 'callback':
+      bgColor = '#ffeece';
+      break;
+
+    default:
+      bgColor = '#fefefe';
+  }
+
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          gap: '10px',
-          paddingBottom: '20px',
-          width: '100%',
-          height: 60,
-          position: 'fixed',
-          top: 64,
-          backgroundColor: '#fff',
-        }}
-      >
-        <button
-          onClick={() => navigate('/dashboard/orders/order-list')}
-          style={{
-            backgroundColor: activeTab === 'orders' ? '#101340' : '#fff',
-            color: activeTab === 'orders' ? '#fff' : '#101340',
-            flexGrow: 1,
-          }}
-        >
-          Заказы
-        </button>
+    <div
+      style={{
+        backgroundColor: bgColor,
+      }}
+    >
+      <PageWrap>
+        <PageContainer>
+          <div
+            style={{
+              width: '100%',
+              height: 64,
+              backgroundColor: bgColor,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                height: 64,
+                position: 'fixed',
+                backgroundColor: bgColor,
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  marginLeft: 16,
+                  marginRight: 16,
+                }}
+              >
+                <button
+                  onClick={() => navigate('/dashboard/orders/order-list')}
+                  style={{
+                    backgroundColor:
+                      activeTab === 'orders'
+                        ? 'rgba(255, 255, 255, 0.7)'
+                        : bgColor,
 
-        <button
-          onClick={() => navigate('/dashboard/orders/vin-requests')}
-          style={{
-            backgroundColor: activeTab === 'vin' ? '#101340' : '#fff',
-            color: activeTab === 'vin' ? '#fff' : '#101340',
-            flexGrow: 1,
-          }}
-        >
-          VIN-запросы
-        </button>
+                    transform:
+                      activeTab === 'orders' ? 'scale(1)' : 'scale(0.8)',
+                    zIndex: activeTab === 'orders' ? '10' : '1',
+                    color: activeTab === 'orders' ? '#101340' : '#858585',
+                    flexGrow: 1,
+                    border: 'transparent',
+                    outline: 'none',
+                    boxShadow:
+                      activeTab === 'orders'
+                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                        : '',
+                  }}
+                >
+                  Заказы
+                </button>
 
-        <button
-          onClick={() => navigate('/dashboard/orders/callback')}
-          style={{
-            backgroundColor: activeTab === 'callback' ? '#101340' : '#fff',
-            color: activeTab === 'callback' ? '#fff' : '#101340',
-            flexGrow: 1,
-          }}
-        >
-          Обратные звонки
-        </button>
-      </div>
+                <button
+                  onClick={() => navigate('/dashboard/orders/vin-requests')}
+                  style={{
+                    backgroundColor:
+                      activeTab === 'vin'
+                        ? 'rgba(255, 255, 255, 0.7)'
+                        : bgColor,
+                    transform: activeTab === 'vin' ? 'scale(1)' : 'scale(0.8)',
+                    zIndex: activeTab === 'vin' ? '10' : '1',
+                    color: activeTab === 'vin' ? '#101340' : '#858585',
+                    flexGrow: 1,
+                    border: 'transparent',
+                    outline: 'none',
+                    boxShadow:
+                      activeTab === 'vin'
+                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                        : '',
+                  }}
+                >
+                  VIN-запросы
+                </button>
 
-      <div style={{ marginTop: 124 }}>
-        <PageWrap>
-          <PageContainer>
-            <Outlet />
-          </PageContainer>
-        </PageWrap>
-      </div>
-    </>
+                <button
+                  onClick={() => navigate('/dashboard/orders/callback')}
+                  style={{
+                    backgroundColor:
+                      activeTab === 'callback'
+                        ? 'rgba(255, 255, 255, 0.7)'
+                        : bgColor,
+                    transform:
+                      activeTab === 'callback' ? 'scale(1)' : 'scale(0.8)',
+                    zIndex: activeTab === 'callback' ? '10' : '1',
+                    color: activeTab === 'callback' ? '#101340' : '#858585',
+                    flexGrow: 1,
+                    border: 'transparent',
+                    outline: 'none',
+                    boxShadow:
+                      activeTab === 'callback'
+                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                        : '',
+                  }}
+                >
+                  Обратные звонки
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <Outlet />
+        </PageContainer>
+      </PageWrap>
+    </div>
   );
 }
