@@ -53,7 +53,6 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
       <Header>
         <div>№</div>
         <div>Статус</div>
-        <div>№ / Статус</div>
         <div>Имя</div>
         <div>Телефон</div>
         <div>Email</div>
