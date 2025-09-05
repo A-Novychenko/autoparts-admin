@@ -59,6 +59,14 @@
       ]
     },
     {
+      "name": "Клиенты",
+      "link": "/dashboard/clients",
+      "available": [
+        "admin",
+        "manager"
+      ]
+    },
+    {
       "name": "ASG",
       "link": "/dashboard/asg",
       "available": [
@@ -163,5 +171,41 @@
       "add": "Добавить",
       "remove": "Убрать"
     }
+  },
+  "order": {
+    "statusOptions": [
+      {
+        "label": "Новый",
+        "value": "new"
+      },
+      {
+        "label": "В обработке",
+        "value": "in-progress"
+      },
+      {
+        "label": "Ожидает оплату",
+        "value": "awaiting-payment"
+      },
+      {
+        "label": "Выполняется",
+        "value": "processed"
+      },
+      {
+        "label": "Отправлено",
+        "value": "sent"
+      },
+      {
+        "label": "Резерв",
+        "value": "reserve"
+      },
+      {
+        "label": "Завершен",
+        "value": "done"
+      },
+      {
+        "label": "Отменен",
+        "value": "rejected"
+      }
+    ]
   }
 }

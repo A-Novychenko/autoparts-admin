@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 const gridTemplate = `
-   50px 100px 160px 140px 80px 160px 60px 1fr 160px
+   90px 120px 160px 140px 2fr 120px 1fr 160px
 `;
 const gridTemplateBig = `
-   60px 100px 180px 150px 200px 280px 60px 1fr 160px
+   90px 120px 180px 150px 280px 120px 1fr 160px
 `;
 
 export const Container = styled.section`
@@ -71,7 +71,7 @@ export const Card = styled(Link)`
   gap: 8px;
   align-items: center;
   padding: 8px 16px;
-  background: #fff;
+  background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   font-size: 14px;
@@ -86,6 +86,14 @@ export const Card = styled(Link)`
 
   @media (min-width: 1260px) {
     grid-template-columns: ${gridTemplateBig};
+  }
+
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+
+  &:hover,
+  &:focus {
+    background-color: #41fc989c;
+    color: #0700c5;
   }
 `;
 

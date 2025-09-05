@@ -162,7 +162,7 @@ export const DeliveryNotePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
             <Text style={styles.label}>Покупець: </Text>
             <View>
               <Text style={styles.text}>
-                {order.name}, {order.phone}
+                {order.client.name}, {order.client.phone}
               </Text>
               <Text style={styles.text}>
                 {order.delivery === 'post' ? 'Нова Пошта' : ''},{' '}

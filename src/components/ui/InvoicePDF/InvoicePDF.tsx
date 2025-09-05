@@ -165,7 +165,7 @@ export const InvoicePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
             <Text style={styles.label}>Покупець: </Text>
             <View>
               <Text style={styles.text}>
-                {order.name}, {order.phone}
+                {order.client.name}, {order.client.phone}
               </Text>
             </View>
           </View>

@@ -17,6 +17,8 @@ export default function OrdersListPage() {
     getAllOrders();
   }, []);
 
+  console.log('orders', orders);
+
   if (orders.length < 1) {
     return <p>Нет заказов</p>;
   }

@@ -5,7 +5,15 @@ export type VinReqDetailProps = {
 export type VinReqDetailItem = {
   _id: string;
   number: string;
-  status: 'new' | 'in-progress' | 'done' | 'rejected';
+  status:
+    | 'new'
+    | 'in-progress'
+    | 'awaiting-payment'
+    | 'processed'
+    | 'sent'
+    | 'reserve'
+    | 'done'
+    | 'rejected';
   phone: string;
   vinCode: string;
   name: string;

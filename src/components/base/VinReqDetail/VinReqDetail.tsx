@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 
+import { toast } from 'react-toastify';
+
+import { serverApi } from '@/redux/auth/authOperations';
+
+import staticData from '@/data/common.json';
+
+import { VinReqDetailItem, VinReqDetailProps } from './types';
+
 import {
   Container,
   Header,
@@ -12,16 +20,8 @@ import {
   CreatedDate,
   SaveButton,
 } from './VinReqDetail.styled';
-import { VinReqDetailItem, VinReqDetailProps } from './types';
-import { toast } from 'react-toastify';
-import { serverApi } from '@/redux/auth/authOperations';
 
-const statusOptions = [
-  { label: 'Новый', value: 'new' },
-  { label: 'В обработке', value: 'in-progress' },
-  { label: 'Завершен', value: 'done' },
-  { label: 'Отклонен', value: 'rejected' },
-];
+const { statusOptions } = staticData.order;
 
 export const VinReqDetail: React.FC<VinReqDetailProps> = ({ item }) => {
   const [comment, setComment] = useState('');

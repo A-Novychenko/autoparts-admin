@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { makeBadgeColor } from '@/utils';
 import { serverApi } from '@/redux/auth/authOperations';
 
+import staticData from '@/data/common.json';
+
 import { CallbackCardProps } from './types';
 
 import {
@@ -15,13 +17,7 @@ import {
   StatusBadge,
   TextAreaStyled,
 } from './CallbackCard.styled';
-
-const statusOptions = [
-  { label: 'Новый', value: 'new' },
-  { label: 'В обработке', value: 'in-progress' },
-  { label: 'Завершен', value: 'done' },
-  { label: 'Отклонен', value: 'rejected' },
-];
+const { statusOptions } = staticData.order;
 
 export const CallbackCard: React.FC<CallbackCardProps> = ({
   item,

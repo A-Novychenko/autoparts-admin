@@ -1,8 +1,7 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { PageContainer, PageWrap } from './ui';
 
-import { PageContainer, PageWrap } from '@/components/ui';
-
-export default function OrdersPage() {
+export const OrdersLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -10,9 +9,14 @@ export default function OrdersPage() {
 
   let activeTab: 'orders' | 'vin' | 'callback' | null = null;
 
-  if (pathname.includes('/order-list')) {
+  console.log('pathname', pathname);
+
+  if (pathname.includes('/order-list') || pathname.includes('/orders/order')) {
     activeTab = 'orders';
-  } else if (pathname.includes('/vin-requests')) {
+  } else if (
+    pathname.includes('/vin-requests') ||
+    pathname.includes('/orders/vin-request')
+  ) {
     activeTab = 'vin';
   } else if (pathname.includes('/callback')) {
     activeTab = 'callback';
@@ -34,7 +38,6 @@ export default function OrdersPage() {
     default:
       bgColor = '#fefefe';
   }
-
   return (
     <div
       style={{
@@ -84,10 +87,11 @@ export default function OrdersPage() {
                     flexGrow: 1,
                     border: 'transparent',
                     outline: 'none',
-                    boxShadow:
-                      activeTab === 'orders'
-                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
-                        : '',
+                    // boxShadow:
+                    //   activeTab === 'orders'
+                    //     ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                    //     : '',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.15)',
                   }}
                 >
                   Заказы
@@ -106,10 +110,11 @@ export default function OrdersPage() {
                     flexGrow: 1,
                     border: 'transparent',
                     outline: 'none',
-                    boxShadow:
-                      activeTab === 'vin'
-                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
-                        : '',
+                    // boxShadow:
+                    //   activeTab === 'vin'
+                    //     ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                    //     : '',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.15)',
                   }}
                 >
                   VIN-запросы
@@ -129,10 +134,11 @@ export default function OrdersPage() {
                     flexGrow: 1,
                     border: 'transparent',
                     outline: 'none',
-                    boxShadow:
-                      activeTab === 'callback'
-                        ? '0 4px 6px rgba(0, 0, 0, 0.15)'
-                        : '',
+                    // boxShadow:
+                    //   activeTab === 'callback'
+                    //     ? '0 4px 6px rgba(0, 0, 0, 0.15)'
+                    //     : '',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.15)',
                   }}
                 >
                   Обратные звонки
@@ -146,4 +152,4 @@ export default function OrdersPage() {
       </PageWrap>
     </div>
   );
-}
+};

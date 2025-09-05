@@ -13,19 +13,35 @@ type OrderProduct = {
 
 type OrderItem = {
   _id: string;
-  number: string;
-  status: 'new' | 'in-progress' | 'done' | 'rejected';
-  name: string;
-  phone: string;
-  email: string;
+
+  client: IClient;
+
+  shipment: IShipment;
+
   comment: string;
   message: string;
+
+  number: string;
+  status:
+    | 'new'
+    | 'in-progress'
+    | 'awaiting-payment'
+    | 'processed'
+    | 'sent'
+    | 'reserve'
+    | 'done'
+    | 'rejected';
+
   delivery: string;
   deliveryCity: string;
   postOffice: string;
   payment: string;
+
   products: OrderProduct[];
-  // products: Product[];
+  totalAmount: number;
+  totalAmountWithDiscount: number;
+  totalDiscount: number;
+
   createdAt: string;
   updatedAt: string;
 };

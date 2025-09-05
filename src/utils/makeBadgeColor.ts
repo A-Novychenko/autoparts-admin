@@ -1,15 +1,22 @@
 export const makeBadgeColor = (status: string) => {
   switch (status) {
     case 'new':
-      return '#2a67ff';
+      return '#2563eb';
     case 'in-progress':
-      return '#ff8018';
+      return '#f97316';
+    case 'awaiting-payment':
+      return '#eab308';
+    case 'processed':
+      return '#38bdf8';
+    case 'sent':
+      return '#8b5cf6';
+    case 'reserve':
+      return '#14b8a6';
     case 'done':
       return '#22c55e';
     case 'rejected':
-      return '#ff2a2a';
-
+      return '#ef4444';
     default:
-      return '#2a67ff';
+      return '#6b7280';
   }
 };

@@ -15,39 +15,9 @@ import {
   StatusBadge,
 } from './OrderList.styled';
 import { OrderListProps } from './types';
+import { makeBadgeColor, makeBadgeText } from '@/utils';
 
 export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
-  const badgeColor = (status: string) => {
-    switch (status) {
-      case 'new':
-        return '#2a67ff';
-      case 'in-progress':
-        return '#ff8018';
-      case 'done':
-        return '#22c55e';
-      case 'rejected':
-        return '#ff2a2a';
-
-      default:
-        return '#2a67ff';
-    }
-  };
-  const badgeText = (status: string) => {
-    switch (status) {
-      case 'new':
-        return 'Новый';
-      case 'in-progress':
-        return 'В обработке';
-      case 'done':
-        return 'Выполнен';
-      case 'rejected':
-        return 'Отклонен';
-
-      default:
-        return '#2a67ff';
-    }
-  };
-
   return (
     <Container>
       <Header>
@@ -55,9 +25,9 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
         <div>Статус</div>
         <div>Имя</div>
         <div>Телефон</div>
-        <div>Email</div>
+
         <div>Доставка</div>
-        <div>Оплата</div>
+        <div>Оплата/Сумма</div>
         <div>Сообщение</div>
         <div>Дата</div>
       </Header>
@@ -69,33 +39,40 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
               <OrderNumber> №{order.number}</OrderNumber>
             </GridItem>
             <GridItem>
-              <StatusBadge style={{ background: badgeColor(order.status) }}>
-                {badgeText(order.status)}
+              <StatusBadge style={{ background: makeBadgeColor(order.status) }}>
+                {makeBadgeText(order.status)}
               </StatusBadge>
             </GridItem>
 
-            <GridItem>{order.name}</GridItem>
-            <GridItem>{order.phone}</GridItem>
-            <GridItem>{order.email}</GridItem>
+            <GridItem>{order?.client?.name}</GridItem>
+            <GridItem>{order?.client?.phone}</GridItem>
+
             <GridItemAddress>
-              {order.delivery === 'post' ? (
-                <NpLogo width={20} height={20} />
-              ) : (
-                <IoStorefrontSharp size={20} color="#101340" />
-              )}
-              {order.deliveryCity && `${order.deliveryCity}`}
-              {order.postOffice && ` №${order.postOffice}`}
+              <span style={{ flexShrink: 0, marginRight: 4 }}>
+                {order.shipment.delivery === 'post' ? (
+                  <NpLogo width={20} height={20} />
+                ) : (
+                  <IoStorefrontSharp size={20} color="#101340" />
+                )}
+              </span>
+              {order.shipment.deliveryCity && `${order.shipment.deliveryCity}`}
+              {order.shipment.postOffice && ` №${order.shipment.postOffice}`}
             </GridItemAddress>
             <GridItem>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {order.payment === 'prepayment' ? (
-                  <MdPayment size={20} color="blue" />
-                ) : (
-                  <FaMoneyBillWave size={20} color="green" />
-                )}
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <span style={{ flexShrink: 0, marginRight: 4 }}>
+                  {' '}
+                  {order.shipment.payment === 'prepayment' ? (
+                    <MdPayment size={20} color="blue" />
+                  ) : (
+                    <FaMoneyBillWave size={20} color="green" />
+                  )}
+                </span>
+                {order.totalAmountWithDiscount || '###'} грн
               </div>
             </GridItem>
             <GridItem>{order.message || '-'}</GridItem>
+
             <GridItem>
               {new Date(order.createdAt).toLocaleString('uk-UA')}
             </GridItem>

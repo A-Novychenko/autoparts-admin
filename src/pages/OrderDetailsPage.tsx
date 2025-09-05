@@ -9,8 +9,6 @@ const OrderDetailsPage = () => {
   const { id } = useParams();
   const [order, setOrder] = useState<OrderItem | null>(null);
 
-  console.log('order', order);
-
   useEffect(() => {
     const getOrder = async () => {
       const { data } = await serverApi.get(`orders/${id}`);
@@ -21,13 +19,7 @@ const OrderDetailsPage = () => {
     getOrder();
   }, [id]);
 
-  console.log('order', order);
-
-  return (
-    <>
-      <OrderDetail order={order} setOrder={setOrder} />
-    </>
-  );
+  return <>{order && <OrderDetail order={order} setOrder={setOrder} />}</>;
 };
 
 export default OrderDetailsPage;

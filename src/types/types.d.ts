@@ -33,3 +33,31 @@ interface ICategory {
   _id: string;
   childrenCategories?: ICategory[];
 }
+
+interface IClient {
+  _id: string;
+  name: string;
+  phone: string;
+  email: string;
+  login: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+  clientCode: string;
+}
+
+type DeliveryMethod = 'pickup' | 'post';
+type PaymentMethod = 'card' | 'cash' | 'prepayment' | 'cod';
+
+interface IShipment {
+  _id: string;
+  client: string;
+  name: string;
+  phone: string;
+  delivery: DeliveryMethod;
+  deliveryCity: string;
+  postOffice: string;
+  payment: PaymentMethod;
+  createdAt: string;
+  updatedAt: string;
+}
