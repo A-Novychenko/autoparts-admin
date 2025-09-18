@@ -17,8 +17,6 @@ export default function ProductsPage() {
 
         const { data } = await serverApi.get('catalog/top-products');
 
-        console.log('products', data.products);
-
         setTopProducts(data.products);
       } catch (e) {
         console.log('e', e);

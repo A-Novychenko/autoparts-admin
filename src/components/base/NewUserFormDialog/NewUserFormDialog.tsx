@@ -65,8 +65,6 @@ export const NewUserFormDialog = () => {
               role: formJson.role,
             };
 
-            console.log('data', data);
-
             dispatch(addUser(data));
 
             handleClose();

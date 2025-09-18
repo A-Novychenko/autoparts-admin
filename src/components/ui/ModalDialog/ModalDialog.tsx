@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -6,6 +6,7 @@ import {
   DialogActions,
   Button,
   Typography,
+  DialogProps,
 } from '@mui/material';
 
 type ModalDialogProps = {
@@ -16,6 +17,10 @@ type ModalDialogProps = {
   onConfirm?: () => void;
   confirmText?: string;
   cancelText?: string;
+  /** Ширина окна, поддерживаются стандартные значения MUI */
+  maxWidth?: DialogProps['maxWidth'];
+  /** Растягивать ли окно на всю ширину maxWidth */
+  fullWidth?: boolean;
 };
 
 export const ModalDialog: React.FC<ModalDialogProps> = ({
@@ -26,14 +31,25 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
   onConfirm,
   confirmText = 'Сохранить',
   cancelText = 'Отмена',
+  maxWidth = 'sm',
+  fullWidth = true,
 }) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (open && dialogRef.current) {
+      dialogRef.current.focus();
+    }
+  }, [open]);
   return (
     <Dialog
+      ref={dialogRef}
       open={open}
       onClose={onClose}
       aria-labelledby="modal-dialog-title"
-      fullWidth
-      maxWidth="sm"
+      fullWidth={fullWidth}
+      maxWidth={maxWidth}
+      disableEnforceFocus
     >
       {title && <DialogTitle id="modal-dialog-title">{title}</DialogTitle>}
 

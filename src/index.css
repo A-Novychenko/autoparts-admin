@@ -16,14 +16,20 @@
 
   --primary-text: #101340;
   --primary-text-opacity: #101340c0;
+  --secondary-text: #fff;
 
   --main-bg: #fff;
 
+  --green-color: #008000;
+  --green-color-opacity: #00800043;
   --slate-color: #e5e7eb;
   --dark-slate-color: #a0a0a0;
   --sales-success-color: #22c55e;
 
   --color-danger: #b71c1c;
+  --red-color: #ff0000;
+  --red-color-opacity: #ff000054;
+  --red-color-light: #ffa6a6;
 
   --animate: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 

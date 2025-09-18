@@ -44,10 +44,23 @@ interface IClient {
   createdAt: string;
   updatedAt: string;
   clientCode: string;
+  company: string | null;
+  discountRate: number;
+  totalSpent: number;
 }
 
+type OrderStatus =
+  | 'new'
+  | 'in-progress'
+  | 'awaiting-payment'
+  | 'processed'
+  | 'sent'
+  | 'reserve'
+  | 'done'
+  | 'rejected';
 type DeliveryMethod = 'pickup' | 'post';
 type PaymentMethod = 'card' | 'cash' | 'prepayment' | 'cod';
+type DeliveryPaymentMethod = 'client' | 'shop' | 'clientBank' | 'shopBank';
 
 interface IShipment {
   _id: string;
@@ -60,4 +73,6 @@ interface IShipment {
   payment: PaymentMethod;
   createdAt: string;
   updatedAt: string;
+  company: string;
+  deliveryPayment: DeliveryPaymentMethod;
 }

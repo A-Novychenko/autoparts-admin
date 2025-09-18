@@ -36,11 +36,8 @@ export const setLogoutIsAuthenticatedCallback = (callback: () => void) => {
 serverApi.interceptors.response.use(
   res => res,
   async e => {
-    console.log('BEFORE');
     if (e.response && e.response.status === 401 && !e.config._retry) {
       e.config._retry = true;
-
-      console.log('AFTER');
 
       try {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -53,13 +50,8 @@ serverApi.interceptors.response.use(
           refreshToken,
         });
 
-        console.log('data!!!QQ!!', data);
-
         const newAccessToken = data.accessToken;
         const newRefreshToken = data.refreshToken;
-
-        console.log('newAccessToken', newAccessToken);
-        console.log('newRefreshToken', newRefreshToken);
 
         setAuthHeader(newAccessToken);
 
@@ -111,13 +103,6 @@ export const login = createAsyncThunk(
   ) => {
     try {
       const { data } = await serverApi.post('/auth/login', credentials);
-      // const { data } = await axios.post(
-      //   'http://localhost:3009/auth/login',
-      //   credentials
-      // );
-
-      console.log('auth/login_data', data);
-      console.log('auth/login_data_refreshToken', data.refreshToken);
 
       setAuthHeader(data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
@@ -136,19 +121,13 @@ export const refreshUser = createAsyncThunk(
 
     const persistedToken = state.auth.token;
 
-    console.log('persistedToken', persistedToken);
-
     if (persistedToken === null) {
       return thunkApi.rejectWithValue('Unable to fetch user');
     }
 
-    console.log('persistedToken', persistedToken);
-
     try {
       setAuthHeader(persistedToken);
       const { data } = await serverApi.get('/auth/current');
-
-      console.log('data', data);
 
       return data;
     } catch (e) {

@@ -55,8 +55,14 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
                   <IoStorefrontSharp size={20} color="#101340" />
                 )}
               </span>
-              {order.shipment.deliveryCity && `${order.shipment.deliveryCity}`}
-              {order.shipment.postOffice && ` №${order.shipment.postOffice}`}
+
+              {order.shipment.delivery === 'post'
+                ? order.shipment.deliveryCity &&
+                  `${order.shipment.deliveryCity}`
+                : 'Самовывоз'}
+              {order.shipment.delivery === 'post'
+                ? order.shipment.postOffice && ` №${order.shipment.postOffice}`
+                : null}
             </GridItemAddress>
             <GridItem>
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>

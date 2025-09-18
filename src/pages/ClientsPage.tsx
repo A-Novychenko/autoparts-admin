@@ -17,8 +17,6 @@ export default function ClientsPage() {
 
         const { data } = await serverApi.get('clients/');
 
-        console.log('clients', data.clients);
-
         setClients(data.clients);
       } catch (e) {
         console.log('e', e);

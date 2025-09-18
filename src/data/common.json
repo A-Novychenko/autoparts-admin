@@ -206,6 +206,16 @@
         "label": "Отменен",
         "value": "rejected"
       }
+    ],
+    "paymentOptions": [
+      {
+        "label": "Оплачено",
+        "value": true
+      },
+      {
+        "label": "Не оплачено",
+        "value": false
+      }
     ]
   }
 }

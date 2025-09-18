@@ -3,12 +3,16 @@ type OrderProduct = {
   article: string;
   name: string;
   img: string;
+  supplierPrice: number | null;
   price: number;
   price_promo: number | null;
   quantity: number;
   availability: string;
+  availabilityLviv: string;
+  availabilityOther?: string;
   _id: string;
   brand: string;
+  comment: string;
 };
 
 type OrderItem = {
@@ -22,20 +26,7 @@ type OrderItem = {
   message: string;
 
   number: string;
-  status:
-    | 'new'
-    | 'in-progress'
-    | 'awaiting-payment'
-    | 'processed'
-    | 'sent'
-    | 'reserve'
-    | 'done'
-    | 'rejected';
-
-  delivery: string;
-  deliveryCity: string;
-  postOffice: string;
-  payment: string;
+  status: OrderStatus;
 
   products: OrderProduct[];
   totalAmount: number;
@@ -44,4 +35,33 @@ type OrderItem = {
 
   createdAt: string;
   updatedAt: string;
+
+  declarationNumber: string[];
+  isPaid: boolean;
+
+  createdBy: string | null;
+  updatedBy: string | null;
+};
+
+type OrderData = {
+  _id: string;
+
+  comment: string;
+  message: string;
+
+  number: string;
+  status: OrderStatus;
+
+  totalAmount: number;
+  totalAmountWithDiscount: number;
+  totalDiscount: number;
+
+  createdAt: string;
+  updatedAt: string;
+
+  declarationNumber: string[];
+  isPaid: boolean;
+
+  createdBy: string | null;
+  updatedBy: string | null;
 };

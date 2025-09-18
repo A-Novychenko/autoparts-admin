@@ -1,5 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { PageContainer, PageWrap } from './ui';
+
+import { PageContainer, PageWrap } from '@components/ui';
 
 export const OrdersLayout = () => {
   const navigate = useNavigate();
@@ -8,8 +9,6 @@ export const OrdersLayout = () => {
   const pathname = location.pathname;
 
   let activeTab: 'orders' | 'vin' | 'callback' | null = null;
-
-  console.log('pathname', pathname);
 
   if (pathname.includes('/order-list') || pathname.includes('/orders/order')) {
     activeTab = 'orders';

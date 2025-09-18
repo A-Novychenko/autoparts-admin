@@ -38,8 +38,6 @@ export default function VinRequestPage() {
     const getVinRequestData = async () => {
       const { data } = await serverApi.get(`/orders/vin-requests/${id}`);
 
-      console.log('data', data);
-
       setItem(data.data);
     };
 

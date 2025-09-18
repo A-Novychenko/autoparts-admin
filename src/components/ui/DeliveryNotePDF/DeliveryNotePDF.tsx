@@ -123,8 +123,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DeliveryNotePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
-  const total = order.products.reduce(
+export const DeliveryNotePDF: React.FC<{
+  order: OrderData;
+  shipment: IShipment;
+  products: OrderProduct[];
+}> = ({ order, shipment, products }) => {
+  const total = products.reduce(
     (acc, product) => acc + product.quantity * product.price,
     0
   );
@@ -162,11 +166,12 @@ export const DeliveryNotePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
             <Text style={styles.label}>Покупець: </Text>
             <View>
               <Text style={styles.text}>
-                {order.client.name}, {order.client.phone}
+                {/* {client.name}, {client.phone} */}
+                {shipment.name}, {shipment.phone}
               </Text>
               <Text style={styles.text}>
-                {order.delivery === 'post' ? 'Нова Пошта' : ''},{' '}
-                {order.deliveryCity} №{order.postOffice}:
+                {shipment.delivery === 'post' ? 'Нова Пошта' : ''},{' '}
+                {shipment.deliveryCity} №{shipment.postOffice}:
               </Text>
             </View>
           </View>
@@ -200,7 +205,7 @@ export const DeliveryNotePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
             <Text style={[styles.cell, styles.col6]}>Сума</Text>
           </View>
 
-          {order.products.map((item, idx) => (
+          {products.map((item, idx) => (
             <View style={styles.tableRow} wrap={false} key={idx}>
               <Text style={[styles.cell, styles.col1]}>{idx + 1}</Text>
               <Text style={[styles.cell, styles.col2]}>
@@ -228,8 +233,8 @@ export const DeliveryNotePDF: React.FC<{ order: OrderItem }> = ({ order }) => {
 
         <View style={styles.totalBoxWithQty}>
           <Text style={styles.totalRow}>
-            Всього найменувань: {order.products.length}, на суму:{' '}
-            {total.toFixed(2)} грн
+            Всього найменувань: {products.length}, на суму: {total.toFixed(2)}{' '}
+            грн
           </Text>
           <Text style={styles.totalRow}>
             {numberToUkrainianCurrency(Number(total.toFixed(2)))

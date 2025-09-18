@@ -69,8 +69,6 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
 
       const { updProduct } = data;
 
-      console.log('updProduct', updProduct);
-
       setProducts(pSt => {
         const productsUpdated = pSt.map(product => {
           if (product.id === updProduct.id) {
@@ -136,10 +134,11 @@ export const ProductASGCard: React.FC<ProductASGCardProps> = ({
 
   const handleAddTopProducts = async () => {
     try {
-      const { data } = await serverApi.post('/catalog/top-products', {
+      // const { data } = await serverApi.post('/catalog/top-products', {
+      await serverApi.post('/catalog/top-products', {
         tecdoc_article: product.tecdoc_article,
       });
-      console.log('data', data);
+      // console.log('data', data);
     } catch (error) {
       console.log('error', error);
     }

@@ -1,62 +1,50 @@
-import { serverApi } from '@/redux/auth/authOperations';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+
+import { UserShipments } from '@/components/base';
+
+import { serverApi } from '@/redux/auth/authOperations';
 
 export default function UserShipmentsPage() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const { id, from } = (location.state || {}) as { id?: string; from?: string };
 
-  const [shipmentList, setShipmentList] = useState<IShipment[]>();
+  const [client, setClient] = useState<IClient | null>(null);
 
-  const { id, from } = location.state || {};
+  const [shipmentList, setShipmentList] = useState<IShipment[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchShipments = async () => {
-      const { data } = await serverApi.get(`/clients/shipments/${id}`);
+    if (!id) return;
 
-      setShipmentList(data.shipments);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const { data } = await serverApi.get(`/clients/shipment/${id}`);
+        setShipmentList(Array.isArray(data?.shipments) ? data.shipments : []);
+        setClient(data?.client ? data.client : null);
+      } catch (err) {
+        console.error(err);
+        toast.error('Не удалось загрузить варианты доставки');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchShipments();
+    fetchData();
   }, [id]);
 
   return (
-    <>
-      <p>Редактируем доставку для заказа {id}</p>
-      <button onClick={() => navigate(from || '/')}>Вернуться</button>
-
-      <ul style={{ display: 'flex', gap: 8 }}>
-        {shipmentList &&
-          shipmentList.map(shipmentItem => {
-            const {
-              _id,
-              name,
-              phone,
-              delivery,
-              deliveryCity,
-              postOffice,
-              payment,
-            } = shipmentItem;
-            return (
-              <li key={_id}>
-                <span>{name}</span>
-                <span>{phone}</span>
-                <span>{delivery}</span>
-                <span>{deliveryCity}</span>
-                <span>{postOffice}</span>
-                <span>{payment}</span>
-                {/* <button
-                    type="button"
-                    onClick={() => {
-                      setCurrentShipment(shipmentItem);
-                    }}
-                  >
-                    Выбрать
-                  </button> */}
-              </li>
-            );
-          })}
-      </ul>
-    </>
+    <UserShipments
+      id={id}
+      from={from}
+      client={client}
+      shipmentList={shipmentList}
+      loading={loading}
+      setLoading={setLoading}
+      setShipmentList={setShipmentList}
+    />
   );
 }
