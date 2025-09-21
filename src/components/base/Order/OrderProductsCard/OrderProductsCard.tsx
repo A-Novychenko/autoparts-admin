@@ -27,14 +27,18 @@ import {
   CancelBtn,
   SaveBtn,
   ProductQtyBox,
+  ProductDiscountPercentage,
+  ProductDiscount,
 } from './OrderProductsCard.styled';
 
 export const OrderProductsCard: React.FC<{
   product: OrderProduct;
-  setProducts: Dispatch<SetStateAction<OrderProduct[] | null>>;
+  orderIsAccounted: boolean;
+  setProducts: Dispatch<SetStateAction<OrderProduct[]>>;
+  setOrder: Dispatch<SetStateAction<OrderData | null>>;
   idx: number;
   orderId: string;
-}> = ({ product, idx, orderId, setProducts }) => {
+}> = ({ product, idx, orderId, setProducts, setOrder, orderIsAccounted }) => {
   const getInitialDraft = (product: OrderProduct) => ({
     quantity: product.quantity,
     discountPercent: product.price_promo
@@ -75,7 +79,7 @@ export const OrderProductsCard: React.FC<{
 
   const handlePromoPriceChange = (val: number) => {
     if (val < 0) val = 0;
-    if (val > product.price) val = product.price;
+    // if (val > product.price) val = product.price;
     const discountValue = product.price - val;
     const discountPercent = Math.round((discountValue / product.price) * 100);
     setDraft(prev => ({
@@ -90,13 +94,35 @@ export const OrderProductsCard: React.FC<{
 
   const handleSave = async () => {
     try {
-      await serverApi.patch(`/orders/crm-editing/${orderId}`, {
+      const { data } = await serverApi.patch(`/orders/cms-editing/${orderId}`, {
         quantity: draft.quantity,
         price_promo:
           draft.promoPrice === product.price ? null : draft.promoPrice,
         productId: product._id,
         comment: draft.comment,
       });
+
+      const {
+        products,
+        totalAmount,
+        totalDiscount,
+        totalAmountWithDiscount,
+        updatedBy,
+      } = data.updOrder as OrderItem;
+
+      setProducts(products);
+      setOrder(prev =>
+        prev
+          ? {
+              ...prev,
+              totalAmount,
+              totalDiscount,
+              totalAmountWithDiscount,
+              updatedBy,
+            }
+          : prev
+      );
+
       toast.success('Изменения сохранены');
       setIsEditing(false);
     } catch (err) {
@@ -107,11 +133,12 @@ export const OrderProductsCard: React.FC<{
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await serverApi.delete(`/orders/del-product/${orderId}/${productId}`);
-
-      setProducts(prev =>
-        prev ? prev.filter(({ _id }) => _id !== productId) : prev
+      const { data } = await serverApi.delete(
+        `/orders/del-product/${orderId}/${productId}`
       );
+
+      setProducts(data.products);
+      setOrder(prev => (prev ? { ...prev, ...data.orderData } : prev));
 
       toast.success('Товар удален');
     } catch (error) {
@@ -121,7 +148,11 @@ export const OrderProductsCard: React.FC<{
 
   return (
     <>
-      <ProductCard key={product._id} isEditing={isEditing}>
+      <ProductCard
+        key={product._id}
+        isEditing={isEditing}
+        isAccounted={orderIsAccounted}
+      >
         <ProductNumber>{idx + 1}</ProductNumber>
         <ProductImageBtn
           // type="button"
@@ -146,21 +177,31 @@ export const OrderProductsCard: React.FC<{
         <ProductInStock>
           {product.availabilityOther ? (
             <>
-              <ProductInStockItem qty={product.availabilityOther}>
+              <ProductInStockItem
+                qty={product.availabilityOther}
+                isAccounted={orderIsAccounted}
+              >
                 Склад {product.availabilityOther}
               </ProductInStockItem>
             </>
           ) : (
             <>
-              <ProductInStockItem qty={product.availability}>
+              <ProductInStockItem
+                qty={product.availability}
+                isAccounted={orderIsAccounted}
+              >
                 Киев {product.availability}
               </ProductInStockItem>
-              <ProductInStockItem qty={product.availabilityLviv}>
+              <ProductInStockItem
+                qty={product.availabilityLviv}
+                isAccounted={orderIsAccounted}
+              >
                 Львов {product.availabilityLviv}
               </ProductInStockItem>
             </>
           )}
         </ProductInStock>
+
         <ProductSupplierPrice>{product.supplierPrice}</ProductSupplierPrice>
         {isEditing ? (
           <ProductQtyBox>
@@ -174,9 +215,14 @@ export const OrderProductsCard: React.FC<{
         ) : (
           <p>{product.quantity}</p>
         )}
-        <ProductPrice hasPromo={product.price_promo}>
+
+        <ProductPrice
+          hasPromo={product.price_promo}
+          isAccounted={orderIsAccounted}
+        >
           {product.price}
         </ProductPrice>
+
         {isEditing ? (
           <input
             type="number"
@@ -185,9 +231,21 @@ export const OrderProductsCard: React.FC<{
             style={{ width: '60px', textAlign: 'center' }}
           />
         ) : (
-          <p>{draft.discountPercent}%</p>
+          <ProductDiscountPercentage
+            hasNegativeDiscount={draft.discountPercent < 0}
+          >
+            {draft.discountPercent}%
+          </ProductDiscountPercentage>
         )}
-        <p>{product.price_promo ? product.price - product.price_promo : 0}</p>
+
+        <ProductDiscount
+          hasNegativeDiscount={
+            (product.price_promo ? product.price - product.price_promo : 0) < 0
+          }
+        >
+          {product.price_promo ? product.price - product.price_promo : 0}
+        </ProductDiscount>
+
         {isEditing ? (
           <input
             type="number"
@@ -196,10 +254,14 @@ export const OrderProductsCard: React.FC<{
             style={{ width: '80px', textAlign: 'center' }}
           />
         ) : (
-          <ProductPricePromo hasPromo={product.price_promo}>
+          <ProductPricePromo
+            hasPromo={product.price_promo}
+            isAccounted={orderIsAccounted}
+          >
             {draft.promoPrice}
           </ProductPricePromo>
         )}
+
         <ProductTotal>{total}</ProductTotal>
 
         {isEditing ? (
@@ -244,6 +306,7 @@ export const OrderProductsCard: React.FC<{
           <EditBtn
             type="button"
             title="Редактировать"
+            disabled={orderIsAccounted}
             onClick={() => {
               setIsEditing(true);
             }}
@@ -252,12 +315,20 @@ export const OrderProductsCard: React.FC<{
           </EditBtn>
         )}
 
-        <ConfirmAction
-          message="Таки удалить, да?🤔"
-          onConfirm={() => handleDeleteProduct(product._id)}
-        >
-          <DelBtn size={20} action={() => {}} />
-        </ConfirmAction>
+        {orderIsAccounted ? (
+          <DelBtn size={20} action={() => {}} disabled />
+        ) : (
+          <ConfirmAction
+            message="Таки удалить, да?🤔"
+            onConfirm={() => {
+              if (orderIsAccounted) return;
+
+              handleDeleteProduct(product._id);
+            }}
+          >
+            <DelBtn size={20} action={() => {}} />
+          </ConfirmAction>
+        )}
       </ProductCard>
 
       <ModalDialog

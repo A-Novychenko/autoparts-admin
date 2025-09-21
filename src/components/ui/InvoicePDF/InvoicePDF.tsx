@@ -125,13 +125,10 @@ const styles = StyleSheet.create({
 
 export const InvoicePDF: React.FC<{
   order: OrderData;
-  client: IClient;
+  shipment: IShipment | null;
   products: OrderProduct[];
-}> = ({ order, client, products }) => {
-  const total = products.reduce(
-    (acc, product) => acc + product.quantity * product.price,
-    0
-  );
+}> = ({ order, products, shipment }) => {
+  const { totalAmountWithDiscount } = order;
 
   return (
     <Document>
@@ -169,7 +166,7 @@ export const InvoicePDF: React.FC<{
             <Text style={styles.label}>Покупець: </Text>
             <View>
               <Text style={styles.text}>
-                {client.name}, {client.phone}
+                {shipment ? `${shipment.name},${shipment.phone}` : null}
               </Text>
             </View>
           </View>
@@ -193,42 +190,55 @@ export const InvoicePDF: React.FC<{
             <Text style={[styles.cell, styles.col6]}>Сума</Text>
           </View>
 
-          {products.map((item, idx) => (
-            <View style={styles.tableRow} wrap={false} key={idx}>
-              <Text style={[styles.cell, styles.col1]}>{idx + 1}</Text>
-              <Text style={[styles.cell, styles.col2]}>
-                {item.article} {item.brand && ` ${item.brand}`} — {item.name}
-              </Text>
-              <Text style={[styles.cell, styles.col3]}>
-                {item.quantity.toFixed(2)}
-              </Text>
-              <Text style={[styles.cell, styles.col4]}>шт</Text>
-              <Text style={[styles.cell, styles.col5]}>
-                {item.price.toFixed(2)}
-              </Text>
-              <Text style={[styles.cell, styles.col6]}>
-                {(item.quantity * item.price).toFixed(2)}
-              </Text>
-            </View>
-          ))}
+          {products.map(
+            ({ price, price_promo, article, brand, name, quantity }, idx) => {
+              const resultPrice: number = price_promo ? price_promo : price;
+
+              return (
+                <View style={styles.tableRow} wrap={false} key={idx}>
+                  <Text style={[styles.cell, styles.col1]}>{idx + 1}</Text>
+                  <Text style={[styles.cell, styles.col2]}>
+                    {article} {brand && ` ${brand}`} — {name}
+                  </Text>
+                  <Text style={[styles.cell, styles.col3]}>
+                    {quantity.toFixed(2)}
+                  </Text>
+                  <Text style={[styles.cell, styles.col4]}>шт</Text>
+                  <Text style={[styles.cell, styles.col5]}>
+                    {resultPrice.toFixed(2)}
+                  </Text>
+                  <Text style={[styles.cell, styles.col6]}>
+                    {(quantity * resultPrice).toFixed(2)}
+                  </Text>
+                </View>
+              );
+            }
+          )}
         </View>
 
         {/* Сумма и примечание */}
         <View style={styles.totalBox}>
           <Text style={styles.totalRow}>Всього: </Text>
-          <Text style={styles.totalRow}> {total.toFixed(2)} грн</Text>
+          <Text style={styles.totalRow}>
+            {totalAmountWithDiscount.toFixed(2)} грн
+          </Text>
         </View>
 
         <View style={styles.totalBoxWithQty}>
           <Text style={styles.totalRow}>
-            Всього найменувань: {products.length}, на суму: {total.toFixed(2)}{' '}
-            грн
+            Всього найменувань: {products.length}, на суму:{' '}
+            {totalAmountWithDiscount.toFixed(2)} грн
           </Text>
+
           <Text style={styles.totalRow}>
-            {numberToUkrainianCurrency(Number(total.toFixed(2)))
+            {numberToUkrainianCurrency(
+              Number(totalAmountWithDiscount.toFixed(2))
+            )
               .charAt(0)
               .toUpperCase() +
-              numberToUkrainianCurrency(Number(total.toFixed(2))).slice(1)}
+              numberToUkrainianCurrency(
+                Number(totalAmountWithDiscount.toFixed(2))
+              ).slice(1)}
           </Text>
         </View>
 

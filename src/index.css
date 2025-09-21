@@ -26,10 +26,13 @@
   --dark-slate-color: #a0a0a0;
   --sales-success-color: #22c55e;
 
+  --accounting-order: #00000025;
+
   --color-danger: #b71c1c;
   --red-color: #ff0000;
   --red-color-opacity: #ff000054;
   --red-color-light: #ffa6a6;
+  --orangered-color-light: #ff79264d;
 
   --animate: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 

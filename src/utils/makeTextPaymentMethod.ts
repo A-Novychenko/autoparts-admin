@@ -1,4 +1,4 @@
-export const makeTextPaymentMethod = (method: PaymentMethod) => {
+export const makeTextPaymentMethod = (method: PaymentMethod | undefined) => {
   switch (method) {
     case 'card':
       return 'Оплата картой';
@@ -10,6 +10,6 @@ export const makeTextPaymentMethod = (method: PaymentMethod) => {
       return 'Наложенный платеж';
 
     default:
-      'not method';
+      return '—';
   }
 };

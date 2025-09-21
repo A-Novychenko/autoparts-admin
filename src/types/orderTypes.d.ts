@@ -32,6 +32,7 @@ type OrderItem = {
   totalAmount: number;
   totalAmountWithDiscount: number;
   totalDiscount: number;
+  isAccounted: boolean;
 
   createdAt: string;
   updatedAt: string;
@@ -55,6 +56,7 @@ type OrderData = {
   totalAmount: number;
   totalAmountWithDiscount: number;
   totalDiscount: number;
+  isAccounted: boolean;
 
   createdAt: string;
   updatedAt: string;

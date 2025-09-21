@@ -82,7 +82,11 @@ export const ConfirmAction: React.FC<ConfirmActionProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            style={{ top: pos.top, left: pos.left }}
+            style={{
+              top: pos.top,
+              left: pos.left,
+              backgroundColor: '#fffff1',
+            }}
           >
             <Message>{message}</Message>
             <Actions>

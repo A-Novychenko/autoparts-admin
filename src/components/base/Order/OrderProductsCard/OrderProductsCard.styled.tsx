@@ -9,6 +9,7 @@ interface ThumbSizeProps {
 
 interface IProductPrice {
   hasPromo: number | null;
+  isAccounted: boolean;
 }
 
 const COLORS = {
@@ -25,6 +26,7 @@ const COLORS = {
 
 export const ProductCard = styled.li<{
   isEditing: boolean;
+  isAccounted: boolean;
   isAddModal?: boolean;
 }>`
   display: grid;
@@ -33,7 +35,13 @@ export const ProductCard = styled.li<{
 
   column-gap: 4px;
 
-  background-color: ${({ isEditing }) => (isEditing ? '#fff789' : '#fff')};
+  background-color: ${({ isAccounted, isEditing }) => {
+    const isEdColor = isEditing ? '#fff789' : '#fff';
+    const isAccColor = isAccounted ? 'var(--accounting-order)' : undefined;
+
+    return isAccColor ? isAccColor : isEdColor;
+  }};
+
   border-bottom: 1px solid #e0e6f0;
 
   font-size: 14px;
@@ -42,9 +50,15 @@ export const ProductCard = styled.li<{
   transition: background-color var(--animate);
 
   &:hover {
-    /* background-color: #9bfeb2; */
-    background-color: ${({ isEditing }) =>
-      isEditing ? '#fff789' : '#bbffcbce'};
+    /* background-color: ${({ isEditing }) =>
+      isEditing ? '#fff789' : '#bbffcbce'}; */
+
+    background-color: ${({ isAccounted, isEditing }) => {
+      const isEdColor = isEditing ? '#fff789' : '#bbffcbce';
+      const isAccColor = isAccounted ? 'var(--accounting-order)' : undefined;
+
+      return isAccColor ? isAccColor : isEdColor;
+    }};
   }
 
   min-width: 900px; /* одинаково с хедером */
@@ -55,7 +69,10 @@ export const ProductCard = styled.li<{
     align-items: center;
   }
   & > p:nth-of-type(2n + 1) {
-    background-color: #eceeff5b;
+    /* background-color: #eceeff5b; */
+
+    background-color: ${({ isAccounted }) =>
+      isAccounted ? 'var(--accounting-order)' : '#eceeff5b'};
   }
 `;
 
@@ -139,12 +156,18 @@ export const ProductInStock = styled.p`
 
 interface IProductInStockItem {
   qty: string;
+  isAccounted: boolean;
 }
 
 export const ProductInStockItem = styled.span<IProductInStockItem>`
   font-weight: 500;
   text-align: center;
-  color: ${({ qty }) => (qty === '0' ? '#f80000' : '#16a34a')};
+  color: ${({ qty, isAccounted }) => {
+    if (isAccounted) {
+      return '#000';
+    }
+    return qty === '0' ? '#f80000' : '#16a34a';
+  }};
 `;
 
 export const ProductSupplierPrice = styled.p`
@@ -159,15 +182,37 @@ export const ProductQtyBox = styled.div`
 
 export const ProductPrice = styled.p<IProductPrice>`
   text-decoration: ${({ hasPromo }) => (hasPromo ? 'line-through' : 'none')};
-  color: ${({ hasPromo }) =>
-    hasPromo ? 'var(--color-danger)' : 'var(--primary-text)'};
+  color: ${({ hasPromo, isAccounted }) => {
+    if (isAccounted) return '#000';
+    return hasPromo ? 'var(--color-danger)' : 'var(--primary-text)';
+  }};
 `;
+
+export const ProductDiscountPercentage = styled.p<{
+  hasNegativeDiscount: boolean;
+}>`
+  color: ${({ hasNegativeDiscount }) =>
+    hasNegativeDiscount ? 'var(--color-danger)' : 'var(--primary-text)'};
+  font-weight: ${({ hasNegativeDiscount }) =>
+    hasNegativeDiscount ? 700 : 400};
+`;
+
+export const ProductDiscount = styled.p<{ hasNegativeDiscount: boolean }>`
+  color: ${({ hasNegativeDiscount }) =>
+    hasNegativeDiscount ? 'var(--color-danger)' : 'var(--primary-text)'};
+  font-weight: ${({ hasNegativeDiscount }) =>
+    hasNegativeDiscount ? 700 : 400};
+`;
+
 export const ProductPricePromo = styled.p<IProductPrice>`
-  color: ${({ hasPromo }) =>
-    hasPromo ? 'var(--sales-success-color)' : 'var(--primary-text)'};
+  color: ${({ hasPromo, isAccounted }) => {
+    if (isAccounted) return '#000';
+    return hasPromo ? 'var(--sales-success-color)' : 'var(--primary-text)';
+  }};
 
   font-weight: ${({ hasPromo }) => (hasPromo ? 700 : 400)};
 `;
+
 export const ProductTotal = styled.p`
   font-weight: 700;
 `;
@@ -259,5 +304,12 @@ export const EditBtn = styled.button`
     color: #fff;
     outline: none;
     border-color: #101340;
+  }
+
+  &:disabled {
+    background-color: var(--accounting-order);
+    color: #fff;
+    outline: none;
+    border: none;
   }
 `;

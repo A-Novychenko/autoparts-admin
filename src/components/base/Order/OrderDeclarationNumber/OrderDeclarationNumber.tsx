@@ -38,14 +38,18 @@ export const OrderDeclarationNumber: React.FC<{
 
   const handleDeleteDeclarationNumber = async (declarationNumber: string) => {
     try {
-      await serverApi.post(`/orders/declaration-delete/${order._id}`, {
-        declarationNumber,
-      });
+      const { data } = await serverApi.post(
+        `/orders/declaration-delete/${order._id}`,
+        {
+          declarationNumber,
+        }
+      );
 
       setOrder(prev =>
         prev
           ? {
               ...prev,
+              updatedBy: data.updatedBy,
               declarationNumber: order.declarationNumber.filter(
                 el => el !== declarationNumber
               ),

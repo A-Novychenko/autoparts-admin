@@ -18,9 +18,15 @@ export const OrderPaymentStatus: React.FC<{
     const newStatus = e.target.value === 'true';
 
     try {
-      await serverApi.patch(`/orders/pay/${order._id}`, { isPaid: newStatus });
+      const { data } = await serverApi.patch(`/orders/pay/${order._id}`, {
+        isPaid: newStatus,
+      });
 
-      setOrder(prev => (prev ? { ...prev, isPaid: newStatus } : prev));
+      setOrder(prev =>
+        prev
+          ? { ...prev, isPaid: data.isPaid, updatedBy: data.updatedBy }
+          : prev
+      );
 
       toast.success('Статус обновлён');
     } catch (err) {
@@ -35,6 +41,7 @@ export const OrderPaymentStatus: React.FC<{
       status={String(order.isPaid ?? false)}
       onChange={handlePaymentStatusChange}
       aria-label="Статус оплаты"
+      disabled={order.isAccounted}
     >
       {paymentOptions.map(opt => (
         <option key={String(opt.value)} value={String(opt.value)}>

@@ -11,17 +11,25 @@ const { statusOptions } = staticData.order;
 
 export const OrderStatus: React.FC<{
   order: OrderData;
+  client: IClient | null;
   setOrder: Dispatch<SetStateAction<OrderData | null>>;
-}> = ({ order, setOrder }) => {
+}> = ({ order, setOrder, client }) => {
   const handleStatusChange = async (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newStatus = e.target.value as OrderItem['status'];
 
     try {
-      await serverApi.patch(`/orders/${order._id}`, { status: newStatus });
+      const { data } = await serverApi.patch(`/orders/${order._id}`, {
+        status: newStatus,
+      });
 
-      setOrder(prev => (prev ? { ...prev, status: newStatus } : prev));
+      setOrder(prev =>
+        prev
+          ? { ...prev, status: data.updStatus, updatedBy: data.updatedBy }
+          : prev
+      );
+
       toast.success('Статус обновлён');
     } catch (err) {
       console.error('Ошибка обновления статуса', err);
@@ -34,6 +42,8 @@ export const OrderStatus: React.FC<{
       status={order.status || 'new'}
       onChange={handleStatusChange}
       aria-label="Статус заказа"
+      disabled={!client || order.isAccounted}
+      title={client ? 'Статус заказа' : 'Выберите клиента!'}
     >
       {statusOptions.map(opt => (
         <option key={opt.value} value={opt.value}>

@@ -23,6 +23,10 @@ export const TextAreaStyled = styled.textarea`
   resize: none;
   font-size: 0.95rem;
   box-sizing: border-box;
+
+  &:disabled {
+    background-color: var(--accounting-order);
+  }
 `;
 
 export const ChooseBtn = styled.button`
@@ -55,9 +59,15 @@ export const ChooseBtn = styled.button`
     color: #101340;
     border-color: #101340;
   }
+
+  &:disabled {
+    color: var(--accounting-order);
+    border-color: var(--accounting-order);
+    background-color: #fff;
+  }
 `;
 
-export const OrderOverviewSection = styled.section`
+export const OrderOverviewSection = styled.section<{ isAccounted: boolean }>`
   display: flex;
   gap: 16px;
   height: 320px;
@@ -66,8 +76,11 @@ export const OrderOverviewSection = styled.section`
 
   font-size: 14px;
 
-  background-color: ${COLORS.bg};
+  /* background-color: ${COLORS.bg}; */
   box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+
+  background-color: ${({ isAccounted }) =>
+    isAccounted ? 'var(--accounting-order)' : COLORS.bg};
 `;
 
 export const NumberBox = styled.div`

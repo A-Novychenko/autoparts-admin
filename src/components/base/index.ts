@@ -13,3 +13,4 @@ export * from './UserShipmentsDeliveryCard';
 export * from './UserShipmentsCreateForm';
 export * from './UserShipmentCompactCard';
 export * from './Order';
+export * from './ClientSelector';

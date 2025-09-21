@@ -8,11 +8,13 @@ import {
   OrderDeclarationNumber,
   UserShipmentCompactCard,
   OrderPaymentStatus,
+  ClientSelector,
 } from '@components/base';
 
 import { serverApi } from '@/redux/auth/authOperations';
 import {
   formatDateToUkrainian,
+  makeDeliveryMethod,
   makeDeliveryPayMethod,
   makeTextPaymentMethod,
 } from '@/utils';
@@ -45,12 +47,13 @@ import {
 
 export const OrderOverview: React.FC<{
   order: OrderData;
-  client: IClient;
-  shipment: IShipment;
+  client: IClient | null;
+  shipment: IShipment | null;
   setOrder: Dispatch<SetStateAction<OrderData | null>>;
   setShipment: Dispatch<SetStateAction<IShipment | null>>;
-}> = ({ order, client, shipment, setOrder, setShipment }) => {
-  const clientId = client._id;
+  setClient: Dispatch<SetStateAction<IClient | null>>;
+}> = ({ order, client, shipment, setOrder, setShipment, setClient }) => {
+  const clientId = client?._id ? client._id : null;
 
   const location = useLocation();
 
@@ -58,8 +61,11 @@ export const OrderOverview: React.FC<{
   const [shipmentList, setShipmentList] = useState<IShipment[]>([]);
   const [openMsg, setOpenMsg] = useState<boolean>(false);
   const [openShipmentsModal, setOpenShipmentsModal] = useState<boolean>(false);
+  const [openClientsModal, setOpenClientsModal] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!clientId) return;
+
     const fetchShipments = async () => {
       const { data } = await serverApi.get(`/clients/shipment/${clientId}`);
 
@@ -70,17 +76,21 @@ export const OrderOverview: React.FC<{
 
   const saveComment = async () => {
     if (!isDirty) return;
+
     try {
-      // setIsSaving(true);
-      await serverApi.patch(`/orders/${order._id}`, { comment: order.comment });
-      setOrder(prev => (prev ? { ...prev, comment: order.comment } : prev));
+      const { data } = await serverApi.patch(`/orders/${order._id}`, {
+        comment: order.comment,
+      });
+      setOrder(prev =>
+        prev
+          ? { ...prev, comment: order.comment, updatedBy: data.updatedBy }
+          : prev
+      );
       setIsDirty(false);
       toast.success('Комментарий сохранён');
     } catch (err) {
       console.error('Ошибка сохранения комментария', err);
       toast.error('Не удалось сохранить комментарий');
-    } finally {
-      // setIsSaving(false);
     }
   };
 
@@ -90,7 +100,7 @@ export const OrderOverview: React.FC<{
 
   return (
     <>
-      <OrderOverviewSection>
+      <OrderOverviewSection isAccounted={order.isAccounted}>
         <OrderClientBox>
           <NumberWrap>
             <NumberInner>
@@ -105,40 +115,51 @@ export const OrderOverview: React.FC<{
             <NumberBox>
               <OrderNumber>№{order.number}</OrderNumber>
 
-              <OrderStatus order={order} setOrder={setOrder} />
+              <OrderStatus order={order} setOrder={setOrder} client={client} />
             </NumberBox>
           </NumberWrap>
 
           <DataBox>
             <DataLabel>Клиент</DataLabel>
-            <ul>
-              <DataItem>
-                <DataItemTitle>Код клиента:</DataItemTitle>
-                <DataItemValue>{client.clientCode ?? '—'}</DataItemValue>
-              </DataItem>
-              <DataItem>
-                <DataItemTitle>Имя:</DataItemTitle>
-                <DataItemValue>{client?.name ?? '—'}</DataItemValue>
-              </DataItem>
-              <DataItem>
-                <DataItemTitle>Телефон:</DataItemTitle>
-                <DataItemValue>{client.phone ?? '—'}</DataItemValue>
-              </DataItem>
-              <DataItem>
-                <DataItemTitle>Email:</DataItemTitle>
-                <DataItemValue>{client.email ?? '—'}</DataItemValue>
-              </DataItem>
-              <DataItem>
-                <DataItemTitle>Оборот: </DataItemTitle>
-                <DataItemValue>{client.totalSpent}грн</DataItemValue>
-              </DataItem>
-              {client.company && (
+            <ChooseBtn
+              disabled={order.isAccounted}
+              onClick={() => {
+                setOpenClientsModal(true);
+              }}
+            >
+              <MdModeEdit size={16} />
+              Выбрать клиента
+            </ChooseBtn>
+            {client ? (
+              <ul>
                 <DataItem>
-                  <DataItemTitle>Компания:</DataItemTitle>
-                  <DataItemValue>{client?.company}</DataItemValue>
+                  <DataItemTitle>Код клиента:</DataItemTitle>
+                  <DataItemValue>{client?.clientCode ?? '—'}</DataItemValue>
                 </DataItem>
-              )}
-            </ul>
+                <DataItem>
+                  <DataItemTitle>Имя:</DataItemTitle>
+                  <DataItemValue>{client?.name ?? '—'}</DataItemValue>
+                </DataItem>
+                <DataItem>
+                  <DataItemTitle>Телефон:</DataItemTitle>
+                  <DataItemValue>{client?.phone ?? '—'}</DataItemValue>
+                </DataItem>
+                <DataItem>
+                  <DataItemTitle>Email:</DataItemTitle>
+                  <DataItemValue>{client?.email ?? '—'}</DataItemValue>
+                </DataItem>
+                <DataItem>
+                  <DataItemTitle>Оборот: </DataItemTitle>
+                  <DataItemValue>{client?.totalSpent}грн</DataItemValue>
+                </DataItem>
+                {client?.company && (
+                  <DataItem>
+                    <DataItemTitle>Компания:</DataItemTitle>
+                    <DataItemValue>{client?.company}</DataItemValue>
+                  </DataItem>
+                )}
+              </ul>
+            ) : null}
           </DataBox>
 
           <DataBox>
@@ -156,20 +177,23 @@ export const OrderOverview: React.FC<{
           <DataBox>
             <DataLabel>Доставка:</DataLabel>
 
-            <ChooseBtn
-              onClick={() => {
-                setOpenShipmentsModal(true);
-              }}
-            >
-              <MdModeEdit size={16} />
-              Изменить
-            </ChooseBtn>
+            {client && (
+              <ChooseBtn
+                disabled={order.isAccounted}
+                onClick={() => {
+                  setOpenShipmentsModal(true);
+                }}
+              >
+                <MdModeEdit size={16} />
+                Изменить
+              </ChooseBtn>
+            )}
 
             <ul>
               <DataItem>
                 <DataItemTitle>Тип оплаты заказа:</DataItemTitle>
                 <DataItemValue>
-                  {makeTextPaymentMethod(shipment.payment)}
+                  {makeTextPaymentMethod(shipment?.payment)}
                 </DataItemValue>
               </DataItem>
               <DataItem>
@@ -183,30 +207,30 @@ export const OrderOverview: React.FC<{
               <DataItem>
                 <DataItemTitle>Тип доставки:</DataItemTitle>
                 <DataItemValue>
-                  {shipment.delivery === 'post' ? 'Новая Почта' : 'Самовывоз'}
+                  {makeDeliveryMethod(shipment?.delivery)}
                 </DataItemValue>
               </DataItem>
-              {shipment.company && (
+              {shipment?.company && (
                 <DataItem>
                   <DataItemTitle>Компания:</DataItemTitle>
                   <DataItemValue>{shipment.company}</DataItemValue>
                 </DataItem>
               )}
 
-              {shipment.delivery === 'post' && (
+              {shipment?.delivery === 'post' && (
                 <>
                   <DataItem>
                     <DataItemTitle>Город:</DataItemTitle>
                     <DataItemValue>
-                      {shipment.deliveryCity || '—'} №
-                      {shipment.postOffice || '—'}
+                      {shipment?.deliveryCity || '—'} №
+                      {shipment?.postOffice || '—'}
                     </DataItemValue>
                   </DataItem>
 
                   <DataItem>
                     <DataItemTitle>Оплата доставки:</DataItemTitle>
                     <DataItemValue>
-                      {makeDeliveryPayMethod(shipment.deliveryPayment)}
+                      {makeDeliveryPayMethod(shipment?.deliveryPayment)}
                     </DataItemValue>
                   </DataItem>
                 </>
@@ -214,11 +238,13 @@ export const OrderOverview: React.FC<{
             </ul>
           </DataBox>
 
-          <OrderDeclarationNumber
-            order={order}
-            shipment={shipment}
-            setOrder={setOrder}
-          />
+          {shipment && (
+            <OrderDeclarationNumber
+              order={order}
+              shipment={shipment}
+              setOrder={setOrder}
+            />
+          )}
         </ShipmentBox>
 
         <InfoBox>
@@ -241,8 +267,8 @@ export const OrderOverview: React.FC<{
 
             <TextAreaStyled
               value={order.comment}
+              disabled={order.isAccounted}
               onChange={e => {
-                // setComment(e.target.value);
                 setOrder(prev =>
                   prev
                     ? {
@@ -289,15 +315,19 @@ export const OrderOverview: React.FC<{
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <p>{'МФО 322001'}</p>
-                  <CopyBtn text="322001" />
                 </li>
 
                 <li>
+                  <p>Найменування банку АТ «УНІВЕРСАЛ БАНК»</p>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <p>
-                    Найменування банку АТ «УНІВЕРСАЛ БАНК» Призначення платежу:
-                    Оплата за товар замовлення{' '}
-                    <span style={{ fontWeight: 700 }}>№{order.number}</span>
+                    Призначення платежу: Оплата за товар замовлення
+                    <span style={{ fontWeight: 700 }}> №{order.number}</span>
                   </p>
+                  <CopyBtn
+                    text={`Оплата за товар замовлення №${order.number}`}
+                  />
                 </li>
                 <li>
                   <p>
@@ -331,14 +361,33 @@ export const OrderOverview: React.FC<{
         <ShipmentsList>
           {shipmentList?.map(shipmentItem => (
             <UserShipmentCompactCard
-              key={shipmentItem._id}
+              key={shipmentItem?._id}
+              setOpenShipmentsModal={setOpenShipmentsModal}
               shipment={shipmentItem}
               setShipment={setShipment}
-              isDefault={shipment._id === shipmentItem._id}
+              setOrder={setOrder}
+              isDefault={shipment?._id === shipmentItem?._id}
               orderId={order._id}
             />
           ))}
         </ShipmentsList>
+      </ModalDialog>
+
+      <ModalDialog
+        open={openClientsModal}
+        title="Список клиентов"
+        onClose={() => setOpenClientsModal(false)}
+        cancelText="Закрыть"
+        maxWidth="lg"
+      >
+        <ClientSelector
+          orderId={order._id}
+          setClient={setClient}
+          setOrder={setOrder}
+          onSelect={() => {
+            setOpenClientsModal(false);
+          }}
+        />
       </ModalDialog>
 
       <ModalDialog

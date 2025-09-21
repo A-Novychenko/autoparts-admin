@@ -11,17 +11,21 @@ import { serverApi } from '@/redux/auth/authOperations';
 import { Dispatch, SetStateAction } from 'react';
 
 interface ShipmentCompactCardProps {
+  setOpenShipmentsModal: Dispatch<SetStateAction<boolean>>;
   shipment: IShipment;
   setShipment: Dispatch<SetStateAction<IShipment | null>>;
+  setOrder: Dispatch<SetStateAction<OrderData | null>>;
   isDefault?: boolean;
   orderId: string;
 }
 
 export const UserShipmentCompactCard: React.FC<ShipmentCompactCardProps> = ({
+  setOpenShipmentsModal,
   shipment,
   setShipment,
   isDefault = false,
   orderId,
+  setOrder,
 }) => {
   const handleChooseShipment = async (id: string) => {
     const { data } = await serverApi.patch(
@@ -34,6 +38,8 @@ export const UserShipmentCompactCard: React.FC<ShipmentCompactCardProps> = ({
     const newOrder = data.order;
 
     setShipment(newOrder.shipment);
+    setOrder(prev => (prev ? { ...prev, updatedBy: data.updatedBy } : prev));
+    setOpenShipmentsModal(false);
   };
 
   return (

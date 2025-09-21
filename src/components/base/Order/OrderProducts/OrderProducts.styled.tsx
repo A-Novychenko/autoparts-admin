@@ -1,20 +1,23 @@
 import styled from '@emotion/styled';
 import { productGridTemp } from '../orderListParams.ts';
 
-export const ProductList = styled.ul`
+export const ProductList = styled.ul<{ isAccounted: boolean }>`
   display: flex;
   flex-direction: column;
 
-  background-color: #fff1c7;
+  background-color: ${({ isAccounted }) =>
+    isAccounted ? 'var(--accounting-order)' : '#fff1c7'};
 `;
 
-export const ProductSection = styled.section`
+export const ProductSection = styled.section<{ isAccounted: boolean }>`
   flex-grow: 1;
   overflow-y: auto;
   padding: 0 10px;
+  background-color: ${({ isAccounted }) =>
+    isAccounted ? 'var(--accounting-order)' : 'transparent'};
 `;
 
-export const ProductsHeader = styled.ul`
+export const ProductsHeader = styled.ul<{ isAccounted: boolean }>`
   position: sticky;
   top: 0;
 
@@ -25,7 +28,8 @@ export const ProductsHeader = styled.ul`
 
   column-gap: 4px;
 
-  background-color: #f1f3f9;
+  background-color: ${({ isAccounted }) =>
+    isAccounted ? 'var(--accounting-order)' : '#f1f3f9'};
   border-bottom: 2px solid #d0d6e6;
 
   font-size: 12px;
@@ -38,7 +42,7 @@ export const ProductsHeader = styled.ul`
   min-width: 900px; /* одинаково со строками */
 `;
 
-export const ProductsHeaderItem = styled.li`
+export const ProductsHeaderItem = styled.li<{ isAccounted: boolean }>`
   padding: 10px 12px;
   line-height: 1;
 
@@ -47,7 +51,9 @@ export const ProductsHeaderItem = styled.li`
   justify-content: center;
 
   &:nth-of-type(2n + 1) {
-    background-color: #e0e3ff4c;
+    /* background-color: #e0e3ff4c; */
+    background-color: ${({ isAccounted }) =>
+      isAccounted ? 'var(--accounting-order)' : '#e0e3ff4c'};
   }
 `;
 

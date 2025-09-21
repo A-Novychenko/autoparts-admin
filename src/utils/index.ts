@@ -4,3 +4,4 @@ export * from './makeBadgeText';
 export * from './makeTextPaymentMethod';
 export * from './makeDeliveryPayMethod';
 export * from './numIdGenerator';
+export * from './makeDeliveryMethod';

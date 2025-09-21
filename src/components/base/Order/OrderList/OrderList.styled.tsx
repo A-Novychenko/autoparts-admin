@@ -40,7 +40,7 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 0 0 32px;
+  padding: 0 0 64px;
   overflow-y: scroll;
   height: calc(100vh - 173px);
 `;
@@ -65,18 +65,22 @@ export const SubTitle = styled.span`
 `;
 
 // export const Card = styled.article`
-export const Card = styled(Link)`
+export const Card = styled(Link, {
+  shouldForwardProp: prop => prop !== 'isAccounted', // ⚡️ не передаём в DOM
+})<{ isAccounted: boolean }>`
   display: grid;
   grid-template-columns: ${gridTemplate};
   gap: 8px;
   align-items: center;
   padding: 8px 16px;
   background-color: #fff;
+
+  font-weight: ${({ isAccounted }) => (isAccounted ? 300 : 500)};
+
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   font-size: 14px;
-  color: #101340;
-  /* margin-bottom: 4px; */
+  color: ${({ isAccounted }) => (isAccounted ? '#10134091' : '#101340')};
 
   @media (max-width: 767px) {
     display: flex;
@@ -138,4 +142,18 @@ export const OpenBtn = styled.span`
   &:hover {
     background: #1d4ed8;
   }
+`;
+
+export const OrdersEmptyLabel = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  background-color: var(--main-bg);
+  border-radius: 8px;
 `;

@@ -18,4 +18,10 @@ export const ProductCardDelBtn = styled.button`
     color: #fff;
     outline: none;
   }
+
+  &:disabled {
+    background-color: var(--accounting-order);
+    color: #fff;
+    outline: none;
+  }
 `;

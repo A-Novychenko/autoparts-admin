@@ -15,25 +15,31 @@ import { productsHeaderItems } from '../orderListParams';
 export const OrderProducts: React.FC<{
   products: OrderProduct[];
   orderId: string;
-  setProducts: Dispatch<SetStateAction<OrderProduct[] | null>>;
-}> = ({ products, orderId, setProducts }) => {
+  orderIsAccounted: boolean;
+  setProducts: Dispatch<SetStateAction<OrderProduct[]>>;
+  setOrder: Dispatch<SetStateAction<OrderData | null>>;
+}> = ({ products, orderIsAccounted, orderId, setProducts, setOrder }) => {
   return (
-    <ProductSection>
+    <ProductSection isAccounted={orderIsAccounted}>
       <ProductWrap>
-        <ProductsHeader>
+        <ProductsHeader isAccounted={orderIsAccounted}>
           {productsHeaderItems.map((el, idx) => (
-            <ProductsHeaderItem key={idx + el}>{el}</ProductsHeaderItem>
+            <ProductsHeaderItem isAccounted={orderIsAccounted} key={idx + el}>
+              {el}
+            </ProductsHeaderItem>
           ))}
         </ProductsHeader>
 
-        <ProductList>
+        <ProductList isAccounted={orderIsAccounted}>
           {products.map((product: OrderProduct, idx: number) => (
             <OrderProductsCard
               key={product._id}
               product={product}
               idx={idx}
               orderId={orderId}
+              orderIsAccounted={orderIsAccounted}
               setProducts={setProducts}
+              setOrder={setOrder}
             />
           ))}
         </ProductList>
@@ -42,6 +48,8 @@ export const OrderProducts: React.FC<{
           products={products}
           setProducts={setProducts}
           orderId={orderId}
+          orderIsAccounted={orderIsAccounted}
+          setOrder={setOrder}
         />
       </ProductWrap>
     </ProductSection>

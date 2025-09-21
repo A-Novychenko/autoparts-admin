@@ -16,7 +16,9 @@ export const makeBadgeColor = (status: string) => {
       return '#22c55e';
     case 'rejected':
       return '#ef4444';
+    case 'accounted':
+      return '#00000074';
     default:
-      return '#6b7280';
+      return '#000000';
   }
 };
