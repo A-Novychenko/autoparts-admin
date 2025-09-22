@@ -152,7 +152,9 @@ export const OrderSummary: React.FC<{
         <SummaryBox>
           <p style={{ color: '#6702ff93', marginRight: 'auto' }}>
             Вход. сумма{' '}
-            <strong style={{ color: '#6702ff93' }}>{totalSupplierPrice}</strong>
+            <strong style={{ color: '#6702ff93' }}>
+              {totalSupplierPrice.toFixed(2)} грн
+            </strong>
           </p>
           <p>
             Товаров: <strong>{productsCount}</strong>
