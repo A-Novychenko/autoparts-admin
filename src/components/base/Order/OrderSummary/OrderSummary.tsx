@@ -105,7 +105,8 @@ export const OrderSummary: React.FC<{
   };
 
   const totalSupplierPrice = products.reduce(
-    (acc, { supplierPrice }) => acc + (supplierPrice ? supplierPrice : 0),
+    (acc, { supplierPrice, quantity }) =>
+      acc + (supplierPrice ? supplierPrice * quantity : 0),
     0
   );
 
@@ -150,7 +151,7 @@ export const OrderSummary: React.FC<{
       <SummaryWrap>
         <SummaryBox>
           <p style={{ color: '#6702ff93', marginRight: 'auto' }}>
-            Вход. цена{' '}
+            Вход. сумма{' '}
             <strong style={{ color: '#6702ff93' }}>{totalSupplierPrice}</strong>
           </p>
           <p>
