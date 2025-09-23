@@ -160,18 +160,19 @@ export const OrderSummary: React.FC<{
             Товаров: <strong>{productsCount}</strong>
           </p>
           <p>
-            Сумма: <strong>{order.totalAmount} грн</strong>
+            Сумма: <strong>{order.totalAmount.toFixed(2)} грн</strong>
           </p>
           <p>
             Скидка: <strong>{order.totalDiscount} грн</strong>
           </p>
           <p>
-            Со скидкой: <strong>{order.totalAmountWithDiscount} грн</strong>
+            Со скидкой:{' '}
+            <strong>{order.totalAmountWithDiscount.toFixed(2)} грн</strong>
           </p>
         </SummaryBox>
 
         <SummaryTotal>
-          Итого к оплате: {order.totalAmountWithDiscount} грн
+          Итого к оплате: {order.totalAmountWithDiscount.toFixed(2)} грн
         </SummaryTotal>
       </SummaryWrap>
 
