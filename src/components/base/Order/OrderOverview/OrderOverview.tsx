@@ -333,7 +333,7 @@ export const OrderOverview: React.FC<{
                   <p>
                     Сума до сплати:{' '}
                     <span style={{ fontWeight: 700 }}>
-                      {order.totalAmountWithDiscount}грн
+                      {order.totalAmountWithDiscount.toFixed(2)}грн
                     </span>
                   </p>
                 </li>
