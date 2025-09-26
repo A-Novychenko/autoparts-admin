@@ -116,7 +116,7 @@ export const OrderList: React.FC<OrderListProps> = ({ orders }) => {
                           />
                         )}
                       </span>
-                      {order.totalAmountWithDiscount || '###'} грн
+                      {order.totalAmountWithDiscount.toFixed() || '###'} грн
                     </div>
                   </>
                 )}

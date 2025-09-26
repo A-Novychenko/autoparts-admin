@@ -43,6 +43,7 @@ import {
   DataBox,
   DataItem,
   DataItemTitle,
+  DataItemValueCompany,
 } from './OrderOverview.styled';
 
 export const OrderOverview: React.FC<{
@@ -213,7 +214,9 @@ export const OrderOverview: React.FC<{
               {shipment?.company && (
                 <DataItem>
                   <DataItemTitle>Компания:</DataItemTitle>
-                  <DataItemValue>{shipment.company}</DataItemValue>
+                  <DataItemValueCompany>
+                    {shipment.company}
+                  </DataItemValueCompany>
                 </DataItem>
               )}
 

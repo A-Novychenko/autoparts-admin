@@ -220,7 +220,7 @@ export const OrderProductsCard: React.FC<{
           hasPromo={product.price_promo}
           isAccounted={orderIsAccounted}
         >
-          {product.price}
+          {product.price.toFixed()}
         </ProductPrice>
 
         {isEditing ? (
@@ -243,7 +243,9 @@ export const OrderProductsCard: React.FC<{
             (product.price_promo ? product.price - product.price_promo : 0) < 0
           }
         >
-          {product.price_promo ? product.price - product.price_promo : 0}
+          {product.price_promo
+            ? (product.price - product.price_promo).toFixed()
+            : 0}
         </ProductDiscount>
 
         {isEditing ? (
@@ -258,11 +260,11 @@ export const OrderProductsCard: React.FC<{
             hasPromo={product.price_promo}
             isAccounted={orderIsAccounted}
           >
-            {draft.promoPrice}
+            {draft.promoPrice.toFixed()}
           </ProductPricePromo>
         )}
 
-        <ProductTotal>{total}</ProductTotal>
+        <ProductTotal>{total.toFixed()}</ProductTotal>
 
         {isEditing ? (
           <ProductComment

@@ -166,7 +166,14 @@ export const InvoicePDF: React.FC<{
             <Text style={styles.label}>Покупець: </Text>
             <View>
               <Text style={styles.text}>
-                {shipment ? `${shipment.name},${shipment.phone}` : null}
+                {/* {shipment ? `${shipment.name},${shipment.phone}` : null} */}
+                {shipment && (
+                  <>
+                    {shipment.company
+                      ? shipment.company
+                      : `${shipment.name},${shipment.phone}`}
+                  </>
+                )}
               </Text>
             </View>
           </View>

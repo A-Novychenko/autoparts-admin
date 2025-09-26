@@ -163,7 +163,7 @@ export const OrderSummary: React.FC<{
             Сумма: <strong>{order.totalAmount.toFixed(2)} грн</strong>
           </p>
           <p>
-            Скидка: <strong>{order.totalDiscount} грн</strong>
+            Скидка: <strong>{order.totalDiscount.toFixed(2)} грн</strong>
           </p>
           <p>
             Со скидкой:{' '}

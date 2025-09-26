@@ -164,17 +164,28 @@ export const DeliveryNotePDF: React.FC<{
 
             <View>
               <Text style={styles.text}>
-                {shipment ? `${shipment.name}, ${shipment.phone}` : null}
+                {/* {shipment ? `${shipment.name}, ${shipment.phone}` : null} */}
+                {shipment && (
+                  <>
+                    {shipment.company
+                      ? shipment.company
+                      : `${shipment.name},${shipment.phone}`}
+                  </>
+                )}
               </Text>
-              <Text style={styles.text}>
-                {shipment
-                  ? `${
-                      shipment.delivery === 'post' ? 'Нова Пошта ' : 'Самовивіз'
-                    } ${shipment.deliveryCity} ${
-                      shipment.delivery === 'post' ? '№' : ''
-                    } ${shipment.postOffice}`
-                  : null}
-              </Text>
+              {shipment && !shipment.company && (
+                <Text style={styles.text}>
+                  {shipment
+                    ? `${
+                        shipment.delivery === 'post'
+                          ? 'Нова Пошта '
+                          : 'Самовивіз'
+                      } ${shipment.deliveryCity} ${
+                        shipment.delivery === 'post' ? '№' : ''
+                      } ${shipment.postOffice}`
+                    : null}
+                </Text>
+              )}
             </View>
           </View>
 

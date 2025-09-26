@@ -147,6 +147,30 @@ export const DataItemValue = styled.p`
   font-weight: 700;
 `;
 
+export const DataItemValueCompany = styled.p`
+  white-space: nowrap; /* весь текст в одну строку */
+  overflow-x: auto; /* включаем горизонтальный скролл */
+  overflow-y: hidden; /* убираем вертикальный */
+
+  /* Настройка скроллбара только для этого элемента */
+  &::-webkit-scrollbar {
+    height: 4px; /* очень тонкий по высоте */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* убираем фон */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* полупрозрачный ползунок */
+    border-radius: 2px; /* скругление */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+`;
+
 export const ShipmentBox = styled.div`
   display: flex;
   flex-direction: column;
