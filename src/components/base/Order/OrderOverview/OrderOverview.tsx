@@ -11,7 +11,7 @@ import {
   ClientSelector,
 } from '@components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import {
   formatDateToUkrainian,
   makeDeliveryMethod,

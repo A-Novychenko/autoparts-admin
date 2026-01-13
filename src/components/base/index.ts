@@ -14,3 +14,7 @@ export * from './UserShipmentsCreateForm';
 export * from './UserShipmentCompactCard';
 export * from './Order';
 export * from './ClientSelector';
+export * from './GroupTree';
+export * from './GroupManagerForm';
+export * from './GroupManager';
+export * from './GroupDataCard';

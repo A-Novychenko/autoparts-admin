@@ -1,5 +1,5 @@
 import { VinReqDetail } from '@/components/base';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 

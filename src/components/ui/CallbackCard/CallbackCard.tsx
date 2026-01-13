@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { makeBadgeColor } from '@/utils';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import staticData from '@/data/common.json';
 

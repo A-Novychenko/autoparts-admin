@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 
 import { DelBtn, Popup } from '@/components/ui';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import { MdOutlineAddBox } from 'react-icons/md';
 
@@ -127,6 +127,7 @@ export const OrderDeclarationNumber: React.FC<{
 
                   <Popup
                     open={openDeclarationNumberPopup}
+                    title="Введите номер ТТН"
                     onClose={handleCloseDeclarationNumberPopup}
                     onSave={handleAddDeclarationNumber}
                   >

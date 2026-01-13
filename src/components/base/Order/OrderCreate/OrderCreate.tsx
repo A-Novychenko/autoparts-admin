@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import { MdAddBox } from 'react-icons/md';
 

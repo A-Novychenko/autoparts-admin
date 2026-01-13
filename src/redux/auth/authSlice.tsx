@@ -10,7 +10,7 @@ import {
   refreshUser,
 } from './authOperations';
 
-import { AuthState } from './types';
+import { AuthState } from '../reduxStore';
 
 const user = {
   _id: '',

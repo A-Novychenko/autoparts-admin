@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { ConfirmAction, CopyBtn, DelBtn, ModalDialog } from '@/components/ui';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import { MdCancel, MdModeEdit, MdSave } from 'react-icons/md';
 

@@ -18,6 +18,7 @@ import DashboardPage from '@/pages/DashboardPage';
 import ASGPage from '@/pages/ASGPage';
 // import OrdersPage from '@/pages/Orders';
 import CatalogPage from '@/pages/Catalog';
+import CatalogByGroupsPage from '@/pages/CatalogByGroups';
 import ProductsPage from '@/pages/Products';
 import ClientsPage from '@/pages/ClientsPage';
 import UsersPage from '@/pages/UsersPage';
@@ -78,6 +79,8 @@ export const router = createBrowserRouter(
         <Route path="catalog" element={<CatalogPage />} />
 
         <Route path="products" element={<ProductsPage />} />
+
+        <Route path="catalog-by-groups" element={<CatalogByGroupsPage />} />
 
         <Route path="clients" element={<ClientsPage />} />
 

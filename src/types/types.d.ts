@@ -20,6 +20,10 @@ interface IProductASG {
   price_promo: number;
   banner: boolean;
   sale: boolean;
+
+  groupId: string | null;
+  groupName: string;
+  manualDescription: string;
 }
 
 interface ICategory {

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-toastify';
 
 import staticData from '@/data/common.json';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import { PaymentSelect } from './OrderPaymentStatus.styled';
 

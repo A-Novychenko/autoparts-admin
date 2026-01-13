@@ -15,7 +15,7 @@ import {
   SearchProgress,
   Wrap,
 } from './ClientSelector.styled';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { PhoneInput } from '@/components/ui';
 
 interface ClientSelectorProps {

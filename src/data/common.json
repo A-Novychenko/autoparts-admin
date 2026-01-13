@@ -51,6 +51,14 @@
       ]
     },
     {
+      "name": "Каталог груп",
+      "link": "/dashboard/catalog-by-groups",
+      "available": [
+        "admin",
+        "manager"
+      ]
+    },
+    {
       "name": "Товары",
       "link": "/dashboard/products",
       "available": [

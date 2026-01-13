@@ -1,13 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { State } from './types';
-
-const serverUrl = import.meta.env.VITE_SERVER_BASE_URL;
-
-export const serverApi = axios.create({
-  baseURL: `${serverUrl}/api`,
-});
+import { serverApi } from '@/utils';
+import { ReduxState } from '../reduxStore';
 
 const setAuthHeader = (token: string) => {
   if (token) {
@@ -117,7 +112,7 @@ export const login = createAsyncThunk(
 export const refreshUser = createAsyncThunk(
   'auth/refreshUser',
   async (_, thunkApi) => {
-    const state: State = thunkApi.getState() as State;
+    const state: ReduxState = thunkApi.getState() as ReduxState;
 
     const persistedToken = state.auth.token;
 

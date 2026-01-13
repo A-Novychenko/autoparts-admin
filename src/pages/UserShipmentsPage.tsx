@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { UserShipments } from '@/components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 export default function UserShipmentsPage() {
   const location = useLocation();

@@ -1,8 +1,18 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppBar } from './base';
+
+import { AppBar } from '@/components/base';
+
+import { getAllGroups } from '@/redux/group/groupOperations';
+import { useAppDispatch } from '@/redux/hooks';
 
 export const DashboardLayout = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllGroups());
+  }, [dispatch]);
+
   return (
     <div>
       <AppBar />

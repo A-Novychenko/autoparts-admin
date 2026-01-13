@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { PageContainer, PageWrap, ProductASGCard } from '@/components/ui';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 export default function ProductsPage() {
   const [topProducts, setTopProducts] = useState<IProductASG[] | null>([]);
@@ -15,7 +15,7 @@ export default function ProductsPage() {
         setIsLoading(true);
         setTopProducts(null);
 
-        const { data } = await serverApi.get('catalog/top-products');
+        const { data } = await serverApi.get('/catalog/top-products');
 
         setTopProducts(data.products);
       } catch (e) {

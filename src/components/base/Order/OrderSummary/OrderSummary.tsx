@@ -29,7 +29,7 @@ import {
   DocBtnPreview,
   AccBtn,
 } from './OrderSummary.styled';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import { FaMoneyCheckAlt } from 'react-icons/fa';
 import { Dispatch, SetStateAction } from 'react';

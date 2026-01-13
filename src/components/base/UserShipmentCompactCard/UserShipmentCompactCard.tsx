@@ -7,7 +7,7 @@ import {
   DefaultBtn,
 } from './UserShipmentCompactCard.styled';
 import { makeTextPaymentMethod, makeDeliveryPayMethod } from '@/utils';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { Dispatch, SetStateAction } from 'react';
 
 interface ShipmentCompactCardProps {

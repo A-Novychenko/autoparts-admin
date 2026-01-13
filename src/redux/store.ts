@@ -16,6 +16,7 @@ import {
   setTokenInState,
   setIsAuthenticated,
 } from './auth/authSlice';
+import { groupReducer } from './group/groupSlice';
 
 import {
   setTokenUpdateCallback,
@@ -28,6 +29,12 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
+const groupPersistConfig = {
+  key: 'groups',
+  storage,
+  // whitelist: ['groups'],
+};
+
 setTokenUpdateCallback(({ token }) => {
   store.dispatch(setTokenInState({ token }));
 });
@@ -37,7 +44,10 @@ setLogoutIsAuthenticatedCallback(() => {
 });
 
 export const store = configureStore({
-  reducer: { auth: persistReducer(authPersistConfig, authReducer) },
+  reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
+    groups: persistReducer(groupPersistConfig, groupReducer),
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

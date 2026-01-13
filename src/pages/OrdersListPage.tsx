@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { OrderList } from '@/components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { Loader } from '@/components/ui';
 
 export default function OrdersListPage() {

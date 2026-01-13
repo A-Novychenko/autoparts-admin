@@ -9,7 +9,7 @@ import {
 } from '@/components/ui';
 import { ProductsASGList } from '@/components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 export default function CatalogPage() {
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -37,7 +37,7 @@ export default function CatalogPage() {
         setIsLoading(true);
         setSelectedCategory(null);
 
-        const { data } = await serverApi.get('cms-catalog/');
+        const { data } = await serverApi.get('/cms-catalog/');
 
         setCategories(data.categories);
         setSelectedCategory(data.categories[0]);
@@ -96,7 +96,7 @@ export default function CatalogPage() {
         setLoadingSearchProducts(true);
 
         const { data } = await serverApi.get(
-          `cms-catalog/products?id=${selectedCategory?.id}&page=${currentPage}`
+          `/cms-catalog/products?id=${selectedCategory?.id}&page=${currentPage}`
         );
 
         if (currentPage === 1) {

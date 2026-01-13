@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { toast } from 'react-toastify';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import staticData from '@/data/common.json';
 

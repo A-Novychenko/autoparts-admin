@@ -1,5 +1,12 @@
-export type State = {
+export type ReduxState = {
   auth: AuthState;
+  groups: GroupState;
+};
+
+export type GroupState = {
+  groups: IGroup[];
+  error: boolean;
+  isLoading: boolean;
 };
 
 export type AuthState = {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { ConfirmAlert } from '@components/ui';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 import staticData from '@/data/common.json';
 

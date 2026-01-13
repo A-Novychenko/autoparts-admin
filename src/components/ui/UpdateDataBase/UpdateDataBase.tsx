@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Loader } from '@components/ui';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 export const UpdateDataBase: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>();

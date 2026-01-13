@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { OrderOverview, OrderProducts, OrderSummary } from '@/components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { Loader } from '@/components/ui';
 
 const OrderDetailsPage = () => {
@@ -23,7 +23,7 @@ const OrderDetailsPage = () => {
         setLoading(true);
         setError(null);
 
-        const { data } = await serverApi.get(`orders/${id}`);
+        const { data } = await serverApi.get(`/orders/${id}`);
         if (!data?.order) {
           setError('Заказ не найден');
           return;

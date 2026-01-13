@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { CallbackList } from '@/components/base';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 export default function CallbackListPage() {
   const [items, setItems] = useState<CallbackItem[]>([]);

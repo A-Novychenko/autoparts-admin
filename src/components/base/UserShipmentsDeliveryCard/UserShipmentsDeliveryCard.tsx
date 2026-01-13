@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { MdOutlineEdit, MdDelete, MdSave, MdCancel } from 'react-icons/md';
 
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 import { makeDeliveryPayMethod, makeTextPaymentMethod } from '@/utils';
 
 import {

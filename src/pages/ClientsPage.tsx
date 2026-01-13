@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { PageContainer, PageWrap } from '@/components/ui';
-import { serverApi } from '@/redux/auth/authOperations';
+import { serverApi } from '@/utils';
 
 const TableWrapper = styled.div`
   width: 100%;
@@ -60,7 +60,7 @@ export default function ClientsPage() {
         setIsLoading(true);
         setClients(null);
 
-        const { data } = await serverApi.get('clients/');
+        const { data } = await serverApi.get('/clients/');
         setClients(data.clients);
       } catch (e) {
         console.log('e', e);

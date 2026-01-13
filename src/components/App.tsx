@@ -1,7 +1,10 @@
-import { useAuth } from '@/hooks';
-import { refreshUser } from '@/redux/auth/authOperations';
-import { useAppDispatch } from '@/redux/hooks';
 import { useRef } from 'react';
+
+import { useAppDispatch } from '@/redux/hooks';
+
+import { useAuth } from '@/hooks';
+
+import { refreshUser } from '@/redux/auth/authOperations';
 
 export const AppWrapper = ({ element }: { element: React.ReactNode }) => {
   const dispatch = useAppDispatch();
