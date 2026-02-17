@@ -5,6 +5,7 @@ export type IFormInput = {
   parent: string;
   img: string;
   isVisible: boolean;
+  description: string | null;
 };
 
 export type GroupManagerFormProps = {

@@ -54,7 +54,7 @@ export const GroupManager: React.FC<{
 
   const handleDelete = async (id: string) => {
     try {
-      await serverApi.delete(`/catalog/groups/${id}`);
+      await serverApi.delete(`/cms-catalog/groups/${id}`);
 
       onDeleteGroup(id, parentGroupData || null);
 
@@ -74,7 +74,7 @@ export const GroupManager: React.FC<{
     formData.append('img', file);
 
     try {
-      const { data } = await serverApi.put('/catalog/group-img', formData, {
+      const { data } = await serverApi.put('/cms-catalog/group-img', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

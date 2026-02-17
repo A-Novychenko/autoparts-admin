@@ -45,6 +45,7 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
   } = useForm<IFormInput>({
     defaultValues: {
       name: '',
+      description: '',
       slug: '',
       margin: 16,
       parent: '',
@@ -57,6 +58,7 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
     if (editingGroup) {
       reset({
         name: editingGroup.name,
+        description: editingGroup.description,
         slug: editingGroup.slug,
         margin: editingGroup.margin,
         parent: editingGroup.parent ? editingGroup.parent.toString() : '',
@@ -67,6 +69,7 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
     } else {
       reset({
         name: '',
+        description: '',
         slug: '',
         margin: 16,
         parent: '',
@@ -89,12 +92,13 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
       ...data,
       margin: Number(data.margin),
       parent: data.parent === '' ? null : data.parent,
+      description: data.description || null,
     };
 
     try {
       if (isEditing && editingGroup?._id) {
         const { data } = await serverApi.put(
-          `/catalog/groups/${editingGroup._id}`,
+          `/cms-catalog/groups/${editingGroup._id}`,
           payload
         );
 
@@ -104,7 +108,7 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
           autoClose: 700,
         });
       } else {
-        const { data } = await serverApi.post('/catalog/groups', payload);
+        const { data } = await serverApi.post('/cms-catalog/groups', payload);
 
         onGroupAdded(data.group);
 
@@ -131,6 +135,19 @@ export const GroupManagerForm: React.FC<GroupManagerFormProps> = ({
             aria-invalid={!!errors.name}
           />
           {errors.name && <ErrorText>{errors.name.message}</ErrorText>}
+        </FieldWrapper>
+
+        <FieldWrapper style={{ marginBottom: '20px' }}>
+          <Label htmlFor="name">Описание</Label>
+          <StyledInput
+            id="description"
+            placeholder="Введите описание..."
+            {...register('description')}
+            aria-invalid={!!errors.description}
+          />
+          {errors.description && (
+            <ErrorText>{errors.description.message}</ErrorText>
+          )}
         </FieldWrapper>
 
         <FieldRow columns={2} style={{ marginBottom: '20px' }}>

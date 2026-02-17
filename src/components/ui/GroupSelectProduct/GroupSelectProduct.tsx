@@ -69,7 +69,7 @@ export const GroupSelectProduct: React.FC<GroupSelectProductProps> = ({
         id: data.groupId ? data.groupId : null,
       };
 
-      await serverApi.put(`/catalog/change-group/${productId}`, submitData);
+      await serverApi.put(`/cms-catalog/change-group/${productId}`, submitData);
 
       toast.success('Товар перемещен в новую группу');
 

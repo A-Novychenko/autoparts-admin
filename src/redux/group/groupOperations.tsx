@@ -6,7 +6,7 @@ export const getAllGroups = createAsyncThunk(
   'group/getAllGroups',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await serverApi.get('/catalog/groups');
+      const { data } = await serverApi.get('/cms-catalog/groups');
 
       return data.groups;
     } catch (e) {

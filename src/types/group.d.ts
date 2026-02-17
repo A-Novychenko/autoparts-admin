@@ -14,6 +14,7 @@ interface IGroup {
   createdAt: string;
   updatedAt: string;
   isVisible: boolean;
+  description: string | null;
 }
 
 // Структура узла дерева (расширяет группу массивом детей)

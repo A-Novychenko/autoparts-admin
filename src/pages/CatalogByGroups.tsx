@@ -50,7 +50,7 @@ export default function CatalogByGroupsPage() {
         setErrorSearchProducts(null);
 
         const { data } = await serverApi.get(
-          `/catalog/product-by-group?id=${_id}&page=${currentPage}`
+          `/cms-catalog/product-by-group?id=${_id}&page=${currentPage}`
         );
 
         if (currentPage === 1) {

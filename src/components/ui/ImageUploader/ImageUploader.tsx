@@ -76,7 +76,7 @@ export const ImageUploader: React.FC<GroupImageUploaderProps> = ({
     }
 
     try {
-      await serverApi.delete(`/catalog/group-del-img/${groupId}`);
+      await serverApi.delete(`/cms-catalog/group-del-img/${groupId}`);
 
       handleClearImg();
 
